@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 
-using CatcherGame.GameStates.Screen;
+using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 using CatcherGame.Sprite;
 namespace CatcherGame.GameObjects
@@ -16,8 +16,8 @@ namespace CatcherGame.GameObjects
     public class TextureLayer : GameObject
     {
         AnimationSprite layer;
-        public TextureLayer(GameScreen currentScreen,int objId,float x,float y)
-            : base(currentScreen, objId ,x, y)
+        public TextureLayer(GameState currentGameState, int objId, float x, float y)
+            : base(currentGameState, objId, x, y)
         {
             Init();
         }
@@ -29,7 +29,7 @@ namespace CatcherGame.GameObjects
 
         public override void LoadResource(TexturesKeyEnum key)
         {
-            layer.SetTexture2DList(base.gameScreen.GetTexture2DList(key));
+            layer.SetTexture2DList(base.gameState.GetTexture2DList(key));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -38,7 +38,7 @@ namespace CatcherGame.GameObjects
         }
 
         public override void Update() {
-            layer.UpdateFrame(base.gameScreen.GetTimeSpan());
+            layer.UpdateFrame(base.gameState.GetTimeSpan());
         }
     }
 }

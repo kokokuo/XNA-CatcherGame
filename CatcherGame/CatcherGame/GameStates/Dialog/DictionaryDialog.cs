@@ -6,13 +6,13 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using CatcherGame.GameStates.Screen;
+using CatcherGame.GameStates;
 namespace CatcherGame.GameStates.Dialog
 {
     public class DictionaryDialog : GameDialog
     {
-        public DictionaryDialog(GameScreen pCurrentScreen)
-            : base(pCurrentScreen) 
+        public DictionaryDialog(GameState pCurrentState)
+            : base(pCurrentState) 
         { }
         public override void BeginInit()
         {

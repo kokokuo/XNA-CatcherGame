@@ -11,9 +11,9 @@ using CatcherGame.GameObjects;
 using CatcherGame.TextureManager;
 
 using CatcherGame.GameStates.Dialog;
-namespace CatcherGame.GameStates.Screen
+namespace CatcherGame.GameStates
 {
-    public class HomeMenuStateScreen : GameScreen
+    public class HomeMenuState : GameState
     {
         Button playButton;
         Button topScoreButton;
@@ -24,7 +24,7 @@ namespace CatcherGame.GameStates.Screen
         Vector2 backgroundPos;
         int objIdCount;
 
-        public HomeMenuStateScreen(MainGame gMainGame)
+        public HomeMenuState(MainGame gMainGame)
             : base(gMainGame) {
                 dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
                 dialogTable.Add(DialogStateEnum.STATE_DICTIONARY, new DictionaryDialog(this));

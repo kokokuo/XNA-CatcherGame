@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using CatcherGame.GameStates.Screen;
+using CatcherGame.GameStates;
 using CatcherGame.GameObjects;
 
 namespace CatcherGame.GameStates.Dialog
@@ -14,30 +14,30 @@ namespace CatcherGame.GameStates.Dialog
     public class TopScoreDialog : GameDialog
     {
         
-        public TopScoreDialog(GameScreen pCurrentScreen)
-            : base(pCurrentScreen) 
+        public TopScoreDialog(GameState pCurrentState)
+            : base(pCurrentState) 
         { 
         }
 
         public override void BeginInit()
         {
             backgroundPos = new Vector2(0,0);
-            closeButton = new Button(base.currentScreen, base.countId++, 0, 0);
+            closeButton = new Button(base.currentState, base.countId++, 0, 0);
             AddGameObject(closeButton);
 
             base.isInit = true;
         }
         public override void LoadResource()
         {
-            background = currentScreen.GetTexture2DList(TextureManager.TexturesKeyEnum.TOP_SCORE_DIALOG_BACK)[0];
-            base.LoadResource();
+            background = currentState.GetTexture2DList(TextureManager.TexturesKeyEnum.TOP_SCORE_DIALOG_BACK)[0];
+            base.LoadResource(); 
         }
         public override void Update()
         {
-            if (!currentScreen.GetIsTouchDataQueueEmpty())
+            if (!currentState.GetIsTouchDataQueueEmpty())
             {
                 TouchLocation touchLocation;
-                touchLocation = currentScreen.GetTouchData();
+                touchLocation = currentState.GetTouchData();
 
                 if (touchLocation.State == TouchLocationState.Released)
                 {
@@ -47,12 +47,12 @@ namespace CatcherGame.GameStates.Dialog
                     }
                 }
             }
-            base.Update();
+            base.Update(); //更新遊戲元件
         }
         public override void Draw()
         {
             gameSateSpriteBatch.Draw(background, backgroundPos, Color.White);
-            base.Draw();
+            base.Draw(); //繪製遊戲元件
         }
     }
 }

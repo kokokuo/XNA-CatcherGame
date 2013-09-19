@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Threading;
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates;
-using CatcherGame.GameStates.Screen;
+
 using System.Diagnostics;
 
 namespace CatcherGame
@@ -32,8 +32,8 @@ namespace CatcherGame
         Thread workInputThread;
 
         //遊戲狀態表
-        GameScreen[] gameScreenTable;
-        GameScreen pCurrentScreenState;
+        GameState[] gameStateTable;
+        GameState pCurrentScreenState;
 
         //圖片管理器
         Texture2DManager texture2DManager;
@@ -53,8 +53,8 @@ namespace CatcherGame
             InactiveSleepTime = TimeSpan.FromSeconds(1);
 
             //遊戲狀態表
-            gameScreenTable = new GameScreen[(int)GameStateEnum.TOTAL_STATE_NUMBER];
-            gameScreenTable[(int)GameStateEnum.STATE_MENU] = new HomeMenuStateScreen(this);
+            gameStateTable = new GameState[(int)GameStateEnum.TOTAL_STATE_NUMBER];
+            gameStateTable[(int)GameStateEnum.STATE_MENU] = new HomeMenuState(this);
 
             //輸入設定
             touchDatas = new Queue<TouchLocation>();
@@ -99,7 +99,7 @@ namespace CatcherGame
         {
             // TODO: 在此新增初始化邏輯
             texture2DManager = new Texture2DManager(this);
-            pCurrentScreenState = gameScreenTable[(int)GameStateEnum.STATE_MENU];
+            pCurrentScreenState = gameStateTable[(int)GameStateEnum.STATE_MENU];
             pCurrentScreenState.BeginInit();
             base.Initialize();
         }
@@ -169,7 +169,7 @@ namespace CatcherGame
 
         public void SetNextGameState(GameStateEnum nextStateKey) {
             //切換遊戲狀態
-            pCurrentScreenState = gameScreenTable[(int)nextStateKey];
+            pCurrentScreenState = gameStateTable[(int)nextStateKey];
             if (!pCurrentScreenState.GetGameStateHasInit)
             {
                 //進入新狀態所做的初始化

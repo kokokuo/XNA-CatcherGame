@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 
 using CatcherGame.GameStates;
-using CatcherGame.GameStates.Screen;
+
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
@@ -22,7 +22,7 @@ namespace CatcherGame.GameObjects
     /// </summary>
     public abstract class GameObject
     {
-        protected GameScreen gameScreen; //知道物件目前所屬的遊戲狀態
+        protected GameState gameState; //知道物件目前所屬的遊戲狀態
         
         protected int id; //物件編號
         protected float x, y; //物件座標
@@ -32,9 +32,9 @@ namespace CatcherGame.GameObjects
         
         }
 
-        public GameObject(GameScreen gameScreen, int objId, float x, float y)
+        public GameObject(GameState gameState, int objId, float x, float y)
         {
-            this.gameScreen = gameScreen;
+            this.gameState = gameState;
             this.id = objId;
             this.x = x;
             this.y = y;

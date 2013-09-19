@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using CatcherGame;
 using CatcherGame.Sprite;
 using CatcherGame.GameStates;
-using CatcherGame.GameStates.Screen;
+
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
@@ -16,8 +16,8 @@ namespace CatcherGame.GameObjects
     {
         private AnimationSprite buttonAnimation;
         private Texture2D currentTexture;
-        public Button(GameScreen gameScreen, int id, float x, float y)
-            : base(gameScreen, id, x, y)
+        public Button(GameState currentGameState, int id, float x, float y)
+            : base(currentGameState, id, x, y)
         {
             Init();
         }
@@ -40,14 +40,14 @@ namespace CatcherGame.GameObjects
         /// <param name="key"></param>
         private void SetTexture2DList(TexturesKeyEnum key)
         {
-            buttonAnimation.SetTexture2DList(gameScreen.GetTexture2DList(key));
+            buttonAnimation.SetTexture2DList(base.gameState.GetTexture2DList(key));
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
             this.Width = buttonAnimation.GetCurrentFrameTexture().Width;
         }
 
         public override void Update()
         {
-            buttonAnimation.UpdateFrame(gameScreen.GetTimeSpan());
+            buttonAnimation.UpdateFrame(base.gameState.GetTimeSpan());
             currentTexture = buttonAnimation.GetCurrentFrameTexture();
             //設定現在的圖片長寬為遊戲元件的長寬
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
