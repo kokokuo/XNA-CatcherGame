@@ -39,6 +39,9 @@ namespace CatcherGame.TextureManager
 
             //載入最高分對話框所用的圖像資源
             LoadTopScoreDialogBackground();
+
+            //載入遊戲中的資源
+            LoadPlayBackground();
         }
         /// <summary>
         /// 取得對應Key值的圖片組
@@ -152,6 +155,7 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+        //對話框的關閉按鈕
         private void LoadCloseDialog() {
             TexturesKeyEnum key = TexturesKeyEnum.DIALOG_CLOSE_BUTTON;
             if (!_dictionary.ContainsKey(key))
@@ -161,7 +165,7 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
-
+        //最高分的對話框背景
         private void LoadTopScoreDialogBackground()
         {
             TexturesKeyEnum key = TexturesKeyEnum.TOP_SCORE_DIALOG_BACK;
@@ -171,6 +175,17 @@ namespace CatcherGame.TextureManager
                 texture2Ds.Add(mainGame.Content.Load<Texture2D>("TopScore/top_score_back"));
                 _dictionary.Add(key, texture2Ds);
             }
+        }
+        //遊戲中的背景
+        private void LoadPlayBackground() {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_BACKGROUND;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/play_back"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        
         }
     }
 }

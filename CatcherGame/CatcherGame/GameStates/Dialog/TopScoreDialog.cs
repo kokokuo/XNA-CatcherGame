@@ -41,7 +41,7 @@ namespace CatcherGame.GameStates.Dialog
 
                 if (touchLocation.State == TouchLocationState.Released)
                 {
-                    if (closeButton.IsClick(touchLocation.Position.X, touchLocation.Position.Y))
+                    if (closeButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y))
                     {
                         base.CloseDialog();
                     }

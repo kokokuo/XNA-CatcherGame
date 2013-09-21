@@ -82,23 +82,24 @@ namespace CatcherGame.GameStates
                     touchLocation = mainGame.GetTouchLocation();
                     if (touchLocation.State == TouchLocationState.Released)
                     {
-                        if (playButton.IsClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
+                        if (playButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_STORY_ANIMATION");
-                            //mainGame.SetNextGameState(GameStateEnum.STATE_STORY_ANIMATION);  
+                            //先直接進入遊戲狀態測試
+                            mainGame.SetNextGameState(GameStateEnum.STATE_PLAYGAME);  
                         }
-                        else if (howToPlayButtion.IsClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
+                        else if (howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
                             //base.SetNextGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
                         }
-                        else if (collectionDictionaryButton.IsClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
+                        else if (collectionDictionaryButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_DICTIONARY");
                             //base.SetNextGameDialog(DialogStateEnum.STATE_DICTIONARY);
 
                         }
-                        else if (topScoreButton.IsClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
+                        else if (topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_TOPSCORE");
                             base.SetNextGameDialog(DialogStateEnum.STATE_TOPSCORE);

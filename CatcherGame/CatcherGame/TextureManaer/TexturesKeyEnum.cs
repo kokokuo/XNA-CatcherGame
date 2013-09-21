@@ -19,5 +19,6 @@ namespace CatcherGame.TextureManager
         TOP_SCORE_BUTTON,
         TOP_SCORE_DIALOG_BACK,
         DIALOG_CLOSE_BUTTON,
+        PLAY_BACKGROUND
     }
 }

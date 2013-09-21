@@ -65,9 +65,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameObjects\TextureLayer.cs" />
-    <Compile Include="GameStates\PlayState.cs" />
+    <Compile Include="GameStates\PlayGameState.cs" />
     <Compile Include="Sprite\AnimationSprite.cs" />
-    <Compile Include="Clickable.cs" />
     <Compile Include="GameObjects\Button.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameStates\Dialog\DialogStateEnum.cs" />

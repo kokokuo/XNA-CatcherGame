@@ -12,7 +12,7 @@ using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
-    public class Button : GameObject , Clickable
+    public class Button : GameObject 
     {
         private AnimationSprite buttonAnimation;
         private Texture2D currentTexture;
@@ -79,7 +79,7 @@ namespace CatcherGame.GameObjects
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public bool IsClick(float x, float y)
+        public bool IsPixelClick(float x, float y)
         {
             Color[] currtentTextureColor = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData<Color>(currtentTextureColor);
@@ -95,6 +95,26 @@ namespace CatcherGame.GameObjects
             }
         }
 
+        /// <summary>
+        /// 判斷有無點擊到Button(區塊碰撞)
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public bool IsBoundingBoxClick(float x, float y)
+        {
+            if (x >= this.X &&
+                x <= this.X + this.Width &&
+                y >= this.Y &&
+                y <= this.Y + this.Height)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         
+        }
     }
 }

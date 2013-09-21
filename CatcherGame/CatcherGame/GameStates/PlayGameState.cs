@@ -14,14 +14,14 @@ using CatcherGame.GameStates.Dialog;
 
 namespace CatcherGame.GameStates
 {
-    public class PlayState  :GameState
+    public class PlayGameState  :GameState
     {
         Button pauseButton;
-        Texture2D menuBackground;
+        Texture2D playBackground;
         Vector2 backgroundPos;
         int objIdCount;
 
-        public PlayState(MainGame gMainGame) 
+        public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
@@ -35,12 +35,12 @@ namespace CatcherGame.GameStates
 
             pauseButton = new Button(this, objIdCount++, 0, 0);
 
-            AddGameObject(pauseButton);
+            //(pauseButton);
         }
 
         public override void LoadResource()
         {
-            throw new NotImplementedException();
+            playBackground = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
         }
 
        
@@ -51,6 +51,8 @@ namespace CatcherGame.GameStates
         }
         public override void Draw()
         {
+            // 繪製主頁背景
+            gameSateSpriteBatch.Draw(playBackground, backgroundPos, Color.White);
             base.Draw();
         }
     }
