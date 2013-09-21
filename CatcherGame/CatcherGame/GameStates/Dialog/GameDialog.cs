@@ -46,10 +46,11 @@ namespace CatcherGame.GameStates.Dialog
         /// 關閉Dialog
         /// </summary>
         protected void CloseDialog() {
-            currentState.SetNextGameDialog(DialogStateEnum.EMPTY);
+            currentState.SetPopGameDialog(DialogStateEnum.EMPTY);
         }
 
-        public virtual void Update() {
+        public virtual void Update()
+        {
             foreach (GameObject gameObject in gameObjects)
             {
                 gameObject.Update();

@@ -11,14 +11,21 @@ namespace CatcherGame.TextureManager
     public enum TexturesKeyEnum
     {
         TEST = 0,
+
         MENU_BACKGROUND,
         MENU_SIDE,
-        DICTIONARY_BUTTON,
-        PLAY_BUTTON,
-        HOW_TO_PLAY_BUTTON,
-        TOP_SCORE_BUTTON,
+        MENU_DICTIONARY_BUTTON,
+        MENU_PLAY_BUTTON,
+        MENU_HOW_TO_PLAY_BUTTON,
+        MENU_TOP_SCORE_BUTTON,
+
         TOP_SCORE_DIALOG_BACK,
         DIALOG_CLOSE_BUTTON,
-        PLAY_BACKGROUND
+
+        PLAY_BACKGROUND,
+        PLAY_FIREMAN,
+        PLAY_LEFT_MOVE_BUTTON,
+        PLAY_RIGHT_MOVE_BUTTON,
+        PLAY_PAUSE_BUTTON
     }
 }

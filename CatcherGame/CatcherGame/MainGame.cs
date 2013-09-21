@@ -25,11 +25,8 @@ namespace CatcherGame
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
-        //觸控點擊管理器
-        TouchPanelInput touchPanelInputManager;
-        Queue<TouchLocation> touchDatas;
-        Thread workInputThread;
+
+        Queue<TouchLocation> touchQueue;
 
         //遊戲狀態表
         Dictionary<GameStateEnum,GameState> gameStateTable;
@@ -57,39 +54,13 @@ namespace CatcherGame
             gameStateTable.Add(GameStateEnum.STATE_MENU,new HomeMenuState(this));
             gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, new PlayGameState(this));
 
-            //輸入設定
-            touchDatas = new Queue<TouchLocation>();
-            touchPanelInputManager = new TouchPanelInput();
-            touchPanelInputManager.TouchEvent +=touchPanelInputManager_TouchEvent;
-            workInputThread = new Thread(new ThreadStart(touchPanelInputManager.ScanInput));
-            workInputThread.Start();
+            //設定水平橫向時的座標
+            TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
+            TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
+            
+            touchQueue = new Queue<TouchLocation>();
         }
-        //接收新的座標資料
-        private void touchPanelInputManager_TouchEvent(TouchLocation data)
-        {
-            touchDatas.Enqueue(data);
-        }
-
-        /// <summary>
-        /// 取得觸控的資料
-        /// </summary>
-        /// <returns></returns>
-        public TouchLocation GetTouchLocation() {
-            return touchDatas.Dequeue();
-        }
-
-        /// <summary>
-        /// 取得觸控資料是否為空
-        /// </summary>
-        /// <returns></returns>
-        public bool GetIsTouchDataQueueEmpty()
-        {
-            if (touchDatas.Count == 0)
-                return true;
-            else
-                return false;
-        }
-
+       
         /// <summary>
         /// 允許遊戲先執行所需的初始化程序，再開始執行。
         /// 這是遊戲可查詢必要服務和載入任何非圖形相關內容
@@ -138,9 +109,16 @@ namespace CatcherGame
             // 允許遊戲結束
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            
             // TODO: 在此新增您的更新邏輯
+            
+            TouchCollection tc = TouchPanel.GetState();
+            foreach (TouchLocation location in tc)
+            {
+                touchQueue.Enqueue(location);
+            }
             pCurrentScreenState.Update();
+            
 
             base.Update(gameTime);
         }
@@ -160,6 +138,14 @@ namespace CatcherGame
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public bool IsEmptyQueue() {
+            if (touchQueue.Count != 0) return false;
+            else return true;
+        }
+        public TouchLocation GetTouchLocation() {
+            return touchQueue.Dequeue();
         }
 
         public List<Texture2D> GetTexture2DList(TexturesKeyEnum key)

@@ -42,6 +42,11 @@ namespace CatcherGame.TextureManager
 
             //載入遊戲中的資源
             LoadPlayBackground();
+            LoadPlayGamePauseButton();
+            LoadPlayGameLeftMoveButton();
+            LoadPlayGameRightMoveButton();
+            LoadPlayGameFireman();
+            Debug.WriteLine("Load Texture2Ds Done ");
         }
         /// <summary>
         /// 取得對應Key值的圖片組
@@ -88,9 +93,11 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+        //選單------------------------------------------------------------------------------
 
+        //開始遊戲按鈕
         private void LoadPlayButton() { 
-             TexturesKeyEnum key = TexturesKeyEnum.PLAY_BUTTON;
+             TexturesKeyEnum key = TexturesKeyEnum.MENU_PLAY_BUTTON;
              if (!_dictionary.ContainsKey(key)){
                  List<Texture2D> texture2Ds = new List<Texture2D>();
                  texture2Ds.Add(mainGame.Content.Load<Texture2D>("Menu/start"));
@@ -100,7 +107,7 @@ namespace CatcherGame.TextureManager
 
         private void LoadHowToPlayButton()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.HOW_TO_PLAY_BUTTON;
+            TexturesKeyEnum key = TexturesKeyEnum.MENU_HOW_TO_PLAY_BUTTON;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
@@ -112,7 +119,7 @@ namespace CatcherGame.TextureManager
 
         private void LoadTopScoreButton()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.TOP_SCORE_BUTTON;
+            TexturesKeyEnum key = TexturesKeyEnum.MENU_TOP_SCORE_BUTTON;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
@@ -123,7 +130,7 @@ namespace CatcherGame.TextureManager
 
         private void LoadDictionaryButton()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_BUTTON;
+            TexturesKeyEnum key = TexturesKeyEnum.MENU_DICTIONARY_BUTTON;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
@@ -176,6 +183,9 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+
+        //遊戲中元件--------------------------------------------------------
+
         //遊戲中的背景
         private void LoadPlayBackground() {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_BACKGROUND;
@@ -186,6 +196,59 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         
+        }
+
+        //遊戲中的暫停鈕
+        private void LoadPlayGamePauseButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_PAUSE_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/pause"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+        //遊戲中的左鍵
+        private void LoadPlayGameLeftMoveButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/left_button"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+        //遊戲中的右鍵
+        private void LoadPlayGameRightMoveButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/right_button"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+        //遊戲中的消防員
+        private void LoadPlayGameFireman()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_FIREMAN;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fireman_1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fireman_2"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
         }
     }
 }

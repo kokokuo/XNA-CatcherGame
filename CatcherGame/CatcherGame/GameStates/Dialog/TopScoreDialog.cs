@@ -30,20 +30,20 @@ namespace CatcherGame.GameStates.Dialog
         public override void LoadResource()
         {
             background = currentState.GetTexture2DList(TextureManager.TexturesKeyEnum.TOP_SCORE_DIALOG_BACK)[0];
-            base.LoadResource(); 
+            base.LoadResource(); //載入CloseButton 圖片資源
         }
         public override void Update()
         {
-            if (!currentState.GetIsTouchDataQueueEmpty())
+           
+            if (!base.currentState.IsEmptyQueue())
             {
-                TouchLocation touchLocation;
-                touchLocation = currentState.GetTouchData();
-
+                TouchLocation touchLocation = base.currentState.GetTouchLocation();
                 if (touchLocation.State == TouchLocationState.Released)
                 {
+                    //若有觸及到關閉按鈕
                     if (closeButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y))
                     {
-                        base.CloseDialog();
+                        base.CloseDialog(); //透過父類別來關閉
                     }
                 }
             }

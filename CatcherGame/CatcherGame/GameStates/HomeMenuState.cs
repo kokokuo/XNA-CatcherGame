@@ -33,10 +33,10 @@ namespace CatcherGame.GameStates
         }
 
         public override void LoadResource(){
-            playButton.LoadResource(TexturesKeyEnum.PLAY_BUTTON);
-            howToPlayButtion.LoadResource(TexturesKeyEnum.HOW_TO_PLAY_BUTTON);
-            collectionDictionaryButton.LoadResource(TexturesKeyEnum.DICTIONARY_BUTTON);
-            topScoreButton.LoadResource(TexturesKeyEnum.TOP_SCORE_BUTTON);
+            playButton.LoadResource(TexturesKeyEnum.MENU_PLAY_BUTTON);
+            howToPlayButtion.LoadResource(TexturesKeyEnum.MENU_HOW_TO_PLAY_BUTTON);
+            collectionDictionaryButton.LoadResource(TexturesKeyEnum.MENU_DICTIONARY_BUTTON);
+            topScoreButton.LoadResource(TexturesKeyEnum.MENU_TOP_SCORE_BUTTON);
 
             menuBackground = GetTexture2DList(TexturesKeyEnum.MENU_BACKGROUND)[0];
 
@@ -50,8 +50,9 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
-            backgroundPos = new Vector2(0, 0);
-
+            base.x = 0; base.y = 0;
+            backgroundPos = new Vector2(base.x, base.y);
+            
             objIdCount = 0;
             playButton = new Button(this, objIdCount++,0,0);
             
@@ -76,17 +77,15 @@ namespace CatcherGame.GameStates
         {
             if (!base.hasDialogShow)
             {
-                if (!mainGame.GetIsTouchDataQueueEmpty())
-                {
-                    TouchLocation touchLocation;
-                    touchLocation = mainGame.GetTouchLocation();
+                if(!base.IsEmptyQueue()){
+                    TouchLocation touchLocation = base.GetTouchLocation();
                     if (touchLocation.State == TouchLocationState.Released)
                     {
                         if (playButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_STORY_ANIMATION");
                             //先直接進入遊戲狀態測試
-                            mainGame.SetNextGameState(GameStateEnum.STATE_PLAYGAME);  
+                            mainGame.SetNextGameState(GameStateEnum.STATE_PLAYGAME);
                         }
                         else if (howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
@@ -102,7 +101,8 @@ namespace CatcherGame.GameStates
                         else if (topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_TOPSCORE");
-                            base.SetNextGameDialog(DialogStateEnum.STATE_TOPSCORE);
+                            //設定彈出GameDialog
+                            base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                         }
                         else
                         {
@@ -111,7 +111,9 @@ namespace CatcherGame.GameStates
                         }
                     }
                 }
+                
             }
+           
             base.Update();
         }
 

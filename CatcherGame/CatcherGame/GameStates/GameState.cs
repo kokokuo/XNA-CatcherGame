@@ -22,6 +22,8 @@ namespace CatcherGame.GameStates
     {
         protected SpriteBatch gameSateSpriteBatch;
         protected List<GameObject> gameObjects;
+        protected int x;
+        protected int y;
         protected int width;
         protected int height;
         protected bool isInit;
@@ -37,18 +39,27 @@ namespace CatcherGame.GameStates
             this.mainGame = mainGamePointer;
             
             isInit = false;
-            width = 480;
-            height = 800;
+            width = 800;
+            height = 480;
             hasDialogShow = false;
         }
         
         public abstract void LoadResource();
         public abstract void BeginInit();
-        
+
+        public bool IsEmptyQueue()
+        {
+            return mainGame.IsEmptyQueue();
+            
+        }
+        public TouchLocation GetTouchLocation()
+        {
+            return mainGame.GetTouchLocation();
+        }
+
+
         public virtual void Update()
         {
-            
-           
             //如果有顯示對話框,則更新對話框的物件
             if (hasDialogShow)
             {
@@ -85,7 +96,25 @@ namespace CatcherGame.GameStates
         {
             gameObjects.Add(gameObject);
         }
-        
+
+
+        /// <summary>
+        /// 設定或取得遊戲狀態左上角x
+        /// </summary>
+        public int SetGetX
+        {
+            set { x = value; }
+            get { return x; }
+        }
+
+        /// <summary>
+        /// 設定或取得遊戲狀態的左上角y
+        /// </summary>
+        public int SetGetY
+        {
+            set { y = value; }
+            get { return y; }
+        }
 
         /// <summary>
         /// 設定或取得遊戲狀態的寬(以遊戲狀態為背景),預設為手機的螢幕寬
@@ -163,24 +192,9 @@ namespace CatcherGame.GameStates
             return mainGame.GetTexture2DList(key);
         }
 
-        /// <summary>
-        /// 透過mainGame取得是否有輸入
-        /// </summary>
-        /// <returns></returns>
-        public bool GetIsTouchDataQueueEmpty()
-        {
-            return mainGame.GetIsTouchDataQueueEmpty();
-        }
-        /// <summary>
-        /// 透過mainGame取得輸入
-        /// </summary>
-        /// <returns></returns>
-        public TouchLocation GetTouchData()
-        {
-            return mainGame.GetTouchLocation();
-        }
+        
 
-        public void SetNextGameDialog(DialogStateEnum nextDialogKey)
+        public void SetPopGameDialog(DialogStateEnum nextDialogKey)
         {
             if (nextDialogKey != DialogStateEnum.EMPTY)
             {
