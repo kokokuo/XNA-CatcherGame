@@ -26,6 +26,7 @@ namespace CatcherGame.TextureManager
         PLAY_FIREMAN,
         PLAY_LEFT_MOVE_BUTTON,
         PLAY_RIGHT_MOVE_BUTTON,
-        PLAY_PAUSE_BUTTON
+        PLAY_PAUSE_BUTTON,
+        PLAY_SMOKE
     }
 }

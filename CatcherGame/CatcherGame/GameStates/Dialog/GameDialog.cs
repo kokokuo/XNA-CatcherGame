@@ -17,6 +17,7 @@ using CatcherGame.GameStates;
 
 namespace CatcherGame.GameStates.Dialog
 {
+    //基礎類別,如果有新的Dialog皆要繼承此 GameDialog
     public abstract class GameDialog  
     {
         protected GameState currentState;
@@ -43,12 +44,13 @@ namespace CatcherGame.GameStates.Dialog
             closeButton.LoadResource(TextureManager.TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
         }
         /// <summary>
-        /// 關閉Dialog
+        /// 關閉Dialog,子類別Dialgo可以透過此來關閉
         /// </summary>
         protected void CloseDialog() {
             currentState.SetPopGameDialog(DialogStateEnum.EMPTY);
         }
 
+        //更新在Dialog中的所有遊戲物件
         public virtual void Update()
         {
             foreach (GameObject gameObject in gameObjects)

@@ -46,6 +46,8 @@ namespace CatcherGame.TextureManager
             LoadPlayGameLeftMoveButton();
             LoadPlayGameRightMoveButton();
             LoadPlayGameFireman();
+            LoadPlaySmoke();
+
             Debug.WriteLine("Load Texture2Ds Done ");
         }
         /// <summary>
@@ -198,6 +200,17 @@ namespace CatcherGame.TextureManager
         
         }
 
+        //遊戲中的煙霧
+        private void LoadPlaySmoke() {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_SMOKE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/smoke"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
         //遊戲中的暫停鈕
         private void LoadPlayGamePauseButton()
         {

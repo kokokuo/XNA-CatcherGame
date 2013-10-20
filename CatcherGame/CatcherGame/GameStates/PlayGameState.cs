@@ -23,9 +23,11 @@ namespace CatcherGame.GameStates
         Vector2 backgroundPos;
         int objIdCount;
         FiremanPlayer player;
+        TextureLayer smokeTexture;
         TouchLocation preTouchLocation;
         float rightGameScreenBorder;
         float leftGameScreenBorder;
+
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
@@ -43,13 +45,14 @@ namespace CatcherGame.GameStates
             leftMoveButton = new Button(this, objIdCount++, 0, 355);
             rightMoveButton = new Button(this, objIdCount++, 700, 355);
             player = new FiremanPlayer(this, objIdCount++, 300, 355);
-            
+            smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
+
             //加入遊戲元件
             AddGameObject(player); 
             AddGameObject(leftMoveButton);
             AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
-           
+            AddGameObject(smokeTexture);
 
             
 
@@ -65,6 +68,7 @@ namespace CatcherGame.GameStates
             rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
             player.LoadResource(TexturesKeyEnum.PLAY_FIREMAN);
 
+            smokeTexture.LoadResource(TexturesKeyEnum.PLAY_SMOKE);
 
         }
 
@@ -97,7 +101,7 @@ namespace CatcherGame.GameStates
                         }
                         else
                         {
-                            player.SetStand();
+                            player.SetStand(); //設定站立
                         }
                     }
                 }

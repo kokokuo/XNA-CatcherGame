@@ -13,6 +13,7 @@ using CatcherGame.TextureManager;
 using CatcherGame.Sprite;
 namespace CatcherGame.GameObjects
 {
+    //顯示單純的圖層圖片,如果有某些圖片會在最上層,且和遊戲中的邏輯無關的話,可以用此類別 e.g 遊戲中的煙霧 或 選單的紅色邊
     public class TextureLayer : GameObject
     {
         AnimationSprite layer;
