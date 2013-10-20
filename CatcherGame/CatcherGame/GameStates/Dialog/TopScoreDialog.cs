@@ -31,6 +31,7 @@ namespace CatcherGame.GameStates.Dialog
         {
             background = currentState.GetTexture2DList(TextureManager.TexturesKeyEnum.TOP_SCORE_DIALOG_BACK)[0];
             base.LoadResource(); //載入CloseButton 圖片資源
+            base.isLoadContent = true;
         }
         public override void Update()
         {

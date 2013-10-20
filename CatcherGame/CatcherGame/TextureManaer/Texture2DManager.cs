@@ -46,7 +46,15 @@ namespace CatcherGame.TextureManager
             LoadPlayGameLeftMoveButton();
             LoadPlayGameRightMoveButton();
             LoadPlayGameFireman();
-            LoadPlaySmoke();
+            LoadPlayGameSmokePicture();
+            LoadPlayGameScorePicture();
+            LoadPlayGameLifePicture();
+            LoadPlayNet();
+
+            //載入遊戲中的暫停對話框
+            LoadPauseDialogBackground();
+            LoadPauseDialogExitButton();
+            LoadPauseDialogContinueButton();
 
             Debug.WriteLine("Load Texture2Ds Done ");
         }
@@ -201,7 +209,7 @@ namespace CatcherGame.TextureManager
         }
 
         //遊戲中的煙霧
-        private void LoadPlaySmoke() {
+        private void LoadPlayGameSmokePicture() {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_SMOKE;
             if (!_dictionary.ContainsKey(key))
             {
@@ -211,6 +219,33 @@ namespace CatcherGame.TextureManager
             }
 
         }
+
+        //遊戲中的救援失敗剩餘次數圖示
+        private void LoadPlayGameLifePicture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_LIFE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/life"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+        
+        //遊戲中的分數圖示
+        private void LoadPlayGameScorePicture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_SCORE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/score"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+       
         //遊戲中的暫停鈕
         private void LoadPlayGamePauseButton()
         {
@@ -262,6 +297,58 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
 
+        }
+
+
+        //遊戲中的救人網子
+        private void LoadPlayNet()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_NET;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/net1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/net2"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
+        }
+
+
+        //暫停對話框的背景
+        private void LoadPauseDialogBackground()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PAUSE_DIALOG_BACK;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Pause/pause_back"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //暫停對話框的離開按鈕
+        private void LoadPauseDialogExitButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PAUSE_EXIT;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Pause/exit"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //暫停對話框的繼續遊戲按鈕
+        private void LoadPauseDialogContinueButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PAUSE_CONTINUE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Pause/continue"));
+                _dictionary.Add(key, texture2Ds);
+            }
         }
     }
 }

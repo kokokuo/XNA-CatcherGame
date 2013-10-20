@@ -52,12 +52,18 @@ namespace CatcherGame.GameStates
             return mainGame.IsEmptyQueue();
             
         }
+        /// <summary>
+        /// 從MainGame中取得點擊時的資料
+        /// </summary>
+        /// <returns></returns>
         public TouchLocation GetTouchLocation()
         {
             return mainGame.GetTouchLocation();
         }
 
-
+        /// <summary>
+        /// 如果有顯示對話框則更新對話框並停止遊戲物件更新,否則只會更新目前狀態中的遊戲物件
+        /// </summary>
         public virtual void Update()
         {
             //如果有顯示對話框,則更新對話框的物件
@@ -75,7 +81,9 @@ namespace CatcherGame.GameStates
                 }
             }
         }
-
+        /// <summary>
+        /// 繪製遊戲狀態中物件,但是如果有要顯示對話框,則也會一併繪製對話框
+        /// </summary>
         public virtual void Draw()
         {
             foreach (GameObject gameObject in gameObjects)
@@ -140,14 +148,16 @@ namespace CatcherGame.GameStates
         {
             get { return gameObjects; }
         }
-
+        /// <summary>
+        /// 取得遊戲狀態是否已經初始化(避免再次初始化,或是如果有需要可以把遊戲狀態釋放,重新設定無初始化)
+        /// </summary>
         public bool GetGameStateHasInit {
             get { return isInit; }
         }
 
 
         /// <summary>
-        /// Set Main Game SpriteBatch to gameState
+        /// 設定主遊戲中的SpriteBatch元件到 gameState 以協助繪製
         /// </summary>
         /// <param name="gSpriteBatch"></param>
         public void SetSpriteBatch(SpriteBatch gSpriteBatch)
@@ -183,7 +193,7 @@ namespace CatcherGame.GameStates
         }
 
         /// <summary>
-        /// 透過mainGame取得 Texture2DList
+        /// 透過mainGame取得 已經載入好的 Texture2DList
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
@@ -193,7 +203,10 @@ namespace CatcherGame.GameStates
         }
 
         
-
+        /// <summary>
+        /// 設定要談出哪個Dialog對話框視窗
+        /// </summary>
+        /// <param name="nextDialogKey">指定Enum的Key,如果要新增</param>
         public void SetPopGameDialog(DialogStateEnum nextDialogKey)
         {
             if (nextDialogKey != DialogStateEnum.EMPTY)
@@ -211,6 +224,14 @@ namespace CatcherGame.GameStates
         public SpriteBatch GetSpriteBatch()
         {
             return gameSateSpriteBatch;
+        }
+
+        /// <summary>
+        /// 設定切換至下一個的遊戲狀態
+        /// </summary>
+        /// <param name="key">下一個狀態的Enum key</param>
+        public void SetNextGameSateByMain(GameStateEnum key) {
+            this.mainGame.SetNextGameState(key);
         }
     }
 }

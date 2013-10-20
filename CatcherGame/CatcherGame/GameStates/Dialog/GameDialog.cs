@@ -28,12 +28,14 @@ namespace CatcherGame.GameStates.Dialog
         protected SpriteBatch gameSateSpriteBatch;
         protected List<GameObject> gameObjects;
         protected bool isInit;
-
+        protected bool isLoadContent;
         public GameDialog(GameState pCurrentState)
         {
             gameObjects = new List<GameObject>();
             this.currentState = pCurrentState;
             countId = 0;
+            isInit = false;
+            isLoadContent = false;
         }
 
         public abstract void BeginInit();
@@ -66,7 +68,7 @@ namespace CatcherGame.GameStates.Dialog
             }
         }
         /// <summary>
-        /// Set Main Game SpriteBatch to gameState
+        /// 設定主遊戲中的SpriteBatch元件到GameDialog ,以協助繪製
         /// </summary>
         /// <param name="gSpriteBatch"></param>
         public void SetSpriteBatch(SpriteBatch gSpriteBatch)
@@ -81,6 +83,22 @@ namespace CatcherGame.GameStates.Dialog
         public void AddGameObject(GameObject gameObject)
         {
             gameObjects.Add(gameObject);
+        }
+
+        /// <summary>
+        /// 取得Dialog狀態是否已經初始化(避免再次初始化,或是如果有需要可以把遊戲狀態釋放,重新設定無初始化)
+        /// </summary>
+        public bool GetGameDialogHasInit
+        {
+            get { return isInit; }
+        }
+
+        /// <summary>
+        /// 取得Dialog狀態是否已經載入資源(避免再次初始化,或是如果有需要可以把遊戲狀態釋放,重新設定無初始化)
+        /// </summary>
+        public bool GetGameDialogHasLoadContent
+        {
+            get { return isLoadContent; }
         }
     }
 }

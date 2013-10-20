@@ -46,9 +46,12 @@ namespace CatcherGame.GameStates
             //載入對話框的圖片資源
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
-                //把繪製的元件 gameSateSpriteBatch 傳入進去,讓對話框可以透過此 gameSateSpriteBatch 來繪製
-                dialog.Value.SetSpriteBatch(this.gameSateSpriteBatch);
-                dialog.Value.LoadResource();
+                if (!dialog.Value.GetGameDialogHasLoadContent)
+                {
+                    //把繪製的元件 gameSateSpriteBatch 傳入進去,讓對話框可以透過此 gameSateSpriteBatch 來繪製
+                    dialog.Value.SetSpriteBatch(this.gameSateSpriteBatch);
+                    dialog.Value.LoadResource();
+                }
             }
         }
 
@@ -72,10 +75,14 @@ namespace CatcherGame.GameStates
             AddGameObject(howToPlayButtion);
             AddGameObject(menuSide);
 
+
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
-                dialog.Value.BeginInit();
+                if (!dialog.Value.GetGameDialogHasInit)
+                {
+                    dialog.Value.BeginInit();
+                }
             }
 
             base.isInit = true; //設定有初始化過了
@@ -93,7 +100,7 @@ namespace CatcherGame.GameStates
                         {
                             Debug.WriteLine("CLICK!! STATE_STORY_ANIMATION");
                             //先直接進入遊戲狀態測試
-                            mainGame.SetNextGameState(GameStateEnum.STATE_PLAYGAME);
+                            SetNextGameSateByMain(GameStateEnum.STATE_PLAYGAME);
                         }
                         else if (howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {

@@ -16,3 +16,10 @@ Content\Play\left_button.xnb
 Content\Play\right_button.xnb
 Content\Play\pause.xnb
 Content\Play\smoke.xnb
+Content\Play\life.xnb
+Content\Play\score.xnb
+Content\Play\net1.xnb
+Content\Play\net2.xnb
+Content\Pause\exit.xnb
+Content\Pause\continue.xnb
+Content\Pause\pause_back.xnb

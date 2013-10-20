@@ -23,8 +23,16 @@ namespace CatcherGame.GameStates
         Vector2 backgroundPos;
         int objIdCount;
         FiremanPlayer player;
+        
+        //純粹圖片,無任何邏輯運算
         TextureLayer smokeTexture;
+        TextureLayer lifeTexture;
+        TextureLayer scoreTexture;
+
+        //記錄點擊前一個座標
         TouchLocation preTouchLocation;
+        
+        //遊戲左右邊框
         float rightGameScreenBorder;
         float leftGameScreenBorder;
 
@@ -32,6 +40,7 @@ namespace CatcherGame.GameStates
             :base(gMainGame)
         {
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
+            dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
         }
 
         public override void BeginInit()
@@ -46,6 +55,8 @@ namespace CatcherGame.GameStates
             rightMoveButton = new Button(this, objIdCount++, 700, 355);
             player = new FiremanPlayer(this, objIdCount++, 300, 355);
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
+            lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
+            scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
 
             //加入遊戲元件
             AddGameObject(player); 
@@ -53,7 +64,19 @@ namespace CatcherGame.GameStates
             AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
             AddGameObject(smokeTexture);
+            AddGameObject(lifeTexture);
+            AddGameObject(scoreTexture);
 
+
+
+            //對 對話框做初始化
+            foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
+            {
+                if (!dialog.Value.GetGameDialogHasInit)
+                {
+                    dialog.Value.BeginInit();
+                }
+            }
             
 
             base.isInit = true;
@@ -69,7 +92,19 @@ namespace CatcherGame.GameStates
             player.LoadResource(TexturesKeyEnum.PLAY_FIREMAN);
 
             smokeTexture.LoadResource(TexturesKeyEnum.PLAY_SMOKE);
+            lifeTexture.LoadResource(TexturesKeyEnum.PLAY_LIFE);
+            scoreTexture.LoadResource(TexturesKeyEnum.PLAY_SCORE);
 
+            //載入對話框的圖片資源
+            foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
+            {
+                if (!dialog.Value.GetGameDialogHasLoadContent)
+                {
+                    //把繪製的元件 gameSateSpriteBatch 傳入進去,讓對話框可以透過此 gameSateSpriteBatch 來繪製
+                    dialog.Value.SetSpriteBatch(this.gameSateSpriteBatch);
+                    dialog.Value.LoadResource();
+                }
+            }
         }
 
 
@@ -103,7 +138,13 @@ namespace CatcherGame.GameStates
                         {
                             player.SetStand(); //設定站立
                         }
+                        
+                        if (pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
+                        {
+                            this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
+                        }
                     }
+                    
                 }
             }
             base.Update();
