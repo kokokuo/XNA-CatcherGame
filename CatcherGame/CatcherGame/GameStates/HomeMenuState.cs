@@ -110,7 +110,8 @@ namespace CatcherGame.GameStates
                         else if (collectionDictionaryButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
                         {
                             Debug.WriteLine("CLICK!! STATE_DICTIONARY");
-                            //base.SetNextGameDialog(DialogStateEnum.STATE_DICTIONARY);
+                            //設定彈出DictionaryDialog
+                            base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
 
                         }
                         else if (topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))

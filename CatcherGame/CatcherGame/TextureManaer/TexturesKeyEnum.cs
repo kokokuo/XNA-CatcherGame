@@ -34,6 +34,13 @@ namespace CatcherGame.TextureManager
 
         PAUSE_DIALOG_BACK,
         PAUSE_EXIT,
-        PAUSE_CONTINUE
+        PAUSE_CONTINUE,
+
+        //DICTIONARY---------------------
+        DICTIONARY_BACKGROUND,
+        DICTIONARY_LEFT_BUTTON,
+        DICTIONARY_RIGHT_BUTOTN,
+        DICTIONARY_CONTENT_TEXTURE,
+        DICTIONARY_PICTURE_TEXTURE
     }
 }

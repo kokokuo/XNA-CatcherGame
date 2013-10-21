@@ -23,3 +23,8 @@ Content\Play\net2.xnb
 Content\Pause\exit.xnb
 Content\Pause\continue.xnb
 Content\Pause\pause_back.xnb
+Content\Dictionary\dictionary_back.xnb
+Content\Dictionary\dictionary_content.xnb
+Content\Dictionary\dictionary_left.xnb
+Content\Dictionary\dictionary_picture.xnb
+Content\Dictionary\dictionary_right.xnb

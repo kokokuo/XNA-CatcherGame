@@ -56,6 +56,14 @@ namespace CatcherGame.TextureManager
             LoadPauseDialogExitButton();
             LoadPauseDialogContinueButton();
 
+            //載入字典對話框所用的圖像資源
+            LoadDictionaryDialogBackground();
+            LoadDictionaryDialogLeftButton();
+            LoadDictionaryDialogRightButton();
+            LoadDictionaryDialogRightButton();
+            LoadDictionaryDialogContentTexture();
+            LoadDictionaryDialogPictureTexture();
+
             Debug.WriteLine("Load Texture2Ds Done ");
         }
         /// <summary>
@@ -348,6 +356,71 @@ namespace CatcherGame.TextureManager
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.Content.Load<Texture2D>("Pause/continue"));
                 _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //字典中元件------------------------------------------------------
+
+        //字典背景
+        private void LoadDictionaryDialogBackground()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_BACKGROUND;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_back"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //字典左按鈕
+        private void LoadDictionaryDialogLeftButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_LEFT_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_left"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //字典右按鈕
+        private void LoadDictionaryDialogRightButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_RIGHT_BUTOTN;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_right"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
+        //字典內容
+        private void LoadDictionaryDialogContentTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_CONTENT_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_content"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
+        //字典人物
+        private void LoadDictionaryDialogPictureTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_PICTURE_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_picture"));
+                _dictionary.Add(key, texture2Ds);
+
             }
         }
     }
