@@ -62,6 +62,14 @@ namespace CatcherGame.GameStates
         }
 
         /// <summary>
+        /// 從MainGame中取得這次的所有點擊時的資料
+        /// </summary>
+        /// <returns></returns>
+        public TouchCollection GetCurrentFrameTouchCollection()
+        {
+            return mainGame.GetCurrentFrameTouchCollection();
+        }
+        /// <summary>
         /// 如果有顯示對話框則更新對話框並停止遊戲物件更新,否則只會更新目前狀態中的遊戲物件
         /// </summary>
         public virtual void Update()

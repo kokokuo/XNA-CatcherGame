@@ -41,6 +41,8 @@ namespace CatcherGame.GameObjects
         private void SetTexture2DList(TexturesKeyEnum key)
         {
             buttonAnimation.SetTexture2DList(base.gameState.GetTexture2DList(key));
+            //加入圖片組後要馬上取得當前的圖片
+            currentTexture = buttonAnimation.GetCurrentFrameTexture(); 
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
             this.Width = buttonAnimation.GetCurrentFrameTexture().Width;
         }
@@ -48,6 +50,7 @@ namespace CatcherGame.GameObjects
         public override void Update()
         {
             buttonAnimation.UpdateFrame(base.gameState.GetTimeSpan());
+            //加入圖片組後要馬上取得當前的圖片
             currentTexture = buttonAnimation.GetCurrentFrameTexture();
             //設定現在的圖片長寬為遊戲元件的長寬
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
@@ -67,6 +70,7 @@ namespace CatcherGame.GameObjects
         private void SetTexture2DList(List<Texture2D> texture2DList)
         {
             buttonAnimation.SetTexture2DList(texture2DList);
+            currentTexture = buttonAnimation.GetCurrentFrameTexture();
             this.Height = buttonAnimation.GetCurrentFrameTexture().Height;
             this.Width = buttonAnimation.GetCurrentFrameTexture().Width;
         }

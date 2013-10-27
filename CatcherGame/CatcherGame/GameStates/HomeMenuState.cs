@@ -92,41 +92,48 @@ namespace CatcherGame.GameStates
             //如果沒有要顯示Dialog的話,則進入選單中的按鈕判斷
             if (!base.hasDialogShow)
             {
-                if(!base.IsEmptyQueue()){
-                    TouchLocation touchLocation = base.GetTouchLocation();
-                    if (touchLocation.State == TouchLocationState.Released)
-                    {
-                        if (playButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
-                        {
+                TouchCollection tc = base.GetCurrentFrameTouchCollection();
+                bool isClickPlay,isClickDictionary,isClickTopScore,isClickHowToPlay;
+                isClickHowToPlay = isClickPlay = isClickDictionary = isClickTopScore = false;
+                if (tc.Count > 0){
+                    //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
+                    foreach (TouchLocation touchLocation in tc){
+                        if (!isClickPlay)
+                            isClickPlay = playButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        if (!isClickDictionary)
+                            isClickDictionary = collectionDictionaryButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        if (!isClickTopScore)
+                            isClickTopScore = topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        if (!isClickHowToPlay)
+                            isClickHowToPlay = howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                    }
+
+                    //遊戲邏輯判斷
+                    //如果沒有同時四個都選項接點擊
+                    if (!(isClickPlay && isClickDictionary && isClickTopScore && isClickHowToPlay)){
+                        //如果isClickPlay有點擊,並且另外三個按鈕中沒有任何一個被點擊
+                        if (isClickPlay && !(isClickDictionary || isClickTopScore || isClickHowToPlay)) {
                             Debug.WriteLine("CLICK!! STATE_STORY_ANIMATION");
-                            //先直接進入遊戲狀態測試
                             SetNextGameSateByMain(GameStateEnum.STATE_PLAYGAME);
                         }
-                        else if (howToPlayButtion.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
-                        {
-                            Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
-                            //base.SetNextGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
-                        }
-                        else if (collectionDictionaryButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
-                        {
+                        else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay)) {
                             Debug.WriteLine("CLICK!! STATE_DICTIONARY");
                             //設定彈出DictionaryDialog
                             base.SetPopGameDialog(DialogStateEnum.STATE_DICTIONARY);
-
                         }
-                        else if (topScoreButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
-                        {
+                        else if (isClickTopScore && !(isClickPlay || isClickDictionary || isClickHowToPlay)){
                             Debug.WriteLine("CLICK!! STATE_TOPSCORE");
                             //設定彈出GameDialog
                             base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                         }
-                        else
-                        {
-                            Debug.WriteLine("MISS!!");
-                            Debug.WriteLine("X:" + touchLocation.Position.X + ", Y:" + touchLocation.Position.Y);
+                        else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary)){
+                            Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
                         }
                     }
                 }
+
+
+                
                 
             }
            

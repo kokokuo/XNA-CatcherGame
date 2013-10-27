@@ -35,6 +35,9 @@ namespace CatcherGame
         //圖片管理器
         Texture2DManager texture2DManager;
 
+        //現在這張frame所擁有的所有觸控點集合
+        TouchCollection currtenTouchCollection;
+
         public MainGame()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -114,7 +117,7 @@ namespace CatcherGame
             // TODO: 在此新增您的更新邏輯
             
             TouchCollection tc = TouchPanel.GetState();
-            
+            currtenTouchCollection = tc;
             foreach (TouchLocation location in tc)
             {
                 touchQueue.Enqueue(location);
@@ -148,6 +151,9 @@ namespace CatcherGame
         }
         public TouchLocation GetTouchLocation() {
             return touchQueue.Dequeue();
+        }
+        public TouchCollection GetCurrentFrameTouchCollection() {
+            return currtenTouchCollection;
         }
 
         public List<Texture2D> GetTexture2DList(TexturesKeyEnum key)

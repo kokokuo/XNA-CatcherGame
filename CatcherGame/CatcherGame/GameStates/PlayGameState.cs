@@ -128,40 +128,44 @@ namespace CatcherGame.GameStates
 
             if (!base.hasDialogShow)
             {
-                //檢查是否觸控的資料Queue為空
-                if (!base.IsEmptyQueue())
-                {
-                    //Deueue區出處控的資料
-                    TouchLocation touchLocation = base.GetTouchLocation();
-                    
-                    if (touchLocation.State != TouchLocationState.Released)
-                    {
-                        bool isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        bool isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
-                        if (isMoveLeft && !isMoveRight)
-                        {
-                            //Debug.WriteLine("Click Left Button");
-                            player.MoveLeft(leftGameScreenBorder);
-                        }
-                        else if (!isMoveLeft && isMoveRight)
-                        {
-                            //Debug.WriteLine("Click Right Button");
-                            player.MoveRight(rightGameScreenBorder);
-                        }
-                        else 
-                        {
-                            player.SetStand(); //設定站立
-                        }
-                        
-                        if (pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y))
-                        {
-                            this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
-                        }
+                TouchCollection tc = base.GetCurrentFrameTouchCollection();
+                bool isMoveRight,isMoveLeft,isClickPause;
+                isClickPause = isMoveLeft = isMoveRight = false;
+                if (tc.Count > 0)  {
+                    //取出點此frame下同時點擊的所有座標,並先對所有座標去做按鈕上的點擊判斷
+                    foreach (TouchLocation touchLocation in tc) {
+                        if (!isMoveRight)
+                            isMoveRight = rightMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        if (!isMoveLeft)
+                            isMoveLeft = leftMoveButton.IsBoundingBoxClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
+                        if (!isClickPause)
+                            isClickPause = pauseButton.IsPixelClick((int)touchLocation.Position.X, (int)touchLocation.Position.Y);
                     }
-                    preTouchLocation = touchLocation;
+
+                    //遊戲邏輯判斷
+                    if (isMoveLeft && !isMoveRight)
+                    {
+                        //Debug.WriteLine("Click Left Button");
+                        player.MoveLeft(leftGameScreenBorder);
+                    }
+                    else if (!isMoveLeft && isMoveRight)
+                    {
+                        //Debug.WriteLine("Click Right Button");
+                        player.MoveRight(rightGameScreenBorder);
+                    }
+                    else if (!isMoveLeft && !isMoveRight)
+                    {
+                        player.SetStand(); //設定站立
+                    }
+                    if(isClickPause){
+                        this.SetPopGameDialog(DialogStateEnum.STATE_PAUSE);
+                    }
+
                 }
-                else
+                else {
                     player.SetStand(); //設定站立
+                }
+               
             }
             base.Update();
         }
