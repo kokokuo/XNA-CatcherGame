@@ -19,10 +19,14 @@ namespace CatcherGame.GameObjects
         const int LEFT_MOVE_STEP = -5;
         const int RIGHT_MOVE_STEP = 5;
         bool isWalking; //是否移動
-        public FiremanPlayer(GameState currentGameState, int id, float x, float y)
+        Net savedNet; //網子類別(Knows)
+
+        public FiremanPlayer(GameState currentGameState, int id, float x, float y,Net net)
             : base(currentGameState, id, x, y)
         {
             Init();
+            //取得網子
+            savedNet = net;
         }
 
         protected override void Init()
@@ -31,6 +35,7 @@ namespace CatcherGame.GameObjects
             this.x = x;
             this.y = y;
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            
         }
 
         public override void LoadResource(TextureManager.TexturesKeyEnum key)
@@ -83,6 +88,7 @@ namespace CatcherGame.GameObjects
             {
                 //Debug.WriteLine("Can Move Left Way");
                 this.x += LEFT_MOVE_STEP;
+                this.savedNet.X += LEFT_MOVE_STEP; //網子跟著移動
                 isWalking = true;
                 
             }
@@ -96,6 +102,7 @@ namespace CatcherGame.GameObjects
             {
                 //Debug.WriteLine("Can Move Right Way");
                 this.x += RIGHT_MOVE_STEP;
+                this.savedNet.X += RIGHT_MOVE_STEP; //網子跟著移動
                 isWalking = true;
                 
             }

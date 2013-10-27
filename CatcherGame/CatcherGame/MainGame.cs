@@ -58,6 +58,7 @@ namespace CatcherGame
             TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
             TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
             
+            
             touchQueue = new Queue<TouchLocation>();
         }
        
@@ -113,6 +114,7 @@ namespace CatcherGame
             // TODO: 在此新增您的更新邏輯
             
             TouchCollection tc = TouchPanel.GetState();
+            
             foreach (TouchLocation location in tc)
             {
                 touchQueue.Enqueue(location);

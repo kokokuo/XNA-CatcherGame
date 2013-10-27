@@ -40,15 +40,7 @@ namespace CatcherGame.GameObjects
             this.y = y;
         }
 
-        /// <summary>
-        /// 檢查是否有碰撞
-        /// </summary>
-        /// <param name="gameObject"></param>
-        /// <returns></returns>
-        public virtual bool IsCollision(GameObject gameObject)
-        {
-            return false;
-        }
+        
         protected abstract void Init();
         public abstract void LoadResource(TexturesKeyEnum key);
         /// <summary>

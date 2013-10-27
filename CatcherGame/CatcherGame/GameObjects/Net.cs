@@ -56,7 +56,11 @@ namespace CatcherGame.GameObjects
 
         public override void Update()
         {
-            throw new NotImplementedException();
+            netStateAnimation.SetToLeftPos(this.x, this.y);
+            
+            
         }
+
+        
     }
 }
