@@ -50,6 +50,7 @@ namespace CatcherGame.TextureManager
             LoadPlayGameScorePicture();
             LoadPlayGameLifePicture();
             LoadPlayNet();
+            LoadPlayFlyOldLady();
 
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
@@ -322,6 +323,40 @@ namespace CatcherGame.TextureManager
 
         }
 
+        //遊戲中的老婦人
+        private void LoadPlayFlyOldLady()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_FLYOLDELADY_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_fall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_fall2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_fall3"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_FLYOLDELADY_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_caught"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_floor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_FLYOLDELADY_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_run1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_run2"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //暫停對話框---------------------------------------------------------------------------
 
         //暫停對話框的背景
         private void LoadPauseDialogBackground()
@@ -358,6 +393,8 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(key, texture2Ds);
             }
         }
+
+        
 
         //字典中元件------------------------------------------------------
 

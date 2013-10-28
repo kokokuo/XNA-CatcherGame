@@ -117,7 +117,7 @@ namespace CatcherGame.Sprite
       
             _totaleEapsed += elapsed;
 
-            if (_delayFrameIndex == _frameIndex)
+            if (_delayFrameIndex == _frameIndex) //這邊的判斷是有設定要針對的delayFrame
             {
                 if (_totaleEapsed > _defaultElapsedTime + _delayFrameTimes)
                 {
@@ -128,7 +128,7 @@ namespace CatcherGame.Sprite
                     _totaleEapsed = _totaleEapsed - (_defaultElapsedTime + _delayFrameTimes);
                 }
             }
-            else
+            else //正常的frame
             {
                 if (_totaleEapsed > _defaultElapsedTime)
                 {

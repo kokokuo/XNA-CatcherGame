@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="GameObjects\FiremanPlayer.cs" />
     <Compile Include="GameObjects\Net.cs" />
+    <Compile Include="GameObjects\People.cs" />
     <Compile Include="GameObjects\TextureLayer.cs" />
     <Compile Include="GameStates\Dialog\PauseDialog.cs" />
     <Compile Include="GameStates\PlayGameState.cs" />

@@ -34,9 +34,6 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
-
-        //記錄點擊前一個座標
-        TouchLocation preTouchLocation;
         
         //遊戲左右邊框
         float rightGameScreenBorder;
