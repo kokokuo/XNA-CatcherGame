@@ -49,6 +49,7 @@ namespace CatcherGame.GameStates
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
         }
 
+
         public override void BeginInit()
         {
             base.x = 0; base.y = 0;
@@ -91,6 +92,12 @@ namespace CatcherGame.GameStates
 
             base.isInit = true;
         }
+
+        //重製遊戲中的所有資料
+        public void ResetData() { 
+            //尚未時做
+        }
+
 
         public override void LoadResource()
         {

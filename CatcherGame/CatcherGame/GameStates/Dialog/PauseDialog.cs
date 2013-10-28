@@ -49,24 +49,34 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-
-            if (!base.currentState.IsEmptyQueue())
+            TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
+            bool isClickClose, isClickContinue;
+            isClickClose = isClickContinue = false;
+            if (tc.Count > 0)
             {
-                TouchLocation touchLocation = base.currentState.GetTouchLocation();
-                if (touchLocation.State == TouchLocationState.Released)
+                //所有當下的觸控點去判斷有無點到按鈕
+                foreach (TouchLocation touchLocation in tc)
                 {
-                    //若有觸及到繼續遊戲按鈕
-                    if (continueGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y))
-                    {
-                        base.CloseDialog(); //透過父類別來關閉視窗
-                    }
-                    else if(exitGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y))
-                    {
+                    if (!isClickClose)
+                        isClickClose = exitGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
+                    if (!isClickContinue)
+                        isClickContinue =  continueGameButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
+                }
+
+                //遊戲邏輯判斷
+                if ( !(isClickClose && isClickContinue) ) { 
+                    if(isClickClose){
                         base.CloseDialog(); //透過父類別來關閉視窗
                         base.currentState.SetNextGameSateByMain(GameStateEnum.STATE_MENU); //切換回選單
                     }
+                    else if (isClickContinue) {
+                        base.CloseDialog(); //透過父類別來關閉
+                    }
+
                 }
+                    
             }
+
             base.Update(); //更新遊戲元件
         }
         public override void Draw()

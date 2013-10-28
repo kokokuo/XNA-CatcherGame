@@ -77,10 +77,8 @@ namespace CatcherGame.GameStates
             //如果有顯示對話框,則更新對話框的物件
             if (hasDialogShow)
             {
-                foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
-                {
-                    dialog.Value.Update();
-                }
+                //更新目前的對話框狀態
+                pCurrentDialog.Update();
             }
             else {
                 foreach (GameObject gameObject in gameObjects)
@@ -225,10 +223,18 @@ namespace CatcherGame.GameStates
             else
                 hasDialogShow = false;
         }
+        /// <summary>
+        /// 取得時間戳記,給予動畫AnimationScripte使用
+        /// </summary>
+        /// <returns></returns>
         public TimeSpan GetTimeSpan()
         {
             return mainGame.TargetElapsedTime;
         }
+        /// <summary>
+        /// 取得SpriteBatch繪製圖像
+        /// </summary>
+        /// <returns></returns>
         public SpriteBatch GetSpriteBatch()
         {
             return gameSateSpriteBatch;
