@@ -19,9 +19,8 @@ namespace CatcherGame.GameStates
         Button topScoreButton;
         Button collectionDictionaryButton;
         Button howToPlayButtion;
-        Texture2D menuBackground;
         TextureLayer menuSide;
-        Vector2 backgroundPos;
+       
         int objIdCount;
 
         public HomeMenuState(MainGame gMainGame)
@@ -40,9 +39,14 @@ namespace CatcherGame.GameStates
             topScoreButton.LoadResource(TexturesKeyEnum.MENU_TOP_SCORE_BUTTON);
 
             //因為背景只有一張圖,所以這邊我們直接用index抽出圖片
-            menuBackground = GetTexture2DList(TexturesKeyEnum.MENU_BACKGROUND)[0];
+            base.background = GetTexture2DList(TexturesKeyEnum.MENU_BACKGROUND)[0];
 
             menuSide.LoadResource(TexturesKeyEnum.MENU_SIDE);
+
+            //設定邊界
+            base.leftGameScreenBorder = 0;
+            base.rightGameScreenBorder = base.background.Width;
+
             //載入對話框的圖片資源
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
@@ -58,7 +62,7 @@ namespace CatcherGame.GameStates
         public override void BeginInit()
         {
             base.x = 0; base.y = 0;
-            backgroundPos = new Vector2(base.x, base.y);
+            base.backgroundPos = new Vector2(base.x, base.y);
             
             objIdCount = 0;
             playButton = new Button(this, objIdCount++,0,0);
@@ -143,7 +147,7 @@ namespace CatcherGame.GameStates
         public override void Draw()
         {
             // 繪製主頁背景
-            gameSateSpriteBatch.Draw(menuBackground, backgroundPos, Color.White);
+            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
             //繪製遊戲元件
             base.Draw();
             

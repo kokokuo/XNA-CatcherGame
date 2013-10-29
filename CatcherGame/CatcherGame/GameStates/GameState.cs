@@ -32,6 +32,31 @@ namespace CatcherGame.GameStates
         protected GameDialog pCurrentDialog;
         protected bool hasDialogShow;
         protected MainGame mainGame;
+        protected Texture2D background; //此遊戲狀態的背景圖
+        protected Vector2 backgroundPos;
+        protected float leftGameScreenBorder,rightGameScreenBorder; //遊戲狀態的左右邊界
+
+        public Texture2D GetBackgroundTexture() {
+            return this.background;
+        }
+
+
+        /// <summary>
+        /// 取得遊戲螢幕的左邊邊框值
+        /// </summary>
+        /// <returns></returns>
+        public float GetLeftGameScreenBorder() {
+            return this.leftGameScreenBorder;
+        }
+
+        /// <summary>
+        /// 取得遊戲螢幕的右邊邊框值
+        /// </summary>
+        /// <returns></returns>
+        public float GetRightGameScreenBorder()
+        {
+            return this.rightGameScreenBorder;
+        }
 
         public GameState(MainGame mainGamePointer)
         {

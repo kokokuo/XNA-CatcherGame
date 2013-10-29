@@ -24,8 +24,7 @@ namespace CatcherGame.GameStates
         Button pauseButton;
         Button leftMoveButton;
         Button rightMoveButton;
-        Texture2D playBackground;
-        Vector2 backgroundPos;
+        
         int objIdCount;
         FiremanPlayer player;
         Net savedNet; //網子
@@ -34,23 +33,22 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
-        
-        //遊戲左右邊框
-        float rightGameScreenBorder;
-        float leftGameScreenBorder;
+        List<GameObject> FallingObjects;
+        People oldLady; //test
 
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
+            FallingObjects = new List<GameObject>();
         }
 
 
         public override void BeginInit()
         {
             base.x = 0; base.y = 0;
-            backgroundPos = new Vector2(base.x, base.y);
+            base.backgroundPos = new Vector2(base.x, base.y);
 
             objIdCount = 0;
             
@@ -64,7 +62,7 @@ namespace CatcherGame.GameStates
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
-
+            oldLady = new People(this, objIdCount++, 150, 0, 3, 0, 3, 1);
             //加入遊戲元件
             AddGameObject(player);
             AddGameObject(savedNet);
@@ -74,7 +72,8 @@ namespace CatcherGame.GameStates
             AddGameObject(smokeTexture);
             AddGameObject(lifeTexture);
             AddGameObject(scoreTexture);
-
+            //test
+            AddGameObject(oldLady);
 
 
             //對 對話框做初始化
@@ -99,7 +98,7 @@ namespace CatcherGame.GameStates
         public override void LoadResource()
         {
             //載入圖片
-            playBackground = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
+            base.background = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
             pauseButton.LoadResource(TexturesKeyEnum.PLAY_PAUSE_BUTTON);
             leftMoveButton.LoadResource(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON);
             rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
@@ -109,6 +108,14 @@ namespace CatcherGame.GameStates
             smokeTexture.LoadResource(TexturesKeyEnum.PLAY_SMOKE);
             lifeTexture.LoadResource(TexturesKeyEnum.PLAY_LIFE);
             scoreTexture.LoadResource(TexturesKeyEnum.PLAY_SCORE);
+            //test
+            oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_FALL);
+            oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_CAUGHT);
+            oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_WALK);
+
+            //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
+            base.rightGameScreenBorder = rightMoveButton.X;
+            base.leftGameScreenBorder = leftMoveButton.Width;
 
             //載入對話框的圖片資源
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
@@ -126,9 +133,7 @@ namespace CatcherGame.GameStates
 
         public override void Update()
         {
-            //設定消防員的移動邊界
-            rightGameScreenBorder = rightMoveButton.X;
-            leftGameScreenBorder = leftMoveButton.Width;
+            
 
             if (!base.hasDialogShow)
             {
@@ -176,7 +181,7 @@ namespace CatcherGame.GameStates
         public override void Draw()
         {
             // 繪製主頁背景
-            gameSateSpriteBatch.Draw(playBackground, backgroundPos, Color.White);
+            gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
             base.Draw();
         }
     }
