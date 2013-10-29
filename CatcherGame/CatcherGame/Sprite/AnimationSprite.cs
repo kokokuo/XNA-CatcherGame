@@ -25,7 +25,7 @@ namespace CatcherGame.Sprite
         private float _defaultElapsedTime;
         private int _delayFrameIndex;
         private float _delayFrameTimes;
-
+        private bool isRound; //是否已經播放一輪
         /// <summary>
         /// 取得現在的Frame編號,第XX張
         /// </summary>
@@ -59,6 +59,15 @@ namespace CatcherGame.Sprite
         public Texture2D GetCurrentFrameTexture() 
         {
             return _texture2DList[_frameIndex];
+        }
+
+        /// <summary>
+        /// 動畫圖片組是否已經播一輪
+        /// </summary>
+        /// <returns></returns>
+        public bool GetIsRoundAnimation()
+        {
+            return isRound;
         }
 
         /// <summary>
@@ -125,6 +134,12 @@ namespace CatcherGame.Sprite
 
                     // Keep the Frame between 0 and the total frames, minus one.
                     _frameIndex = _frameIndex % _frameCount;
+                    if (_frameIndex == 0)
+                    {
+                        isRound = true;
+                    }
+                    else
+                        isRound = false;
                     _totaleEapsed = _totaleEapsed - (_defaultElapsedTime + _delayFrameTimes);
                 }
             }
@@ -136,6 +151,12 @@ namespace CatcherGame.Sprite
 
                     // Keep the Frame between 0 and the total frames, minus one.
                     _frameIndex = _frameIndex % _frameCount;
+                    if (_frameIndex == 0)
+                    {
+                        isRound = true;
+                    }
+                    else
+                        isRound = false;
                     _totaleEapsed -= _defaultElapsedTime;
                 }
             }
