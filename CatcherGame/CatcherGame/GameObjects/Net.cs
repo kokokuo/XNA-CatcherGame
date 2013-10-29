@@ -19,7 +19,8 @@ namespace CatcherGame.GameObjects
     public class Net : GameObject
     {
         AnimationSprite netStateAnimation; //網子動畫
-
+        int savedPeopleNumber;
+        List<int> willRemoveObjectId;
         public Net(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y) 
         {
@@ -31,6 +32,8 @@ namespace CatcherGame.GameObjects
             this.x = x;
             this.y = y;
             netStateAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+            savedPeopleNumber = 0;
+            willRemoveObjectId = new List<int>();
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -60,7 +63,49 @@ namespace CatcherGame.GameObjects
             
             
         }
+        public void CheckCollision(List<DropObjects> dropObjs) {
 
-        
+            foreach (DropObjects obj in dropObjs){
+
+                if ((obj.Y + obj.Height) < (this.y + this.height) && (obj.Y + obj.Height) > this.y) {
+                    obj.SetCaught();  //設定為拯救到
+                    //如果是People的Type
+                    if (obj is People) {
+                        savedPeopleNumber++;
+                    }
+                    RemoveDropObject(obj.Id);
+                }
+            }
+            RemoveDropObjectFromList(dropObjs);
+        }
+
+
+        /// <summary>
+        /// 將 id 放入準備要被刪除的 list
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveDropObject(int id)
+        {
+            willRemoveObjectId.Add(id);
+        }
+
+        /// <summary>
+        /// 真正將 GameObject 刪除
+        /// </summary>
+        private void RemoveDropObjectFromList(List<DropObjects> dropObjs)
+        {
+            foreach (int removeId in willRemoveObjectId)
+            {
+                foreach (DropObjects obj in dropObjs)
+                {
+                    if (obj.Id == removeId)
+                    {
+                        dropObjs.Remove(obj);
+                        break;
+                    }
+                }
+            }
+            willRemoveObjectId.Clear();
+        }
     }
 }

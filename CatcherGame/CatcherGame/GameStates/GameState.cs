@@ -36,6 +36,10 @@ namespace CatcherGame.GameStates
         protected Vector2 backgroundPos;
         protected float leftGameScreenBorder,rightGameScreenBorder; //遊戲狀態的左右邊界
 
+        /// <summary>
+        /// 取得背景圖
+        /// </summary>
+        /// <returns></returns>
         public Texture2D GetBackgroundTexture() {
             return this.background;
         }

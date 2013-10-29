@@ -64,6 +64,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameObjects\DropObjects.cs" />
     <Compile Include="GameObjects\FiremanPlayer.cs" />
     <Compile Include="GameObjects\Net.cs" />
     <Compile Include="GameObjects\People.cs" />

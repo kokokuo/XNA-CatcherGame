@@ -13,15 +13,13 @@ using CatcherGame.TextureManager;
 
 namespace CatcherGame.GameObjects
 {
-    public class People : GameObject
+    public class People : DropObjects
     {
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
-        bool isFalling, isCaught, isSaved,isDead;
+        bool isSaved,isDead;
         bool isSetDelay;
-        float fallingSpeed, fallingWave;
-        float fallingNextYPos; //接下來會掉落的Y座標
-        float fallingNextXPos; //接下來會擺動的x座標
+       
         float savedWalkSpeed; //被接住後離開畫面移動的速度
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2;
         int walkOrienation;
@@ -37,12 +35,11 @@ namespace CatcherGame.GameObjects
         /// <param name="walkSpeed"></param>
         /// <param name="orienation">移動的方向(0為左邊,1為右邊)</param>
         public People(GameState currentGameState, int id, float x, float y, float fallingSpeed, float fallingWave, float walkSpeed, int orienation)
-            : base(currentGameState, id, x, y) 
+            : base(currentGameState, id, x, y, fallingSpeed, fallingWave) 
         { 
             Init();
             //設定掉下來的速度與擺動的位移量
-            this.fallingSpeed = fallingSpeed;
-            this.fallingWave = fallingWave;
+            
             this.walkOrienation = orienation;
             //沒有辦法預設參數值,只好這樣做
             if (walkSpeed >= 0)
@@ -53,12 +50,12 @@ namespace CatcherGame.GameObjects
         }
         protected override void Init()
         {
-            this.fallingNextXPos = this.x = x;
-            this.fallingNextYPos = this.y = y;
+            base.fallingNextXPos = this.x ;
+            base.fallingNextYPos = this.y ;
             
             animationList = new List<AnimationSprite>();
-            isFalling = true;
-            isDead =  isCaught = isSaved = false;
+            base.isFalling = true;
+            base.isCaught = isDead = isSaved = false;
             isSetDelay = false;
            
         }
@@ -75,9 +72,9 @@ namespace CatcherGame.GameObjects
         /// <summary>
         /// 呼叫此方法設定為接到
         /// </summary>
-        public void SetCaught() {
-            isCaught = true;
-            isFalling = false;
+        public override void SetCaught() {
+            base.isCaught = true;
+            base.isFalling = false;
             //切換圖片組
             pCurrentAnimation = animationList[CAUGHT_KEY];
         }

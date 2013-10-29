@@ -33,15 +33,16 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
-        List<GameObject> FallingObjects;
+        List<DropObjects> FallingObjects;
         People oldLady; //test
+
 
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
-            FallingObjects = new List<GameObject>();
+            FallingObjects = new List<DropObjects>();
         }
 
 
@@ -74,7 +75,7 @@ namespace CatcherGame.GameStates
             AddGameObject(scoreTexture);
             //test
             AddGameObject(oldLady);
-
+            FallingObjects.Add(oldLady);
 
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
@@ -174,6 +175,7 @@ namespace CatcherGame.GameStates
                 else {
                     player.SetStand(); //設定站立
                 }
+                savedNet.CheckCollision(FallingObjects);
                
             }
             base.Update();
