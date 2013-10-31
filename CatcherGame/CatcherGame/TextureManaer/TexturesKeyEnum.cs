@@ -35,6 +35,9 @@ namespace CatcherGame.TextureManager
         PLAY_FLYOLDELADY_CAUGHT,
         PLAY_FLYOLDELADY_WALK,
 
+        PLAY_FATDANCE_FALL,
+        PLAY_FATDANCE_CAUGHT,
+        PLAY_FATDANCE_WALK,
         //PAUSE DIALOG------------------------------
         PAUSE_DIALOG_BACK,
         PAUSE_EXIT,

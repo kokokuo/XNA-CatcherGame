@@ -18,7 +18,7 @@ namespace CatcherGame.GameObjects
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
         bool isSaved,isDead;
-        bool isSetDelay;
+       
        
         float savedWalkSpeed; //被接住後離開畫面移動的速度
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2;
@@ -56,9 +56,8 @@ namespace CatcherGame.GameObjects
             base.fallingNextYPos = this.y ;
             
             animationList = new List<AnimationSprite>();
-            base.isFalling = true;
-            base.isCaught = isDead = isSaved = false;
-            isSetDelay = false;
+            isDead = isSaved = false;
+           
            
         }
 
@@ -92,13 +91,7 @@ namespace CatcherGame.GameObjects
         public override void LoadResource(TexturesKeyEnum key)
         {
             SetTexture2DList(key);
-            //設定Caught圖片組的第二張圖片延遲一秒 (從接住到站起來這段時間)
-            //caught圖片組第一張是接住(Index =0),第二張是站起來,對接住的圖片delay 1秒(1000ms)
-            if ( (animationList.Count == 2) && !isSetDelay)
-            {
-                animationList[CAUGHT_KEY].SetCertainFrameDelayTime(0, 1000);
-                isSetDelay = true;
-            }
+           
             if (animationList.Count >= 3)
             {
                 //設定目前的圖片組是"掉下來"

@@ -35,7 +35,7 @@ namespace CatcherGame.GameStates
         TextureLayer scoreTexture;
         List<DropObjects> FallingObjects;
         People oldLady; //test
-
+        People fatDance; //test2
 
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
@@ -64,6 +64,7 @@ namespace CatcherGame.GameStates
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
             oldLady = new People(this, objIdCount++, 170, 0, 3, 0, 3, 1);
+            fatDance = new People(this, objIdCount++, 200, -20, 5, 0, 3, 0);
             //加入遊戲元件
             AddGameObject(player);
             AddGameObject(savedNet);
@@ -76,6 +77,10 @@ namespace CatcherGame.GameStates
             //test
             AddGameObject(oldLady);
             FallingObjects.Add(oldLady);
+
+            //test2
+            AddGameObject(fatDance);
+            FallingObjects.Add(fatDance);
 
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
@@ -113,6 +118,12 @@ namespace CatcherGame.GameStates
             oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_FALL);
             oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_CAUGHT);
             oldLady.LoadResource(TexturesKeyEnum.PLAY_FLYOLDELADY_WALK);
+
+            //test2
+            fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_FALL);
+            fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_CAUGHT);
+            fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_WALK);
+
 
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
             base.rightGameScreenBorder = rightMoveButton.X;

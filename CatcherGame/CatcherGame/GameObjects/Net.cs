@@ -21,8 +21,8 @@ namespace CatcherGame.GameObjects
         AnimationSprite netStateAnimation; //網子動畫
         int savedPeopleNumber;
         List<int> willRemoveObjectId;
-        bool isCaught;
-        bool isTouch;
+        bool isCaught; //用來讓網子在接觸到物體時可以撥放網子往下凹的效果動畫,而做的判斷值
+        
         public Net(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y) 
         {
@@ -37,7 +37,7 @@ namespace CatcherGame.GameObjects
             savedPeopleNumber = 0;
             willRemoveObjectId = new List<int>();
             isCaught = false;
-            isTouch = false;
+           
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -59,43 +59,49 @@ namespace CatcherGame.GameObjects
         public override void Draw(SpriteBatch spriteBatch)
         {
             netStateAnimation.Draw(spriteBatch);
+
         }
 
         public override void Update()
         {
             netStateAnimation.SetToLeftPos(this.x, this.y);
-            if (isTouch) {
-                netStateAnimation.UpdateFrame(this.gameState.GetTimeSpan());  
-            }
-            if (isCaught)
+
+            if (isCaught && !netStateAnimation.GetIsRoundAnimation())
             {
                 netStateAnimation.UpdateFrame(this.gameState.GetTimeSpan());
+            }
+            if (netStateAnimation.GetIsRoundAnimation()) {
+                isCaught = false;
             }
         }
         public void CheckCollision(List<DropObjects> dropObjs) {
 
             foreach (DropObjects obj in dropObjs){
-                if ((obj.Y + obj.Height) <= (this.y + this.height) && (obj.Y + obj.Height) >= this.y 
-                    && (obj.X >= this.x) && ( (obj.X + obj.Width) <= (this.x + this.Width))) {
-                        
-                    if (!this.isTouch) {
-                        this.isTouch = true;
-                    }
-                    else{
-                        obj.SetCaught();  //設定為拯救到
+                if ((obj.Y + obj.Height) <= (this.y + this.height) && (obj.Y + obj.Height) >= this.y
+                    && ((obj.X + (obj.Width / 2) >= this.x) && ((obj.X + (obj.Width / 2)) <= (this.x + this.Width))))
+                {
+                    //如果掉落的物體沒有接觸到網子
+                    if (!obj.GetIsTouch())
+                    {
+                        obj.SetTouched(); //設定接觸網子
+                        obj.Y += (this.height/2); //用來讓烙下的物體有掉進網子的感覺
                         this.isCaught = true; //網子有接到
-                        this.isTouch = false;    
+                    }
+                    else {
+                        obj.SetCaught();  //設定為拯救到
+                        
                         //如果是People的Type
                         if (obj is People)
                         {
                             savedPeopleNumber++;
-                        }    
+                        }
+
+                        RemoveDropObject(obj.Id);
                     }
-                    RemoveDropObject(obj.Id);
+                   
                 }
             }
-            
-                
+              
             RemoveDropObjectFromList(dropObjs);
         }
 

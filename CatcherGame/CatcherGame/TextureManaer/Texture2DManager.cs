@@ -51,6 +51,7 @@ namespace CatcherGame.TextureManager
             LoadPlayGameLifePicture();
             LoadPlayNet();
             LoadPlayFlyOldLady();
+            LoadPlayFatDance();
 
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
@@ -352,6 +353,40 @@ namespace CatcherGame.TextureManager
                 List<Texture2D> texture2Ds = new List<Texture2D>();
                 texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_run1"));
                 texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/flyoldlady/flyoldlady_run2"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+
+        //遊戲中的胖胖舞者
+        private void LoadPlayFatDance()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_FATDANCE_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancerfall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancerfall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_FATDANCE_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancercaught1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancercaught2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancerfloor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_FATDANCE_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancerrun1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/fatdance/fatdancerrun2"));
                 _dictionary.Add(walkkey, texture2Ds);
             }
         }
