@@ -25,13 +25,23 @@ namespace CatcherGame.GameStates.Dialog
         protected Vector2 backgroundPos;
         protected Button closeButton;
         protected int countId;
+        protected DialogGameObjectEnum gtCurrent;
+        protected DialogStateEnum stCurrent;
         protected SpriteBatch gameSateSpriteBatch;
         protected List<GameObject> gameObjects;
+        protected Dictionary<DialogStateEnum, Dictionary<DialogGameObjectEnum, GameObject[]>> objectTable;
+        protected Dictionary<DialogGameObjectEnum, GameObject[]> dgameObject;
         protected bool isInit;
         protected bool isLoadContent;
         public GameDialog(GameState pCurrentState)
         {
             gameObjects = new List<GameObject>();
+            //objectTable存放該Dialog裡要有哪些遊戲物件的集合
+            objectTable = new Dictionary<DialogStateEnum, Dictionary<DialogGameObjectEnum, GameObject[]>>();
+            //dgameObject存放每個Dialog裡有哪些遊戲物件，之後再放入到objectTable裡
+            dgameObject = new Dictionary<DialogGameObjectEnum, GameObject[]>();
+            stCurrent = DialogStateEnum.EMPTY;//設定該Dialog的頁面狀態
+            gtCurrent = DialogGameObjectEnum.EMPTY;//設定該Dialog是否需額外要載入遊戲物件，預設EMPTY
             this.currentState = pCurrentState;
             countId = 0;
             isInit = false;
@@ -59,12 +69,36 @@ namespace CatcherGame.GameStates.Dialog
             {
                 gameObject.Update();
             }
+
+            if (stCurrent != DialogStateEnum.EMPTY)
+            {//如果stCurrent不等於EMPTY,代表有需要更新遊戲物件在畫面上   
+                Dictionary<DialogGameObjectEnum, GameObject[]> _dgameObject = new Dictionary<DialogGameObjectEnum, GameObject[]>();
+                _dgameObject = objectTable[stCurrent];//取出該Dialog的遊戲物件
+
+                foreach (GameObject gameObject in _dgameObject[gtCurrent])
+                {
+                    gameObject.Update();
+                }
+            }
         }
 
         public virtual void Draw () {
             foreach (GameObject gameObject in gameObjects)
             {
                 gameObject.Draw(gameSateSpriteBatch);
+            }
+
+            if (stCurrent != DialogStateEnum.EMPTY)
+            {//如果stCurrent不等於EMPTY,代表有需要繪製遊戲物件在畫面上   
+                Dictionary<DialogGameObjectEnum, GameObject[]> _dgameObject = new Dictionary<DialogGameObjectEnum, GameObject[]>();
+                _dgameObject = objectTable[stCurrent];//取出該Dialog的遊戲物件
+
+                foreach (GameObject gameObject in _dgameObject[gtCurrent])
+                {
+                    gameObject.Draw(gameSateSpriteBatch);
+                }
+
+
             }
         }
         /// <summary>
@@ -99,6 +133,50 @@ namespace CatcherGame.GameStates.Dialog
         public bool GetGameDialogHasLoadContent
         {
             get { return isLoadContent; }
+        }
+
+        /// <summary>
+        /// 將該Dialog的遊戲集合放置到objetTable裡
+        /// </summary>
+        /// <param name="stateEnum"></param>
+        /// <param name="dgameObject"></param>
+        public void AddObjectTable(DialogStateEnum stateEnum, Dictionary<DialogGameObjectEnum, GameObject[]> dgameObject)
+        {
+            objectTable.Add(stateEnum, dgameObject);
+        }
+
+        /// <summary>
+        /// 將遊戲物件放入到Dictionary集合裡
+        /// </summary>
+        /// <param name="objectEnum"></param>
+        /// <param name="gameObject"></param>
+        public void AddgameObject(DialogGameObjectEnum objectEnum, GameObject[] gameObject)
+        {
+            dgameObject.Add(objectEnum, gameObject);
+        }
+
+        /// <summary>
+        /// 取出該Dialog裡的集合
+        /// </summary>
+        public Dictionary<DialogGameObjectEnum, GameObject[]> GetDialogGameObject
+        {
+            get { return dgameObject; }
+        }
+
+
+        /// <summary>
+        /// 暫定寫法...應該有更好的寫法
+        /// </summary>
+        /// <param name="g1"></param>
+        /// <param name="g2"></param>
+        /// <returns></returns>
+        public GameObject[] SetGameObject(GameObject g1, GameObject g2)
+        {
+            GameObject[] _gameObject = new GameObject[2];
+            _gameObject[0] = g1;
+            _gameObject[1] = g2;
+
+            return _gameObject;
         }
     }
 }

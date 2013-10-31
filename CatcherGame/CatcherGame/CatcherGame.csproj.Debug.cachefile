@@ -24,9 +24,7 @@ Content\Pause\exit.xnb
 Content\Pause\continue.xnb
 Content\Pause\pause_back.xnb
 Content\Dictionary\dictionary_back.xnb
-Content\Dictionary\dictionary_content.xnb
 Content\Dictionary\dictionary_left.xnb
-Content\Dictionary\dictionary_picture.xnb
 Content\Dictionary\dictionary_right.xnb
 Content\Play\pause_bigger.xnb
 Content\Play\flyoldlady\flyoldlady_dictionary.xnb
@@ -45,3 +43,7 @@ Content\Play\fatdance\fatdancerfall2.xnb
 Content\Play\fatdance\fatdancerfloor.xnb
 Content\Play\fatdance\fatdancerrun1.xnb
 Content\Play\fatdance\fatdancerrun2.xnb
+Content\Dictionary\dictionary_littlegirl.xnb
+Content\Dictionary\dictionary_littlegirl_intro.xnb
+Content\Dictionary\dictionary_nicole.xnb
+Content\Dictionary\dictionary_nicole_intro.xnb

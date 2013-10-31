@@ -188,18 +188,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Dictionary\dictionary_content.png">
-      <Name>dictionary_content</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Dictionary\dictionary_left.png">
       <Name>dictionary_left</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Dictionary\dictionary_picture.png">
-      <Name>dictionary_picture</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -298,6 +288,28 @@
     </Compile>
     <Compile Include="Play\fatdance\fatdancerrun2.png">
       <Name>fatdancerrun2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dictionary\dictionary_littlegirl.png">
+      <Name>dictionary_littlegirl</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Dictionary\dictionary_littlegirl_intro.png">
+      <Name>dictionary_littlegirl_intro</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Dictionary\dictionary_nicole.png">
+      <Name>dictionary_nicole</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Dictionary\dictionary_nicole_intro.png">
+      <Name>dictionary_nicole_intro</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

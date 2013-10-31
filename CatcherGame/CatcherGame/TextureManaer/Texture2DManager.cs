@@ -63,8 +63,10 @@ namespace CatcherGame.TextureManager
             LoadDictionaryDialogLeftButton();
             LoadDictionaryDialogRightButton();
             LoadDictionaryDialogRightButton();
-            LoadDictionaryDialogContentTexture();
-            LoadDictionaryDialogPictureTexture();
+            LoadDictionaryDialogNicoleTexture();
+            LoadDictionaryDialogNicoleIntroTexture();
+            LoadDictionaryDialogLittleGirlTexture();
+            LoadDictionaryDialogLittleGirlIntroTexture();
 
             Debug.WriteLine("Load Texture2Ds Done ");
         }
@@ -471,26 +473,49 @@ namespace CatcherGame.TextureManager
         }
 
         //字典內容
-        private void LoadDictionaryDialogContentTexture()
+        private void LoadDictionaryDialogNicoleIntroTexture()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_CONTENT_TEXTURE;
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NICOLE_INTRO_TEXTURE;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_content"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_nicole_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogLittleGirlIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_LITTLEGIRL_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_littlegirl_intro"));
                 _dictionary.Add(key, texture2Ds);
 
             }
         }
 
         //字典人物
-        private void LoadDictionaryDialogPictureTexture()
+        private void LoadDictionaryDialogNicoleTexture()
         {
-            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_PICTURE_TEXTURE;
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NICOLE_TEXTURE;
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_picture"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_nicole"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
+        private void LoadDictionaryDialogLittleGirlTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_LITTLEGIRL_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_littlegirl"));
                 _dictionary.Add(key, texture2Ds);
 
             }
