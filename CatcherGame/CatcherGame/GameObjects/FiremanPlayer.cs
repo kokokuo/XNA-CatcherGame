@@ -83,8 +83,8 @@ namespace CatcherGame.GameObjects
         //設定消防員往左移動
         public void MoveLeft(float leftGameScreenBorder)
         {
-            //檢查如果要移動是否會超處邊界 不會才給予下一步的移動座標
-            if ((this.x + LEFT_MOVE_STEP) >= leftGameScreenBorder)
+            //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
+            if ((this.savedNet.X + LEFT_MOVE_STEP) >= leftGameScreenBorder)
             {
                 //Debug.WriteLine("Can Move Left Way");
                 this.x += LEFT_MOVE_STEP;
@@ -97,8 +97,8 @@ namespace CatcherGame.GameObjects
         //設定消防員往右移動
         public void MoveRight(float rightGameScreenBorder)
         {
-            //檢查如果要移動是否會超處邊界 不會才給予下一步的移動座標
-            if ((this.x + this.width) + RIGHT_MOVE_STEP <= rightGameScreenBorder)
+            //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
+            if ((this.savedNet.X + this.width) + RIGHT_MOVE_STEP <= rightGameScreenBorder)
             {
                 //Debug.WriteLine("Can Move Right Way");
                 this.x += RIGHT_MOVE_STEP;

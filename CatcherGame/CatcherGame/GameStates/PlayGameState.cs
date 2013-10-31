@@ -63,7 +63,7 @@ namespace CatcherGame.GameStates
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
-            oldLady = new People(this, objIdCount++, 150, 0, 3, 0, 3, 1);
+            oldLady = new People(this, objIdCount++, 170, 0, 3, 0, 3, 1);
             //加入遊戲元件
             AddGameObject(player);
             AddGameObject(savedNet);

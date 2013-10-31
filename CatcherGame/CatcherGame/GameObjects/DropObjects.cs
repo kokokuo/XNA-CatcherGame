@@ -18,7 +18,6 @@ namespace CatcherGame.GameObjects
         protected float fallingNextYPos; //接下來會掉落的Y座標
         protected float fallingNextXPos; //接下來會擺動的x座標
         protected bool isFalling, isCaught;
-
         public DropObjects(GameState currentGameState, int id, float x, float y, float fallingSpeed, float fallingWave)
             : base(currentGameState, id, x, y)
         {
@@ -29,6 +28,12 @@ namespace CatcherGame.GameObjects
 
         public abstract void SetCaught();
 
+        public bool GetIsCaught() {
+            return this.isCaught;
+        }
 
+        public bool GetIsFalling(){
+            return this.isFalling;
+        }
     }
 }

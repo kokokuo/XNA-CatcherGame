@@ -217,13 +217,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Play\flyoldlady\flyoldlady_caught.png">
-      <Name>flyoldlady_caught</Name>
+    <Compile Include="Play\flyoldlady\flyoldlady_dictionary.png">
+      <Name>flyoldlady_dictionary</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Play\flyoldlady\flyoldlady_dictionary.png">
-      <Name>flyoldlady_dictionary</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Play\flyoldlady\flyoldlady_caught.png">
+      <Name>flyoldlady_caught</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

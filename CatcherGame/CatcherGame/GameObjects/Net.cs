@@ -21,6 +21,8 @@ namespace CatcherGame.GameObjects
         AnimationSprite netStateAnimation; //網子動畫
         int savedPeopleNumber;
         List<int> willRemoveObjectId;
+        bool isCaught;
+        bool isTouch;
         public Net(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y) 
         {
@@ -34,6 +36,8 @@ namespace CatcherGame.GameObjects
             netStateAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
             savedPeopleNumber = 0;
             willRemoveObjectId = new List<int>();
+            isCaught = false;
+            isTouch = false;
         }
 
         public override void LoadResource(TexturesKeyEnum key)
@@ -60,22 +64,38 @@ namespace CatcherGame.GameObjects
         public override void Update()
         {
             netStateAnimation.SetToLeftPos(this.x, this.y);
-            
-            
+            if (isTouch) {
+                netStateAnimation.UpdateFrame(this.gameState.GetTimeSpan());  
+            }
+            if (isCaught)
+            {
+                netStateAnimation.UpdateFrame(this.gameState.GetTimeSpan());
+            }
         }
         public void CheckCollision(List<DropObjects> dropObjs) {
 
             foreach (DropObjects obj in dropObjs){
-
-                if ((obj.Y + obj.Height) < (this.y + this.height) && (obj.Y + obj.Height) > this.y) {
-                    obj.SetCaught();  //設定為拯救到
-                    //如果是People的Type
-                    if (obj is People) {
-                        savedPeopleNumber++;
+                if ((obj.Y + obj.Height) <= (this.y + this.height) && (obj.Y + obj.Height) >= this.y 
+                    && (obj.X >= this.x) && ( (obj.X + obj.Width) <= (this.x + this.Width))) {
+                        
+                    if (!this.isTouch) {
+                        this.isTouch = true;
+                    }
+                    else{
+                        obj.SetCaught();  //設定為拯救到
+                        this.isCaught = true; //網子有接到
+                        this.isTouch = false;    
+                        //如果是People的Type
+                        if (obj is People)
+                        {
+                            savedPeopleNumber++;
+                        }    
                     }
                     RemoveDropObject(obj.Id);
                 }
             }
+            
+                
             RemoveDropObjectFromList(dropObjs);
         }
 

@@ -23,6 +23,7 @@ namespace CatcherGame.GameObjects
         float savedWalkSpeed; //被接住後離開畫面移動的速度
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2;
         int walkOrienation;
+       
         /// <summary>
         /// 
         /// </summary>
@@ -47,6 +48,7 @@ namespace CatcherGame.GameObjects
             else
                 this.savedWalkSpeed = walkSpeed;
 
+           
         }
         protected override void Init()
         {
@@ -59,6 +61,15 @@ namespace CatcherGame.GameObjects
             isSetDelay = false;
            
         }
+
+        public bool GetIsSaved() {
+            return this.isSaved;
+        }
+
+        public bool GetIsDead(){
+            return this.isDead;
+        }
+
         /// <summary>
         /// 設定載入的圖片組,使用給予Key方式設定載入
         /// </summary>
@@ -112,9 +123,9 @@ namespace CatcherGame.GameObjects
         //墜落搖晃時是否碰到邊界
         private bool IsFallingWaveCollideBorder()
         {
-            //超出左邊邊框或超出右邊邊框 (70 與 80是包含了兩隻消防員的人物寬度)
-            if ( ((base.x + base.width) >= base.gameState.GetRightGameScreenBorder() -70 )
-                || (base.x < base.gameState.GetLeftGameScreenBorder() + 80)) 
+            //超出左邊邊框或超出右邊邊框 
+            if ( ((base.x + base.width) >= base.gameState.GetRightGameScreenBorder() )
+                || (base.x < base.gameState.GetLeftGameScreenBorder())) 
             {
                 return true;
             }
@@ -171,6 +182,7 @@ namespace CatcherGame.GameObjects
                 //走出遊戲畫面
                 if (IsWalkOuterGameScreenBorder()) { 
                     //釋放資料(圖片除外)
+
                 }
 
             }
