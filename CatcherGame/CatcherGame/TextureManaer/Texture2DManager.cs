@@ -59,15 +59,35 @@ namespace CatcherGame.TextureManager
             LoadPauseDialogExitButton();
             LoadPauseDialogContinueButton();
 
+
+            //載入Dialog中共用元件
+            LoadDialogLeftButton();
+            LoadDialogRightButton();
+
             //載入字典對話框所用的圖像資源
             LoadDictionaryDialogBackground();
-            LoadDictionaryDialogLeftButton();
-            LoadDictionaryDialogRightButton();
-            LoadDictionaryDialogRightButton();
             LoadDictionaryDialogNicoleTexture();
             LoadDictionaryDialogNicoleIntroTexture();
             LoadDictionaryDialogLittleGirlTexture();
             LoadDictionaryDialogLittleGirlIntroTexture();
+            LoadDictionaryDialogFatDancerTexture();
+            LoadDictionaryDialogFatDancerIntroTexture();
+            LoadDictionaryDialogFlyOldLadyTexture();
+            LoadDictionaryDialogFlyOldLadyIntroTexture();
+            LoadDictionaryDialogManStubbleTexture();
+            LoadDictionaryDialogManStubbleIntroTexture();
+            LoadDictionaryDialogNaughtyBoyTexture();
+            LoadDictionaryDialogNaughtyBoyIntroTexture();
+            LoadDictionaryDialogOldManTexture();
+            LoadDictionaryDialogOldManIntroTexture();
+            LoadDictionaryDialogRoxanneTexture();
+            LoadDictionaryDialogRoxanneIntroTexture();
+
+            //載入HOWTOPLAY所用的圖像資源
+            LoadHowtoplayDialogBackground();
+            LoadHowtoplayDialogPage1();
+            LoadHowtoplayDialogPage2();
+            LoadHowtoplayDialogPage3();
 
             Debug.WriteLine("Load Texture2Ds Done ");
         }
@@ -443,7 +463,34 @@ namespace CatcherGame.TextureManager
             }
         }
 
-        
+
+        //Dialog中元件---------------------------------------------------------------------------------
+
+        //左按鈕
+        private void LoadDialogLeftButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DIALOG_LEFT_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/left_button"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //右按鈕
+        private void LoadDialogRightButton()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DIALOG_RIGHT_BUTTON;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/right_button"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
 
         //字典中元件------------------------------------------------------
 
@@ -454,35 +501,12 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_back"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_back"));
                 _dictionary.Add(key, texture2Ds);
             }
         }
 
-        //字典左按鈕
-        private void LoadDictionaryDialogLeftButton()
-        {
-            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_LEFT_BUTTON;
-            if (!_dictionary.ContainsKey(key))
-            {
-                List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_left"));
-                _dictionary.Add(key, texture2Ds);
-            }
-        }
-
-        //字典右按鈕
-        private void LoadDictionaryDialogRightButton()
-        {
-            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_RIGHT_BUTOTN;
-            if (!_dictionary.ContainsKey(key))
-            {
-                List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_right"));
-                _dictionary.Add(key, texture2Ds);
-
-            }
-        }
+       
 
         //字典內容
         private void LoadDictionaryDialogNicoleIntroTexture()
@@ -491,7 +515,7 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_nicole_intro"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_nicole_intro"));
                 _dictionary.Add(key, texture2Ds);
 
             }
@@ -502,12 +526,77 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_littlegirl_intro"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_littlegirl_intro"));
                 _dictionary.Add(key, texture2Ds);
 
             }
         }
+        private void LoadDictionaryDialogFatDancerIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_FATDANCER_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_fatdancer_intro"));
+                _dictionary.Add(key, texture2Ds);
 
+            }
+        }
+        private void LoadDictionaryDialogFlyOldLadyIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_FLYOLDLADY_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_flyoldlady_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogManStubbleIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_MANSTUBBLE_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_manstubble_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogNaughtyBoyIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NAUGHTYBOY_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_naughtyboy_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogOldManIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_OLDMAN_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_oldman_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogRoxanneIntroTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_ROXANNE_INTRO_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_roxanne_intro"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
         //字典人物
         private void LoadDictionaryDialogNicoleTexture()
         {
@@ -515,7 +604,7 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_nicole"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_nicole"));
                 _dictionary.Add(key, texture2Ds);
 
             }
@@ -527,9 +616,117 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dictionary/dictionary_littlegirl"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_littlegirl"));
                 _dictionary.Add(key, texture2Ds);
 
+            }
+        }
+        private void LoadDictionaryDialogFatDancerTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_FATDANCER_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_fatdancer"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogFlyOldLadyTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_FLYOLDLADY_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_flyoldlady"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogManStubbleTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_MANSTUBBLE_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_manstubble"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogNaughtyBoyTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_NAUGHTYBOY_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_naughtyboy"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogOldManTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_OLDMAN_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_oldman"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+        private void LoadDictionaryDialogRoxanneTexture()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.DICTIONARY_ROXANNE_TEXTURE;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Dictionary/dictionary_roxanne"));
+                _dictionary.Add(key, texture2Ds);
+
+            }
+        }
+
+        //HOWTOPLAY元件--------------------------------------
+        private void LoadHowtoplayDialogBackground()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_BACKGROUND;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Howtoplay/howtoplay_back"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadHowtoplayDialogPage1()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_PAGE1;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Howtoplay/howtoplay_page1"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadHowtoplayDialogPage2()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_PAGE2;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Howtoplay/howtoplay_page2"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+        private void LoadHowtoplayDialogPage3()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.HOWTOPLAY_PAGE3;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Dialog/Howtoplay/howtoplay_page3"));
+                _dictionary.Add(key, texture2Ds);
             }
         }
     }

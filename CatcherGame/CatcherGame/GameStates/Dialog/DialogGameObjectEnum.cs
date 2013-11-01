@@ -18,9 +18,16 @@ namespace CatcherGame.GameStates.Dialog
         //DICTIONARY-----------------------------
         DICTIONARY_NICOLE,
         DICTIONARY_LITTLEGIRL,
+        DICTIONARY_FATDANCER,
+        DICTIONARY_FLYOLDLADY,
+        DICTIONARY_MANSTUBBLE,
+        DICTIONARY_NAUGHTYBOY,
+        DICTIONARY_OLDMAN,
+        DICTIONARY_ROXANNE,
 
         //HOWTOPLAY-----------------------------
-        HOWTOPLAY_PICTURE1,
-        HOWTOPLAY_PICTURE2
+        HOWTOPLAY_PAGE1,
+        HOWTOPLAY_PAGE2,
+        HOWTOPLAY_PAGE3
     }
 }

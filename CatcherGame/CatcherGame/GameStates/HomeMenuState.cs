@@ -133,6 +133,7 @@ namespace CatcherGame.GameStates
                             base.SetPopGameDialog(DialogStateEnum.STATE_TOPSCORE);
                         }
                         else if (isClickHowToPlay && !(isClickPlay || isClickTopScore || isClickDictionary)){
+                            base.SetPopGameDialog(DialogStateEnum.STATE_HOW_TO_PLAY);
                             Debug.WriteLine("CLICK!! STATE_HOW_TO_PLAY");
                         }
                     }

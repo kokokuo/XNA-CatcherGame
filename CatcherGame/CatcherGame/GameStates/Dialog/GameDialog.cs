@@ -60,7 +60,12 @@ namespace CatcherGame.GameStates.Dialog
         /// </summary>
         protected void CloseDialog() {
             currentState.SetPopGameDialog(DialogStateEnum.EMPTY);
+            stCurrent = DialogStateEnum.EMPTY;
+            gtCurrent = DialogGameObjectEnum.EMPTY;
+
         }
+
+        
 
         //更新在Dialog中的所有遊戲物件
         public virtual void Update()
@@ -97,7 +102,7 @@ namespace CatcherGame.GameStates.Dialog
                 {
                     gameObject.Draw(gameSateSpriteBatch);
                 }
-
+               
 
             }
         }
@@ -164,19 +169,6 @@ namespace CatcherGame.GameStates.Dialog
         }
 
 
-        /// <summary>
-        /// 暫定寫法...應該有更好的寫法
-        /// </summary>
-        /// <param name="g1"></param>
-        /// <param name="g2"></param>
-        /// <returns></returns>
-        public GameObject[] SetGameObject(GameObject g1, GameObject g2)
-        {
-            GameObject[] _gameObject = new GameObject[2];
-            _gameObject[0] = g1;
-            _gameObject[1] = g2;
-
-            return _gameObject;
-        }
+       
     }
 }
