@@ -66,16 +66,17 @@ namespace CatcherGame.GameObjects
         {
             netStateAnimation.SetToLeftPos(this.x, this.y);
 
-            if (isCaught && !netStateAnimation.GetIsRoundAnimation())
+            //如果接住 播完網子往下凹的動畫
+            if (isCaught)
             {
-                netStateAnimation.UpdateFrame(this.gameState.GetTimeSpan());
+                netStateAnimation.SetNextWantFrameIndex(1); //索引是1
             }
-            if (netStateAnimation.GetIsRoundAnimation()) {
-                isCaught = false;
+            else { //播正常的網子
+                netStateAnimation.SetNextWantFrameIndex(0);
             }
         }
         public void CheckCollision(List<DropObjects> dropObjs) {
-
+            isCaught = false;
             foreach (DropObjects obj in dropObjs){
                 if ((obj.Y + obj.Height) <= (this.y + this.height) && (obj.Y + obj.Height) >= this.y
                     && ((obj.X + (obj.Width / 2) >= this.x) && ((obj.X + (obj.Width / 2)) <= (this.x + this.Width))))
@@ -84,12 +85,11 @@ namespace CatcherGame.GameObjects
                     if (!obj.GetIsTouch())
                     {
                         obj.SetTouched(); //設定接觸網子
-                        obj.Y += (this.height/2); //用來讓烙下的物體有掉進網子的感覺
                         this.isCaught = true; //網子有接到
                     }
                     else {
                         obj.SetCaught();  //設定為拯救到
-                        
+            
                         //如果是People的Type
                         if (obj is People)
                         {

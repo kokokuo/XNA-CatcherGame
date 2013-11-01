@@ -71,6 +71,14 @@ namespace CatcherGame.Sprite
         }
 
         /// <summary>
+        /// 直接設定下一個要撥放的影格索引
+        /// </summary>
+        /// <param name="frameIndex"></param>
+        public void SetNextWantFrameIndex(int frameIndex) {
+            this._frameIndex = frameIndex;
+        }
+
+        /// <summary>
         /// 建構子
         /// </summary>
         /// <param name="startPos">初始位置(左上角為準)</param>

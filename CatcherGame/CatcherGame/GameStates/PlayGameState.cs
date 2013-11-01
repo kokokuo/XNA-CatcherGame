@@ -64,7 +64,17 @@ namespace CatcherGame.GameStates
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
             oldLady = new People(this, objIdCount++, 170, 0, 3, 0, 3, 1);
-            fatDance = new People(this, objIdCount++, 200, -20, 5, 0, 3, 0);
+            fatDance = new People(this, objIdCount++, 200, -50, 2, 0, 3, 0);
+
+
+            //test
+            AddGameObject(oldLady);
+            FallingObjects.Add(oldLady);
+
+            //test2
+            AddGameObject(fatDance);
+            FallingObjects.Add(fatDance);
+            
             //加入遊戲元件
             AddGameObject(player);
             AddGameObject(savedNet);
@@ -74,13 +84,7 @@ namespace CatcherGame.GameStates
             AddGameObject(smokeTexture);
             AddGameObject(lifeTexture);
             AddGameObject(scoreTexture);
-            //test
-            AddGameObject(oldLady);
-            FallingObjects.Add(oldLady);
-
-            //test2
-            AddGameObject(fatDance);
-            FallingObjects.Add(fatDance);
+            
 
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)

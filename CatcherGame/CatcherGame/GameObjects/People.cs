@@ -21,7 +21,8 @@ namespace CatcherGame.GameObjects
        
        
         float savedWalkSpeed; //被接住後離開畫面移動的速度
-        const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2;
+        const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2,DIE_KEY = 3;
+        const float DEAD_FLY_UP_SPEED = 10; //死掉飛上去的速度
         int walkOrienation;
        
         /// <summary>
@@ -43,7 +44,7 @@ namespace CatcherGame.GameObjects
             
             this.walkOrienation = orienation;
             //沒有辦法預設參數值,只好這樣做
-            if (walkSpeed >= 0)
+            if (walkSpeed <= 0)
                 this.savedWalkSpeed = 5;
             else
                 this.savedWalkSpeed = walkSpeed;
@@ -94,6 +95,8 @@ namespace CatcherGame.GameObjects
            
             if (animationList.Count >= 3)
             {
+                //自動載入死亡的圖片
+                SetTexture2DList(TexturesKeyEnum.PLAY_DIE);
                 //設定目前的圖片組是"掉下來"
                 pCurrentAnimation = animationList[FALLING_KEY];
             }
@@ -153,18 +156,22 @@ namespace CatcherGame.GameObjects
                 }
                 else {
                     isDead = true;
+                    isFalling = false;
+                    pCurrentAnimation = animationList[DIE_KEY];
                 }
             }
             else if (isCaught) { 
                 //如果播完一輪,代表被接住也站起來=>切換成走路
-                if(pCurrentAnimation.GetIsRoundAnimation()){
+                if (pCurrentAnimation.GetIsRoundAnimation()){
                     isCaught = false;
                     isSaved = true;
                     //切換到走路的圖片組
                     pCurrentAnimation = animationList[WALK_KEY];
+                    
                 }
             }
             else if (isSaved) { 
+               
                 //向左或向右走
                 if (walkOrienation == 0) { 
                     this.x -=savedWalkSpeed;
@@ -177,10 +184,11 @@ namespace CatcherGame.GameObjects
                     //釋放資料(圖片除外)
 
                 }
-
+                
             }
             else if (isDead) { 
                 //往上飄
+                this.y -= DEAD_FLY_UP_SPEED;
             }
 
             //設定座標
@@ -190,6 +198,11 @@ namespace CatcherGame.GameObjects
             //設定現在的圖片長寬為遊戲元件的長寬
             this.Height = pCurrentAnimation.GetCurrentFrameTexture().Height;
             this.Width = pCurrentAnimation.GetCurrentFrameTexture().Width;
+
+            //如果是活著的,這邊調整圖片站在地面上的位置
+            if(isSaved)
+                //Y軸 = 遊戲的畫面高度 - 目前播放的圖片高度
+                this.y = (this.gameState.SetGetHeight - this.height);
         }
     }
 }

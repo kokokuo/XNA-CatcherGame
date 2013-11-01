@@ -50,6 +50,7 @@ namespace CatcherGame.TextureManager
             LoadPlayGameScorePicture();
             LoadPlayGameLifePicture();
             LoadPlayNet();
+            LoadPlayDie();
             LoadPlayFlyOldLady();
             LoadPlayFatDance();
 
@@ -325,7 +326,18 @@ namespace CatcherGame.TextureManager
             }
 
         }
+        //遊戲中死亡的符號
+        private void LoadPlayDie() {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_DIE;
 
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/die"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/die_2"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
         //遊戲中的老婦人
         private void LoadPlayFlyOldLady()
         {
@@ -358,7 +370,7 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(walkkey, texture2Ds);
             }
         }
-
+        
 
         //遊戲中的胖胖舞者
         private void LoadPlayFatDance()

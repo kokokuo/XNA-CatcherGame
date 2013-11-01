@@ -98,7 +98,7 @@ namespace CatcherGame.GameObjects
         public void MoveRight(float rightGameScreenBorder)
         {
             //檢查如果要移動是否會超處邊界(以網子為基準) 不會才給予下一步的移動座標
-            if ((this.savedNet.X + this.width) + RIGHT_MOVE_STEP <= rightGameScreenBorder)
+            if ((this.savedNet.X + this.savedNet.Width) + RIGHT_MOVE_STEP <= rightGameScreenBorder)
             {
                 //Debug.WriteLine("Can Move Right Way");
                 this.x += RIGHT_MOVE_STEP;

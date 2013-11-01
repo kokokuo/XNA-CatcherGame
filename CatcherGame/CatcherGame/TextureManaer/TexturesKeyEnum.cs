@@ -31,6 +31,7 @@ namespace CatcherGame.TextureManager
         PLAY_LIFE,
         PLAY_SCORE,
         PLAY_NET,
+        PLAY_DIE,
         PLAY_FLYOLDELADY_FALL,
         PLAY_FLYOLDELADY_CAUGHT,
         PLAY_FLYOLDELADY_WALK,
