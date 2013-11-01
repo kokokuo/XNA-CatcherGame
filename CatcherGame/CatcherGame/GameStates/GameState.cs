@@ -27,7 +27,6 @@ namespace CatcherGame.GameStates
         protected int width;
         protected int height;
         protected bool isInit;
-        protected List<int> willRemoveObjectId;
         protected Dictionary<DialogStateEnum, GameDialog> dialogTable;
         protected GameDialog pCurrentDialog;
         protected bool hasDialogShow;
@@ -199,33 +198,7 @@ namespace CatcherGame.GameStates
         {
             this.gameSateSpriteBatch = gSpriteBatch;
         }
-        /// <summary>
-        /// 將 id 放入準備要被刪除的 list
-        /// </summary>
-        /// <param name="id"></param>
-        public void RemoveGameObject(int id)
-        {
-            willRemoveObjectId.Add(id);
-        }
-
-        /// <summary>
-        /// 真正將 GameObject 刪除
-        /// </summary>
-        private void RemoveGameObjectFromList()
-        {
-            foreach (int removeId in willRemoveObjectId)
-            {
-                foreach (GameObject gameObject in gameObjects)
-                {
-                    if (gameObject.Id == removeId)
-                    {
-                        gameObjects.Remove(gameObject);
-                        break;
-                    }
-                }
-            }
-            willRemoveObjectId.Clear();
-        }
+        
 
         /// <summary>
         /// 透過mainGame取得 已經載入好的 Texture2DList

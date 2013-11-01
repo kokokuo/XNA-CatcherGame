@@ -18,7 +18,7 @@ namespace CatcherGame.GameObjects
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
         bool isSaved,isDead;
-       
+        
        
         float savedWalkSpeed; //被接住後離開畫面移動的速度
         const int FALLING_KEY = 0, CAUGHT_KEY = 1, WALK_KEY = 2,DIE_KEY = 3;
@@ -129,12 +129,12 @@ namespace CatcherGame.GameObjects
                 return false;
         }
 
-        //拯救到後人物是否離開遊戲畫面
-        private bool IsWalkOuterGameScreenBorder()
+        //拯救到或死亡後,人物是否離開遊戲畫面
+        private bool IsOuterGameScreenBorder()
         {
             //超出左邊邊框或超出右邊邊框
-            if (((base.x + base.width) >= base.gameState.GetBackgroundTexture().Width)
-                || (base.x < 0) )
+            if ((base.x  >= base.gameState.GetBackgroundTexture().Width)
+                || ( (base.x + base.width) < 0)  || ((base.y + base.height) < 0 ) )
             {
                 return true;
             }
@@ -180,15 +180,19 @@ namespace CatcherGame.GameObjects
                     this.x += savedWalkSpeed;
                 }
                 //走出遊戲畫面
-                if (IsWalkOuterGameScreenBorder()) { 
-                    //釋放資料(圖片除外)
-
+                if (IsOuterGameScreenBorder()) { 
+                    //移除自己
+                    ((PlayGameState)this.gameState).RemoveGameObject(this.id);
                 }
                 
             }
             else if (isDead) { 
                 //往上飄
                 this.y -= DEAD_FLY_UP_SPEED;
+                if (IsOuterGameScreenBorder()) {
+                    //移除自己
+                    ((PlayGameState)this.gameState).RemoveGameObject(this.id);
+                }
             }
 
             //設定座標

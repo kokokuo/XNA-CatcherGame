@@ -24,7 +24,9 @@ namespace CatcherGame.GameStates
         Button pauseButton;
         Button leftMoveButton;
         Button rightMoveButton;
-        
+
+         List<int> willRemoveObjectId;
+
         int objIdCount;
         FiremanPlayer player;
         Net savedNet; //網子
@@ -43,7 +45,7 @@ namespace CatcherGame.GameStates
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
             FallingObjects = new List<DropObjects>();
-
+            willRemoveObjectId = new List<int>();
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
         }
@@ -104,7 +106,7 @@ namespace CatcherGame.GameStates
             smokeTexture.Dispose();
             lifeTexture.Dispose();
             scoreTexture.Dispose();
-
+            willRemoveObjectId.Clear();
             foreach (GameObject obj in gameObjects) {
                 obj.Dispose();
             }
@@ -198,7 +200,11 @@ namespace CatcherGame.GameStates
                     player.SetStand(); //設定站立
                 }
                 savedNet.CheckCollision(FallingObjects);
-               
+
+                //如果有要移除的元件,執行移除方法
+                if (willRemoveObjectId.Count > 0) {
+                    RemoveGameObjectFromList();
+                }
             }
             base.Update();
         }
@@ -210,6 +216,37 @@ namespace CatcherGame.GameStates
             smokeTexture.Draw(this.GetSpriteBatch());
             lifeTexture.Draw(this.GetSpriteBatch());
             scoreTexture.Draw(this.GetSpriteBatch());
+        }
+
+
+        /// <summary>
+        /// 將 id 放入準備要被刪除的 list
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveGameObject(int id)
+        {
+            willRemoveObjectId.Add(id);
+        }
+
+        /// <summary>
+        /// 真正將 GameObject 刪除
+        /// </summary>
+        private void RemoveGameObjectFromList()
+        {
+            //有空在修改成LINQ語法...
+            foreach (int removeId in willRemoveObjectId)
+            {
+                foreach (GameObject gameObject in gameObjects)
+                {
+                    if (gameObject.Id == removeId)
+                    {
+                        gameObject.Dispose(); //釋放資源
+                        gameObjects.Remove(gameObject);
+                        break;
+                    }
+                }
+            }
+            willRemoveObjectId.Clear();
         }
     }
 }
