@@ -30,6 +30,9 @@ namespace CatcherGame.GameStates
                 dialogTable.Add(DialogStateEnum.STATE_DICTIONARY, new DictionaryDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_TOPSCORE, new TopScoreDialog(this));
                 dialogTable.Add(DialogStateEnum.STATE_HOW_TO_PLAY, new HowToPlayDialog(this));
+
+                base.x = 0; base.y = 0;
+                base.backgroundPos = new Vector2(base.x, base.y);
         }
 
         public override void LoadResource(){
@@ -61,8 +64,7 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
-            base.x = 0; base.y = 0;
-            base.backgroundPos = new Vector2(base.x, base.y);
+           
             
             objIdCount = 0;
             playButton = new Button(this, objIdCount++,0,0);

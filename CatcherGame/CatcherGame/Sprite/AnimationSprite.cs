@@ -15,7 +15,7 @@ namespace CatcherGame.Sprite
     /// <summary>
     /// 動畫物件,可以用來製作動畫效果
     /// </summary>
-    public class AnimationSprite
+    public class AnimationSprite : IDisposable
     {
         private List<Texture2D> _texture2DList;
         private Vector2 _position;
@@ -26,6 +26,7 @@ namespace CatcherGame.Sprite
         private int _delayFrameIndex;
         private float _delayFrameTimes;
         private bool isRound; //是否已經播放一輪
+        private bool _disposed;
         /// <summary>
         /// 取得現在的Frame編號,第XX張
         /// </summary>
@@ -92,7 +93,7 @@ namespace CatcherGame.Sprite
             _defaultElapsedTime = defaultElapsed;
             _frameCount = 0;
             _frameIndex = 0;
-            
+            isRound = false;
         }
 
         /// <summary>
@@ -175,6 +176,26 @@ namespace CatcherGame.Sprite
         /// <param name="SpriteBatch">用來繪畫的工具</param>
         public void Draw(SpriteBatch SpriteBatch) {
             SpriteBatch.Draw(_texture2DList[_frameIndex], _position, Color.White);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);     
+        }
+        private void Dispose(bool disposing) {
+            if (!_disposed){
+
+                if (disposing)
+                {
+                    if (_texture2DList.Count > 0){
+                        _texture2DList = null; //因為是指向記憶體位置 ,所以如果Clear會把Text2DManager中的圖片清掉 =>改成null
+                    }
+                        
+                    Console.WriteLine("Animation disposed.");
+                }
+            }
+            _disposed = true;   
         }
     }
 }

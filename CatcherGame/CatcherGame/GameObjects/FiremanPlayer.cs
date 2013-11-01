@@ -20,7 +20,7 @@ namespace CatcherGame.GameObjects
         const int RIGHT_MOVE_STEP = 5;
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Knows)
-
+        float init_x, init_y;
         public FiremanPlayer(GameState currentGameState, int id, float x, float y,Net net)
             : base(currentGameState, id, x, y)
         {
@@ -31,12 +31,13 @@ namespace CatcherGame.GameObjects
 
         protected override void Init()
         {
-            isWalking = false; 
-            this.x = x;
-            this.y = y;
+            isWalking = false;
+            this.init_x = this.x = x;
+            this.init_y = this.y = y;
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
             
         }
+
 
         public override void LoadResource(TextureManager.TexturesKeyEnum key)
         {
@@ -108,6 +109,22 @@ namespace CatcherGame.GameObjects
             }
         }
 
-        
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (walkAnimation != null)
+                    {
+                        walkAnimation.Dispose();
+                    }
+
+                    Console.WriteLine("FirePlayer disposed.");
+                }
+            }
+            disposed = true;
+        }
     }
 }

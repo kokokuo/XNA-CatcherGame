@@ -173,6 +173,7 @@ namespace CatcherGame
                 pCurrentScreenState.SetSpriteBatch(spriteBatch);
                 pCurrentScreenState.LoadResource();
             }
+            
         }
     }
 }

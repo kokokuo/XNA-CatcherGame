@@ -59,9 +59,9 @@ namespace CatcherGame.GameObjects
             animationList = new List<AnimationSprite>();
             isDead = isSaved = false;
            
-           
         }
 
+        
         public bool GetIsSaved() {
             return this.isSaved;
         }
@@ -203,6 +203,29 @@ namespace CatcherGame.GameObjects
             if(isSaved)
                 //Y軸 = 遊戲的畫面高度 - 目前播放的圖片高度
                 this.y = (this.gameState.SetGetHeight - this.height);
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (animationList.Count > 0)
+                    {
+                        foreach (AnimationSprite animation in animationList) {
+                            animation.Dispose();
+                        }
+                        animationList.Clear();
+                        pCurrentAnimation = null;
+                    }
+                    
+                    Console.WriteLine("FirePlayer disposed.");
+                }
+            }
+            disposed = true;
         }
     }
 }

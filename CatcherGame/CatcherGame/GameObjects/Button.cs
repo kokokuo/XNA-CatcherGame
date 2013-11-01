@@ -120,5 +120,25 @@ namespace CatcherGame.GameObjects
             }
         
         }
+
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (buttonAnimation != null )
+                    {
+                        buttonAnimation.Dispose();
+                    }
+
+                    Console.WriteLine("FirePlayer disposed.");
+                }
+            }
+            disposed = true;
+        }
     }
 }

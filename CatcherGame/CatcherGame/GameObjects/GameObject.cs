@@ -20,14 +20,14 @@ namespace CatcherGame.GameObjects
     /// <summary>
     /// 遊戲物件的基礎類別
     /// </summary>
-    public abstract class GameObject
+    public abstract class GameObject :IDisposable
     {
         protected GameState gameState; //知道物件目前所屬的遊戲狀態
         
         protected int id; //物件編號
         protected float x, y; //物件座標
         protected float width, height; //物件的寬高
-
+        protected bool disposed;
         public GameObject() { 
         
         }
@@ -38,6 +38,7 @@ namespace CatcherGame.GameObjects
             this.id = objId;
             this.x = x;
             this.y = y;
+            disposed = false;
         }
 
         
@@ -86,5 +87,12 @@ namespace CatcherGame.GameObjects
         }
         
         #endregion
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);     
+        }
+        protected virtual void Dispose(bool disposing) { }
     }
 }

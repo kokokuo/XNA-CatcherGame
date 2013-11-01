@@ -22,7 +22,7 @@ namespace CatcherGame.GameObjects
         int savedPeopleNumber;
         List<int> willRemoveObjectId;
         bool isCaught; //用來讓網子在接觸到物體時可以撥放網子往下凹的效果動畫,而做的判斷值
-        
+        float init_x, init_y;
         public Net(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y) 
         {
@@ -39,6 +39,7 @@ namespace CatcherGame.GameObjects
             isCaught = false;
            
         }
+
 
         public override void LoadResource(TexturesKeyEnum key)
         {
@@ -132,6 +133,26 @@ namespace CatcherGame.GameObjects
                 }
             }
             willRemoveObjectId.Clear();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (netStateAnimation != null)
+                    {
+                        netStateAnimation.Dispose();
+                    }
+                    if (willRemoveObjectId.Count > 0) {
+                        willRemoveObjectId.Clear();
+                    }
+                    Console.WriteLine("FirePlayer disposed.");
+                }
+            }
+            disposed = true;
         }
     }
 }

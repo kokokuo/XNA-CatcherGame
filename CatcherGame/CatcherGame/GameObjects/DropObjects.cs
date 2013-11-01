@@ -12,7 +12,7 @@ using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
-    public abstract class DropObjects : GameObject
+    public abstract class DropObjects : GameObject 
     {
         protected float fallingSpeed, fallingWave;
         protected float fallingNextYPos; //接下來會掉落的Y座標
@@ -45,5 +45,7 @@ namespace CatcherGame.GameObjects
         public bool GetIsFalling(){
             return this.isFalling;
         }
+
+       
     }
 }

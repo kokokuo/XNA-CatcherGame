@@ -67,6 +67,7 @@ namespace CatcherGame.GameStates.Dialog
                 if ( !(isClickClose && isClickContinue) ) { 
                     if(isClickClose){
                         base.CloseDialog(); //透過父類別來關閉視窗
+                        ((PlayGameState)base.currentState).Release(); //釋放遊戲元件資源
                         base.currentState.SetNextGameSateByMain(GameStateEnum.STATE_MENU); //切換回選單
                     }
                     else if (isClickContinue) {

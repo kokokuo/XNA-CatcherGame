@@ -41,5 +41,23 @@ namespace CatcherGame.GameObjects
         public override void Update() {
             layer.UpdateFrame(base.gameState.GetTimeSpan());
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (layer != null)
+                    {
+                        layer.Dispose();
+                    }
+
+                    Console.WriteLine("Object disposed.");
+                }
+            }
+            disposed = true;   
+        }
     }
 }

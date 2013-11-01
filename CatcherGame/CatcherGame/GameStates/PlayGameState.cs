@@ -43,14 +43,15 @@ namespace CatcherGame.GameStates
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
             FallingObjects = new List<DropObjects>();
+
+            base.x = 0; base.y = 0;
+            base.backgroundPos = new Vector2(base.x, base.y);
         }
 
 
         public override void BeginInit()
         {
-            base.x = 0; base.y = 0;
-            base.backgroundPos = new Vector2(base.x, base.y);
-
+           
             objIdCount = 0;
             
             pauseButton = new Button(this, objIdCount++, 0, 0);
@@ -81,9 +82,7 @@ namespace CatcherGame.GameStates
             AddGameObject(leftMoveButton);
             AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
-            AddGameObject(smokeTexture);
-            AddGameObject(lifeTexture);
-            AddGameObject(scoreTexture);
+           
             
 
             //對 對話框做初始化
@@ -100,8 +99,17 @@ namespace CatcherGame.GameStates
         }
 
         //重製遊戲中的所有資料
-        public void ResetData() { 
-            //尚未時做
+        public void Release() {
+            FallingObjects.Clear();
+            smokeTexture.Dispose();
+            lifeTexture.Dispose();
+            scoreTexture.Dispose();
+
+            foreach (GameObject obj in gameObjects) {
+                obj.Dispose();
+            }
+            gameObjects.Clear();
+            base.isInit  = false;
         }
 
 
@@ -149,7 +157,6 @@ namespace CatcherGame.GameStates
 
         public override void Update()
         {
-            
 
             if (!base.hasDialogShow)
             {
@@ -200,6 +207,9 @@ namespace CatcherGame.GameStates
             // 繪製主頁背景
             gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
             base.Draw();
+            smokeTexture.Draw(this.GetSpriteBatch());
+            lifeTexture.Draw(this.GetSpriteBatch());
+            scoreTexture.Draw(this.GetSpriteBatch());
         }
     }
 }
