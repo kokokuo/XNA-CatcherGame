@@ -18,9 +18,7 @@ namespace CatcherGame.GameStates
     {
         const int FIREMAN_INIT_X = 300;
         const int FIREMAN_INIT_Y = 355;
-        const int NET_INIT_X = FIREMAN_INIT_X + 73;
-        const int NET_INIT_Y = FIREMAN_INIT_Y + 85;
-
+       
         Button pauseButton;
         Button leftMoveButton;
         Button rightMoveButton;
@@ -29,7 +27,7 @@ namespace CatcherGame.GameStates
 
         int objIdCount;
         FiremanPlayer player;
-        Net savedNet; //網子
+        
 
         //純粹圖片,無任何邏輯運算
         TextureLayer smokeTexture;
@@ -38,6 +36,11 @@ namespace CatcherGame.GameStates
         List<DropObjects> FallingObjects;
         People oldLady; //test
         People fatDance; //test2
+        People littleGirl;
+        People manStubble;
+        People naughtyBoy;
+        People oldMan;
+        People roxanne; 
 
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
@@ -60,8 +63,7 @@ namespace CatcherGame.GameStates
             leftMoveButton = new Button(this, objIdCount++, 0, 355);
             rightMoveButton = new Button(this, objIdCount++, 700, 355);
 
-            savedNet = new Net(this, objIdCount++, NET_INIT_X, NET_INIT_Y);
-            player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y, savedNet);
+            player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y);
             
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
@@ -69,6 +71,11 @@ namespace CatcherGame.GameStates
             oldLady = new People(this, objIdCount++, 170, 0, 3, 0, 3, 1);
             fatDance = new People(this, objIdCount++, 200, -50, 2, 0, 3, 0);
 
+            littleGirl = new People(this, objIdCount++, 250, -50, 4, 0, 3, 1);
+            manStubble = new People(this, objIdCount++, 270, -20, 4, 0, 3, 0);
+            naughtyBoy = new People(this, objIdCount++, 320, -10, 4, 0, 3, 1);
+            oldMan = new People(this, objIdCount++, 360, -10, 4, 0, 3, 1);
+            roxanne = new People(this, objIdCount++, 400, -10, 6, 0, 6, 1);
 
             //test
             AddGameObject(oldLady);
@@ -77,10 +84,29 @@ namespace CatcherGame.GameStates
             //test2
             AddGameObject(fatDance);
             FallingObjects.Add(fatDance);
-            
+
+            AddGameObject(littleGirl);
+            FallingObjects.Add(littleGirl);
+
+            //test2
+            AddGameObject(manStubble);
+            FallingObjects.Add(manStubble);
+
+            //test2
+            AddGameObject(naughtyBoy);
+            FallingObjects.Add(naughtyBoy);
+
+            //test2
+            AddGameObject(oldMan);
+            FallingObjects.Add(oldMan);
+
+            //test2
+            AddGameObject(roxanne);
+            FallingObjects.Add(roxanne);
+
             //加入遊戲元件
             AddGameObject(player);
-            AddGameObject(savedNet);
+            
             AddGameObject(leftMoveButton);
             AddGameObject(rightMoveButton);
             AddGameObject(pauseButton);
@@ -100,7 +126,7 @@ namespace CatcherGame.GameStates
             base.isInit = true;
         }
 
-        //重製遊戲中的所有資料
+        //釋放遊戲中的所有資料
         public void Release() {
             FallingObjects.Clear();
             smokeTexture.Dispose();
@@ -123,7 +149,7 @@ namespace CatcherGame.GameStates
             leftMoveButton.LoadResource(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON);
             rightMoveButton.LoadResource(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON);
             player.LoadResource(TexturesKeyEnum.PLAY_FIREMAN);
-            savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
+            
 
             smokeTexture.LoadResource(TexturesKeyEnum.PLAY_SMOKE);
             lifeTexture.LoadResource(TexturesKeyEnum.PLAY_LIFE);
@@ -137,6 +163,26 @@ namespace CatcherGame.GameStates
             fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_FALL);
             fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_CAUGHT);
             fatDance.LoadResource(TexturesKeyEnum.PLAY_FATDANCE_WALK);
+
+            littleGirl.LoadResource(TexturesKeyEnum.PLAY_LITTLEGIRL_FALL);
+            littleGirl.LoadResource(TexturesKeyEnum.PLAY_LITTLEGIRL_CAUGHT);
+            littleGirl.LoadResource(TexturesKeyEnum.PLAY_LITTLEGIRL_WALK);
+
+            manStubble.LoadResource(TexturesKeyEnum.PLAY_MANSTUBBLE_FALL);
+            manStubble.LoadResource(TexturesKeyEnum.PLAY_MANSTUBBLE_CAUGHT);
+            manStubble.LoadResource(TexturesKeyEnum.PLAY_MANSTUBBLE_WALK);
+
+            naughtyBoy.LoadResource(TexturesKeyEnum.PLAY_NAUGHTYBOY_FALL);
+            naughtyBoy.LoadResource(TexturesKeyEnum.PLAY_NAUGHTYBOY_CAUGHT);
+            naughtyBoy.LoadResource(TexturesKeyEnum.PLAY_NAUGHTYBOY_WALK);
+
+            oldMan.LoadResource(TexturesKeyEnum.PLAY_OLDMAN_FALL);
+            oldMan.LoadResource(TexturesKeyEnum.PLAY_OLDMAN_CAUGHT);
+            oldMan.LoadResource(TexturesKeyEnum.PLAY_OLDMAN_WALK);
+
+            roxanne.LoadResource(TexturesKeyEnum.PLAY_ROXANNE_FALL);
+            roxanne.LoadResource(TexturesKeyEnum.PLAY_ROXANNE_CAUGHT);
+            roxanne.LoadResource(TexturesKeyEnum.PLAY_ROXANNE_WALK);
 
 
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
@@ -199,7 +245,7 @@ namespace CatcherGame.GameStates
                 else {
                     player.SetStand(); //設定站立
                 }
-                savedNet.CheckCollision(FallingObjects);
+                player.CheckIsCaught(FallingObjects);
 
                 //如果有要移除的元件,執行移除方法
                 if (willRemoveObjectId.Count > 0) {

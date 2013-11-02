@@ -41,6 +41,26 @@ namespace CatcherGame.TextureManager
         PLAY_FATDANCE_FALL,
         PLAY_FATDANCE_CAUGHT,
         PLAY_FATDANCE_WALK,
+
+        PLAY_LITTLEGIRL_FALL,
+        PLAY_LITTLEGIRL_CAUGHT,
+        PLAY_LITTLEGIRL_WALK,
+
+        PLAY_MANSTUBBLE_FALL,
+        PLAY_MANSTUBBLE_CAUGHT,
+        PLAY_MANSTUBBLE_WALK,
+
+        PLAY_NAUGHTYBOY_FALL,
+        PLAY_NAUGHTYBOY_CAUGHT,
+        PLAY_NAUGHTYBOY_WALK,
+
+        PLAY_OLDMAN_FALL,
+        PLAY_OLDMAN_CAUGHT,
+        PLAY_OLDMAN_WALK,
+
+        PLAY_ROXANNE_FALL,
+        PLAY_ROXANNE_CAUGHT,
+        PLAY_ROXANNE_WALK,
         //PAUSE DIALOG------------------------------
         PAUSE_DIALOG_BACK,
         PAUSE_EXIT,

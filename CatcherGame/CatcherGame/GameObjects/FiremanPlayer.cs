@@ -19,14 +19,17 @@ namespace CatcherGame.GameObjects
         const int LEFT_MOVE_STEP = -5;
         const int RIGHT_MOVE_STEP = 5;
         bool isWalking; //是否移動
-        Net savedNet; //網子類別(Knows)
+        Net savedNet; //網子類別(Has)
         float init_x, init_y;
-        public FiremanPlayer(GameState currentGameState, int id, float x, float y,Net net)
+        public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
             Init();
             //取得網子
-            savedNet = net;
+
+            //數值待解決
+             savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
+             savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
         }
 
         protected override void Init()
@@ -35,9 +38,14 @@ namespace CatcherGame.GameObjects
             this.init_x = this.x = x;
             this.init_y = this.y = y;
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
+
             
         }
 
+        public void CheckIsCaught(List<DropObjects> fallingObjs) {
+            savedNet.CheckCollision(fallingObjs);
+            
+        }
 
         public override void LoadResource(TextureManager.TexturesKeyEnum key)
         {
@@ -69,12 +77,13 @@ namespace CatcherGame.GameObjects
                 this.Width = walkAnimation.GetCurrentFrameTexture().Width;
             
             }
-            
+            savedNet.Update();
         }
 
         public override void Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch)
         {
             walkAnimation.Draw(spriteBatch);
+            savedNet.Draw(spriteBatch);
         }
 
         //設定站立
@@ -120,7 +129,9 @@ namespace CatcherGame.GameObjects
                     {
                         walkAnimation.Dispose();
                     }
-
+                    if (savedNet != null) {
+                        savedNet.Dispose();
+                    }
                     Console.WriteLine("FirePlayer disposed.");
                 }
             }

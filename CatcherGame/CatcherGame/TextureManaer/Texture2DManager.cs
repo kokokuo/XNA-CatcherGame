@@ -53,6 +53,12 @@ namespace CatcherGame.TextureManager
             LoadPlayDie();
             LoadPlayFlyOldLady();
             LoadPlayFatDance();
+            LoadPlayLittleGirl();
+            LoadPlayManStubble();
+            LoadPlayNaughtyBoy();
+            LoadPlayOldMan();
+            LoadPlayRoxanne();
+
 
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
@@ -424,6 +430,171 @@ namespace CatcherGame.TextureManager
                 _dictionary.Add(walkkey, texture2Ds);
             }
         }
+
+        //遊戲中的小女孩
+        private void LoadPlayLittleGirl()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_LITTLEGIRL_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlfall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlfall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_LITTLEGIRL_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlhavecaught"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_LITTLEGIRL_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlrun1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlrun2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/littlegirl/littlegirlrun3"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //遊戲中的男人
+        private void LoadPlayManStubble()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_MANSTUBBLE_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblefall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblefall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_MANSTUBBLE_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblehavecaught"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_MANSTUBBLE_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblerun1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblerun2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/manstubble/manstubblerun3"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //遊戲中的小男孩
+        private void LoadPlayNaughtyBoy()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_NAUGHTYBOY_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_fall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_fall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_NAUGHTYBOY_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_caught"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_floor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_NAUGHTYBOY_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_run1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_run2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/naughtyboy/naughtyboy_run3"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //遊戲中的老人
+        private void LoadPlayOldMan()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_OLDMAN_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanfall1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanfall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_OLDMAN_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmancaught"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanfloor"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_OLDMAN_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanrun1"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanrun2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/oldman/oldmanrun3"));
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
+        //遊戲中的老人
+        private void LoadPlayRoxanne()
+        {
+            TexturesKeyEnum fallkey = TexturesKeyEnum.PLAY_ROXANNE_FALL;
+            if (!_dictionary.ContainsKey(fallkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxannefall"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxannefall2"));
+                _dictionary.Add(fallkey, texture2Ds);
+            }
+
+            TexturesKeyEnum catchkey = TexturesKeyEnum.PLAY_ROXANNE_CAUGHT;
+            if (!_dictionary.ContainsKey(catchkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxannehave_caught"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxanne_floor"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxanne_floor2"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxanne_floor3"));
+                _dictionary.Add(catchkey, texture2Ds);
+            }
+
+
+            TexturesKeyEnum walkkey = TexturesKeyEnum.PLAY_ROXANNE_WALK;
+            if (!_dictionary.ContainsKey(walkkey))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/roxanne/roxanne_run"));
+                
+                _dictionary.Add(walkkey, texture2Ds);
+            }
+        }
+
 
         //暫停對話框---------------------------------------------------------------------------
 

@@ -23,10 +23,12 @@ namespace CatcherGame.GameObjects
         List<int> willRemoveObjectId;
         bool isCaught; //用來讓網子在接觸到物體時可以撥放網子往下凹的效果動畫,而做的判斷值
         float init_x, init_y;
-        public Net(GameState currentGameState, int id, float x, float y)
+        FiremanPlayer player;
+        public Net(GameState currentGameState, int id, float x, float y,FiremanPlayer player)
             : base(currentGameState, id, x, y) 
         {
             Init();
+            this.player = player; //知道消防員
         }
 
         protected override void Init()
