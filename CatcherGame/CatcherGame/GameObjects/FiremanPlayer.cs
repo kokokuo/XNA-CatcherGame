@@ -12,8 +12,13 @@ using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
+    public delegate void ValueUpdateEventHandler(int newValue);
+
     public class FiremanPlayer : GameObject
     {
+        public event ValueUpdateEventHandler SaveNewPerson;
+        public event ValueUpdateEventHandler lostPerson;
+
         AnimationSprite walkAnimation;
         //移動步伐
         const int LEFT_MOVE_STEP = -5;
@@ -21,6 +26,9 @@ namespace CatcherGame.GameObjects
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
+
+        int savePeopleNumber;
+        int lostPeopleNumber;
         public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
@@ -39,12 +47,35 @@ namespace CatcherGame.GameObjects
             this.init_y = this.y = y;
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
 
-            
+            savePeopleNumber = 0;
+            lostPeopleNumber = 3;
         }
 
+        /// <summary>
+        /// 累加新的Person
+        /// </summary>
+        public void AddSavedPerson(){
+            savePeopleNumber++;
+            //觸發事件
+            if (SaveNewPerson != null){
+                SaveNewPerson.Invoke(savePeopleNumber);
+            }
+        }
+        /// <summary>
+        /// 扣掉能冗忍的漏接人數
+        /// </summary>
+        public void SubstractCanLostPerson() {
+            lostPeopleNumber--;
+            if (lostPerson != null) {
+                lostPerson.Invoke(lostPeopleNumber);
+            }
+        }
+        /// <summary>
+        /// 確認掉落的所有元件有無接觸到網子
+        /// </summary>
+        /// <param name="fallingObjs"></param>
         public void CheckIsCaught(List<DropObjects> fallingObjs) {
-            savedNet.CheckCollision(fallingObjs);
-            
+            savedNet.CheckCollision(fallingObjs);    
         }
 
         public override void LoadResource(TextureManager.TexturesKeyEnum key)
