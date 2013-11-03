@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Media;
 using System.Threading;
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates;
+using CatcherGame.FontManager;
 
 using System.Diagnostics;
 
@@ -34,6 +35,9 @@ namespace CatcherGame
 
         //圖片管理器
         Texture2DManager texture2DManager;
+
+        //文字管理器
+        SpriteFontManager fontManager;
 
         //現在這張frame所擁有的所有觸控點集合
         TouchCollection currtenTouchCollection;
@@ -74,6 +78,7 @@ namespace CatcherGame
         protected override void Initialize()
         {
             // TODO: 在此新增初始化邏輯
+            fontManager = new SpriteFontManager(this);
             texture2DManager = new Texture2DManager(this);
             pCurrentScreenState = gameStateTable[GameStateEnum.STATE_MENU];
             pCurrentScreenState.BeginInit();
@@ -152,15 +157,34 @@ namespace CatcherGame
         public TouchLocation GetTouchLocation() {
             return touchQueue.Dequeue();
         }
+
+        /// <summary>
+        /// 取得當下觸碰畫面的所有觸控點
+        /// </summary>
+        /// <returns></returns>
         public TouchCollection GetCurrentFrameTouchCollection() {
             return currtenTouchCollection;
         }
 
+        /// <summary>
+        /// 取得對應Key的圖片集
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
         public List<Texture2D> GetTexture2DList(TexturesKeyEnum key)
         {
             return texture2DManager.GetTexture2DList(key);
         }
 
+        /// <summary>
+        /// 取得文字資源
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public SpriteFont GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum key) {
+
+            return fontManager.GetSpriteFontFromKey(key);
+        }
 
         public void SetNextGameState(GameStateEnum nextStateKey) {
             //切換遊戲狀態

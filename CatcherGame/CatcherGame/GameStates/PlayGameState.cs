@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using CatcherGame.GameObjects;
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates.Dialog;
-
+using CatcherGame.FontManager;
 
 namespace CatcherGame.GameStates
 {
@@ -27,7 +27,12 @@ namespace CatcherGame.GameStates
 
         int objIdCount;
         FiremanPlayer player;
-        
+        int lostPeopleNumber;
+        int savedPeopleNumber;
+
+        //文字資源
+        SpriteFont savedPeopleNumberFont;
+        SpriteFont lostPeopleNumberFont;
 
         //純粹圖片,無任何邏輯運算
         TextureLayer smokeTexture;
@@ -58,13 +63,15 @@ namespace CatcherGame.GameStates
         {
            
             objIdCount = 0;
-            
+            lostPeopleNumber = 3;
+            savedPeopleNumber = 0;
             pauseButton = new Button(this, objIdCount++, 0, 0);
             leftMoveButton = new Button(this, objIdCount++, 0, 355);
             rightMoveButton = new Button(this, objIdCount++, 700, 355);
 
             player = new FiremanPlayer(this, objIdCount++, FIREMAN_INIT_X, FIREMAN_INIT_Y);
-            
+            player.SaveNewPerson +=player_SaveNewPerson;
+
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
@@ -126,6 +133,11 @@ namespace CatcherGame.GameStates
             base.isInit = true;
         }
 
+        private void player_SaveNewPerson(int newValue)
+        {
+            savedPeopleNumber = newValue;
+        }
+
         //釋放遊戲中的所有資料
         public void Release() {
             FallingObjects.Clear();
@@ -133,6 +145,11 @@ namespace CatcherGame.GameStates
             lifeTexture.Dispose();
             scoreTexture.Dispose();
             willRemoveObjectId.Clear();
+            //指向NULL
+            savedPeopleNumberFont = null;
+            lostPeopleNumberFont = null;
+            //取消事件訂閱
+            player.SaveNewPerson -= player_SaveNewPerson;
             foreach (GameObject obj in gameObjects) {
                 obj.Dispose();
             }
@@ -140,9 +157,22 @@ namespace CatcherGame.GameStates
             base.isInit  = false;
         }
 
+        public void SubtractCanLostPeopleNumber() {
+            this.lostPeopleNumber--;
+            if (this.lostPeopleNumber <= 0) {
+                //Release();
+                //遊戲結束
+                Debug.WriteLine("Game Over...");
+                //切換到遊戲結束的畫面
+            }
+        }
 
         public override void LoadResource()
         {
+            //載入文字
+            savedPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum.PLAY_SAVED_PEOPLE_FONT);
+            lostPeopleNumberFont = base.GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum.PLAT_LOST_PEOPLE_FONT);
+
             //載入圖片
             base.background = base.GetTexture2DList(TexturesKeyEnum.PLAY_BACKGROUND)[0];
             pauseButton.LoadResource(TexturesKeyEnum.PLAY_PAUSE_BUTTON);
@@ -262,6 +292,10 @@ namespace CatcherGame.GameStates
             smokeTexture.Draw(this.GetSpriteBatch());
             lifeTexture.Draw(this.GetSpriteBatch());
             scoreTexture.Draw(this.GetSpriteBatch());
+            //繪製文字資源
+            //座標位置有待調整為動態
+            gameSateSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(),new Vector2(40,130) ,Color.White);
+            gameSateSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(),new Vector2(765,10), Color.White);
         }
 
 

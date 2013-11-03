@@ -190,8 +190,12 @@ namespace CatcherGame.GameObjects
                 //往上飄
                 this.y -= DEAD_FLY_UP_SPEED;
                 if (IsOuterGameScreenBorder()) {
+                    
+                    //告知遊戲可以漏接的人數減少
+                    ((PlayGameState)this.gameState).SubtractCanLostPeopleNumber();
                     //移除自己
                     ((PlayGameState)this.gameState).RemoveGameObject(this.id);
+                    
                 }
             }
 

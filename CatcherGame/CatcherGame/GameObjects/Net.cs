@@ -19,7 +19,7 @@ namespace CatcherGame.GameObjects
     public class Net : GameObject
     {
         AnimationSprite netStateAnimation; //網子動畫
-        int savedPeopleNumber;
+        
         List<int> willRemoveObjectId;
         bool isCaught; //用來讓網子在接觸到物體時可以撥放網子往下凹的效果動畫,而做的判斷值
         FiremanPlayer player;
@@ -35,7 +35,7 @@ namespace CatcherGame.GameObjects
             this.x = x;
             this.y = y;
             netStateAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
-            savedPeopleNumber = 0;
+            
             willRemoveObjectId = new List<int>();
             isCaught = false;
            
@@ -95,7 +95,9 @@ namespace CatcherGame.GameObjects
                         //如果是People的Type
                         if (obj is People)
                         {
-                            savedPeopleNumber++;
+                           
+                            //累加拯救到的人數
+                            player.AddSavedPerson();
                         }
 
                         RemoveDropObject(obj.Id);

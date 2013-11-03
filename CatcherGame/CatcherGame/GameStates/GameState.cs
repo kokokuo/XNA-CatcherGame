@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework.Media;
 using CatcherGame.GameObjects;
 using CatcherGame.GameStates.Dialog;
 using CatcherGame.TextureManager;
+using CatcherGame.FontManager;
 
 namespace CatcherGame.GameStates
 {
@@ -248,6 +249,17 @@ namespace CatcherGame.GameStates
         /// <param name="key">下一個狀態的Enum key</param>
         public void SetNextGameSateByMain(GameStateEnum key) {
             this.mainGame.SetNextGameState(key);
+        }
+
+        /// <summary>
+        /// 取得文字資源
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public SpriteFont GetSpriteFontFromKeyByGameState(SpriteFontKeyEnum key)
+        {
+
+            return mainGame.GetSpriteFontFromKeyByMainGame(key);
         }
     }
 }

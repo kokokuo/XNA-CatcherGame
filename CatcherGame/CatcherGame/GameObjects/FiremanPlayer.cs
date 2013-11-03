@@ -17,7 +17,7 @@ namespace CatcherGame.GameObjects
     public class FiremanPlayer : GameObject
     {
         public event ValueUpdateEventHandler SaveNewPerson;
-        public event ValueUpdateEventHandler lostPerson;
+      
 
         AnimationSprite walkAnimation;
         //移動步伐
@@ -28,14 +28,14 @@ namespace CatcherGame.GameObjects
         float init_x, init_y;
 
         int savePeopleNumber;
-        int lostPeopleNumber;
+      
         public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
             Init();
             //取得網子
 
-            //數值待解決
+            //數值待解決(改為依裝置吃尺寸去調整)
              savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
              savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
         }
@@ -48,7 +48,7 @@ namespace CatcherGame.GameObjects
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
 
             savePeopleNumber = 0;
-            lostPeopleNumber = 3;
+           
         }
 
         /// <summary>
@@ -61,15 +61,7 @@ namespace CatcherGame.GameObjects
                 SaveNewPerson.Invoke(savePeopleNumber);
             }
         }
-        /// <summary>
-        /// 扣掉能冗忍的漏接人數
-        /// </summary>
-        public void SubstractCanLostPerson() {
-            lostPeopleNumber--;
-            if (lostPerson != null) {
-                lostPerson.Invoke(lostPeopleNumber);
-            }
-        }
+       
         /// <summary>
         /// 確認掉落的所有元件有無接觸到網子
         /// </summary>
