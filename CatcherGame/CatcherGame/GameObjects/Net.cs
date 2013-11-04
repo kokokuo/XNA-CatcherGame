@@ -93,7 +93,7 @@ namespace CatcherGame.GameObjects
                         obj.SetCaught();  //設定為拯救到
             
                         //如果是People的Type
-                        if (obj is People)
+                        if (obj is Creature)
                         {
                            
                             //累加拯救到的人數

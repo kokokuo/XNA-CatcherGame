@@ -41,6 +41,7 @@ namespace CatcherGame
 
         //現在這張frame所擁有的所有觸控點集合
         TouchCollection currtenTouchCollection;
+        private bool isMessageBoxShow = false;
 
         public MainGame()
         {
@@ -109,6 +110,21 @@ namespace CatcherGame
             // TODO: 在此解除載入任何非 ContentManager 內容
         }
 
+        //離開遊戲處理
+        private void userSelected(IAsyncResult result)
+        {
+            this.isMessageBoxShow = false;
+
+            if (!result.IsCompleted)
+                return;
+
+            int? index = Guide.EndShowMessageBox(result);
+
+            if (index.HasValue && index.Value == 0)
+                this.Exit();
+
+
+        }
         /// <summary>
         /// 允許遊戲執行如更新世界、
         /// 檢查衝突、收集輸入和播放音訊的邏輯。
@@ -116,10 +132,16 @@ namespace CatcherGame
         /// <param name="gameTime">提供時間值的快照。</param>
         protected override void Update(GameTime gameTime)
         {
-            // 允許遊戲結束
+            // 允許遊戲結束 預設方法
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-            
+
+            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && !this.isMessageBoxShow)
+            //{
+            //    this.isMessageBoxShow = true;
+            //    Guide.BeginShowMessageBox("Exit", "Do you want to exit?", new string[] { "Yes", "No" }, 1, MessageBoxIcon.None, new AsyncCallback(this.userSelected), null);
+            //}
+
             // TODO: 在此新增您的更新邏輯
             
             TouchCollection tc = TouchPanel.GetState();

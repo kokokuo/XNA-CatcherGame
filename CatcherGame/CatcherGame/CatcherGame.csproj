@@ -66,10 +66,12 @@
   <ItemGroup>
     <Compile Include="FontManager\SpriteFontKeyEnum.cs" />
     <Compile Include="FontManager\FontSpriteManager.cs" />
+    <Compile Include="GameObjects\CreatureDataRecord.cs" />
     <Compile Include="GameObjects\DropObjects.cs" />
     <Compile Include="GameObjects\FiremanPlayer.cs" />
+    <Compile Include="GameObjects\DropObjectDataRecord.cs" />
     <Compile Include="GameObjects\Net.cs" />
-    <Compile Include="GameObjects\People.cs" />
+    <Compile Include="GameObjects\Creature.cs" />
     <Compile Include="GameObjects\TextureLayer.cs" />
     <Compile Include="GameStates\Dialog\DialogGameObjectEnum.cs" />
     <Compile Include="GameStates\Dialog\PauseDialog.cs" />

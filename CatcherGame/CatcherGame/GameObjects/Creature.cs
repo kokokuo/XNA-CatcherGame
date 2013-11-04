@@ -13,7 +13,10 @@ using CatcherGame.TextureManager;
 
 namespace CatcherGame.GameObjects
 {
-    public class People : DropObjects
+    /// <summary>
+    /// 有生命的掉落物體:人 動物
+    /// </summary>
+    public class Creature : DropObjects
     {
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
@@ -36,7 +39,7 @@ namespace CatcherGame.GameObjects
         /// <param name="fallingWave">擺動的位移量(數值應為正)</param>
         /// <param name="walkSpeed"></param>
         /// <param name="orienation">移動的方向(0為左邊,1為右邊)</param>
-        public People(GameState currentGameState, int id, float x, float y, float fallingSpeed, float fallingWave, float walkSpeed, int orienation)
+        public Creature(GameState currentGameState, int id, float x, float y, float fallingSpeed, float fallingWave, float walkSpeed, int orienation)
             : base(currentGameState, id, x, y, fallingSpeed, fallingWave) 
         { 
             Init();

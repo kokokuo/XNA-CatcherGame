@@ -39,14 +39,15 @@ namespace CatcherGame.GameStates
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
         List<DropObjects> FallingObjects;
-        People oldLady; //test
-        People fatDance; //test2
-        People littleGirl;
-        People manStubble;
-        People naughtyBoy;
-        People oldMan;
-        People roxanne; 
-
+        Creature oldLady; //test
+        Creature fatDance; //test2
+        Creature littleGirl;
+        Creature manStubble;
+        Creature naughtyBoy;
+        Creature oldMan;
+        Creature roxanne;
+       
+       
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
@@ -56,12 +57,14 @@ namespace CatcherGame.GameStates
             willRemoveObjectId = new List<int>();
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
+
+            
         }
-
-
+        
         public override void BeginInit()
         {
            
+
             objIdCount = 0;
             lostPeopleNumber = 3;
             savedPeopleNumber = 0;
@@ -75,14 +78,14 @@ namespace CatcherGame.GameStates
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
             scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
-            oldLady = new People(this, objIdCount++, 170, 0, 3, 0, 3, 1);
-            fatDance = new People(this, objIdCount++, 200, -50, 2, 0, 3, 0);
+            oldLady = new Creature(this, objIdCount++, 170, 0, 3, 0, 3, 1);
+            fatDance = new Creature(this, objIdCount++, 200, -50, 2, 0, 3, 0);
 
-            littleGirl = new People(this, objIdCount++, 250, -50, 4, 0, 3, 1);
-            manStubble = new People(this, objIdCount++, 270, -20, 4, 0, 3, 0);
-            naughtyBoy = new People(this, objIdCount++, 320, -10, 4, 0, 3, 1);
-            oldMan = new People(this, objIdCount++, 360, -10, 4, 0, 3, 1);
-            roxanne = new People(this, objIdCount++, 400, -10, 6, 0, 6, 1);
+            littleGirl = new Creature(this, objIdCount++, 250, -50, 4, 0, 3, 1);
+            manStubble = new Creature(this, objIdCount++, 270, -20, 4, 0, 3, 0);
+            naughtyBoy = new Creature(this, objIdCount++, 320, -10, 4, 0, 3, 1);
+            oldMan = new Creature(this, objIdCount++, 360, -10, 4, 0, 3, 1);
+            roxanne = new Creature(this, objIdCount++, 400, -10, 6, 0, 6, 1);
 
             //test
             AddGameObject(oldLady);

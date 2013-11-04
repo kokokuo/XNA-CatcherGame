@@ -14,7 +14,7 @@ namespace CatcherGame.GameStates
     public class GameStartComicState :GameState
     {
         float totaleEapsed;
-        const float defaultElapsedTime = 2000;
+        const float defaultElapsedTime = 2000; //2秒
         public GameStartComicState(MainGame gMainGame)
             : base(gMainGame)
         {
