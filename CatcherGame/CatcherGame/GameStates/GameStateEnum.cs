@@ -8,7 +8,7 @@ namespace CatcherGame.GameStates
     public enum GameStateEnum{
         STATE_MENU = 0,
         STATE_PLAYGAME,      
-        STATE_STORY_ANIMATION,
+        STATE_START_COMIC,
         STATE_GAME_OVER,
         TOTAL_STATE_NUMBER
     }

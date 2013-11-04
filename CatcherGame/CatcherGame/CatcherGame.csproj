@@ -73,6 +73,7 @@
     <Compile Include="GameObjects\TextureLayer.cs" />
     <Compile Include="GameStates\Dialog\DialogGameObjectEnum.cs" />
     <Compile Include="GameStates\Dialog\PauseDialog.cs" />
+    <Compile Include="GameStates\GameStartComicState.cs" />
     <Compile Include="GameStates\PlayGameState.cs" />
     <Compile Include="Sprite\AnimationSprite.cs" />
     <Compile Include="GameObjects\Button.cs" />

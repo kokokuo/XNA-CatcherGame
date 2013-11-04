@@ -119,8 +119,8 @@ namespace CatcherGame.GameStates
                     if (!(isClickPlay && isClickDictionary && isClickTopScore && isClickHowToPlay)){
                         //如果isClickPlay有點擊,並且另外三個按鈕中沒有任何一個被點擊
                         if (isClickPlay && !(isClickDictionary || isClickTopScore || isClickHowToPlay)) {
-                            Debug.WriteLine("CLICK!! STATE_STORY_ANIMATION");
-                            SetNextGameSateByMain(GameStateEnum.STATE_PLAYGAME);
+                            Debug.WriteLine("CLICK!! STATE_START_COMIC");
+                            SetNextGameSateByMain(GameStateEnum.STATE_START_COMIC);
                         }
                         else if (isClickDictionary && !(isClickPlay || isClickTopScore || isClickHowToPlay)) {
                             Debug.WriteLine("CLICK!! STATE_DICTIONARY");

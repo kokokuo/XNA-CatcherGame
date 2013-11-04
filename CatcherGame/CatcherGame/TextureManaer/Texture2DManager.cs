@@ -40,6 +40,10 @@ namespace CatcherGame.TextureManager
             //載入最高分對話框所用的圖像資源
             LoadTopScoreDialogBackground();
 
+
+            //載入開頭動畫
+            LoadGameStartComic();
+
             //載入遊戲中的資源
             LoadPlayBackground();
             LoadPlayGamePauseButton();
@@ -231,6 +235,19 @@ namespace CatcherGame.TextureManager
                 texture2Ds.Add(mainGame.Content.Load<Texture2D>("TopScore/top_score_back"));
                 _dictionary.Add(key, texture2Ds);
             }
+        }
+
+        //遊戲開場動畫----------------------------------------------------------------
+        private void LoadGameStartComic()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.GAME_START_COMIC_BACK;
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("StartComic/comic800"));
+                _dictionary.Add(key, texture2Ds);
+            }
+
         }
 
         //遊戲中元件--------------------------------------------------------

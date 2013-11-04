@@ -24,6 +24,9 @@ namespace CatcherGame.TextureManager
         DIALOG_LEFT_BUTTON,
         DIALOG_RIGHT_BUTTON,
 
+        GAME_START_COMIC_BACK,
+
+        //PALY GAME----------------------------
         PLAY_BACKGROUND,
         PLAY_FIREMAN,
         PLAY_LEFT_MOVE_BUTTON,

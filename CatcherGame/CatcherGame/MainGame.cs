@@ -59,6 +59,7 @@ namespace CatcherGame
             //遊戲狀態表
             gameStateTable = new Dictionary<GameStateEnum,GameState>();
             gameStateTable.Add(GameStateEnum.STATE_MENU,new HomeMenuState(this));
+            gameStateTable.Add(GameStateEnum.STATE_START_COMIC, new GameStartComicState(this));
             gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, new PlayGameState(this));
 
             //設定水平橫向時的座標
