@@ -68,6 +68,7 @@
     <Compile Include="FontManager\FontSpriteManager.cs" />
     <Compile Include="GameObjects\CreatureDataRecord.cs" />
     <Compile Include="GameObjects\DropObjects.cs" />
+    <Compile Include="GameObjects\DropObjectsKeyEnum.cs" />
     <Compile Include="GameObjects\FiremanPlayer.cs" />
     <Compile Include="GameObjects\DropObjectDataRecord.cs" />
     <Compile Include="GameObjects\Net.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="GameStates\Dialog\PauseDialog.cs" />
     <Compile Include="GameStates\GameStartComicState.cs" />
     <Compile Include="GameStates\PlayGameState.cs" />
+    <Compile Include="RandGenerateDropObjsSystem.cs" />
     <Compile Include="Sprite\AnimationSprite.cs" />
     <Compile Include="GameObjects\Button.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
