@@ -10,14 +10,20 @@ namespace CatcherGame.GameObjects
     /// </summary>
     public class CreatureDataRecord : DropObjectDataRecord
     {
-        public CreatureDataRecord(DropObjectsKeyEnum dropObjKey,float probability, List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue, int walkOrienation)
+        public CreatureDataRecord(DropObjectsKeyEnum dropObjKey,float probability, List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue,float walkSpeed, int walkOrienation)
             : base(dropObjKey, probability, texturesKey, fallSpeed, waveValue)
         {
             WalkOrienation = walkOrienation;
+            WalkSpeed = walkSpeed;
         }
         /// <summary>
         /// 被接到後行走的方向 (左邊是0,右邊是1)
         /// </summary>
         public int WalkOrienation { get; set; }
+
+        /// <summary>
+        /// 行走的速度
+        /// </summary>
+        public float WalkSpeed { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace CatcherGame.GameStates
         Button howToPlayButtion;
         TextureLayer menuSide;
        
-        int objIdCount;
+        
 
         public HomeMenuState(MainGame gMainGame)
             : base(gMainGame) {
@@ -64,9 +64,7 @@ namespace CatcherGame.GameStates
 
         public override void BeginInit()
         {
-           
-            
-            objIdCount = 0;
+            base.objIdCount = 0;
             playButton = new Button(this, objIdCount++,0,0);
             
             topScoreButton = new Button(this, objIdCount++, 0, 0);

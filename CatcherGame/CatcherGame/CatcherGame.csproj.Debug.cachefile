@@ -23,6 +23,9 @@ Content\Play\net2.xnb
 Content\Pause\exit.xnb
 Content\Pause\continue.xnb
 Content\Pause\pause_back.xnb
+Content\Dialog\Dictionary\dictionary_back.xnb
+Content\Dialog\left_button.xnb
+Content\Dialog\right_button.xnb
 Content\Play\pause_bigger.xnb
 Content\Play\flyoldlady\flyoldlady_caught.xnb
 Content\Play\flyoldlady\flyoldlady_fall1.xnb
@@ -38,15 +41,12 @@ Content\Play\fatdance\fatdancerfall2.xnb
 Content\Play\fatdance\fatdancerfloor.xnb
 Content\Play\fatdance\fatdancerrun1.xnb
 Content\Play\fatdance\fatdancerrun2.xnb
-Content\Play\die.xnb
-Content\Play\die_2.xnb
-Content\Dialog\Dictionary\dictionary_back.xnb
-Content\Dialog\left_button.xnb
-Content\Dialog\right_button.xnb
 Content\Dialog\Dictionary\dictionary_littlegirl.xnb
 Content\Dialog\Dictionary\dictionary_littlegirl_intro.xnb
 Content\Dialog\Dictionary\dictionary_nicole.xnb
 Content\Dialog\Dictionary\dictionary_nicole_intro.xnb
+Content\Play\die.xnb
+Content\Play\die_2.xnb
 Content\Dialog\Howtoplay\howtoplay_page1.xnb
 Content\Dialog\Howtoplay\howtoplay_page2.xnb
 Content\Dialog\Howtoplay\howtoplay_page3.xnb

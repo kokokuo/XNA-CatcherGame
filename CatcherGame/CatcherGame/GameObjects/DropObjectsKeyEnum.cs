@@ -7,7 +7,8 @@ namespace CatcherGame.GameObjects
 {
     public enum DropObjectsKeyEnum
     {
-        PERSON_FAT_DANCE = 0,
+        EMPTY = 0,
+        PERSON_FAT_DANCE,
         PERSON_FLY_OLDLADY,
         PERSON_LITTLE_GIRL,
         PERSON_MAN_STUBBLE,

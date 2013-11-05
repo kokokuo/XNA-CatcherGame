@@ -35,7 +35,7 @@ namespace CatcherGame.GameStates
         protected Texture2D background; //此遊戲狀態的背景圖
         protected Vector2 backgroundPos;
         protected float leftGameScreenBorder,rightGameScreenBorder; //遊戲狀態的左右邊界
-
+        protected int objIdCount;
         /// <summary>
         /// 取得背景圖
         /// </summary>
@@ -44,7 +44,20 @@ namespace CatcherGame.GameStates
             return this.background;
         }
 
-
+        /// <summary>
+        /// 取得目前遊戲中的Id值
+        /// </summary>
+        /// <returns></returns>
+        public int GetObjId()
+        {
+            return this.objIdCount;
+        }
+        /// <summary>
+        /// 累加ID
+        /// </summary>
+        public void AddObjId() {
+            this.objIdCount++;
+        }
         /// <summary>
         /// 取得遊戲螢幕的左邊邊框值
         /// </summary>
