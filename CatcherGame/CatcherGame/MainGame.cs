@@ -209,6 +209,8 @@ namespace CatcherGame
             return fontManager.GetSpriteFontFromKey(key);
         }
 
+      
+
         public void SetNextGameState(GameStateEnum nextStateKey) {
             //切換遊戲狀態
             pCurrentScreenState = gameStateTable[nextStateKey];

@@ -144,6 +144,7 @@ namespace CatcherGame.GameStates
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
             {
+                //如果初始化過就不再初始化
                 if (!dialog.Value.GetGameDialogHasInit)
                 {
                     dialog.Value.BeginInit();
@@ -260,10 +261,11 @@ namespace CatcherGame.GameStates
 
         public override void Update()
         {
-            randSys.UpdateTime(this.GetTimeSpan());
-
+            //如果沒有談出對話框->處理遊戲邏輯
             if (!base.hasDialogShow)
             {
+                randSys.UpdateTime(this.GetTimeSpan());　//隨機系統更新時間
+
                 TouchCollection tc = base.GetCurrentFrameTouchCollection();
                 bool isMoveRight,isMoveLeft,isClickPause;
                 isClickPause = isMoveLeft = isMoveRight = false;
