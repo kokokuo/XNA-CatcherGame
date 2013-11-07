@@ -146,46 +146,45 @@ namespace CatcherGame.GameStates.Dialog
 
 
 
-                    //按鈕方式1
-                    if (isLeftButton)
-                    {
-                        if ((int)gtCurrent > roleStart)
-                            gtCurrent--;
-                    }
-                    if (isRightButton)
-                    {
-                        if ((int)gtCurrent < roleEnd)
-                            gtCurrent++;
-                    }
-
-
-
-                    ////按鈕方式2
-                    ////使用觸控單次點擊方式
-                    //TouchLocation tL = base.currentState.GetTouchLocation();
-                    //if (tL.State == TouchLocationState.Released)
+                    ////按鈕方式1
+                    //if (isLeftButton)
                     //{
-
-                    //    //左邊按鈕
-                    //    if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
-                    //    {
-                    //        if ((int)gtCurrent > roleStart)
-                    //            gtCurrent--;
-                    //        Debug.WriteLine(gtCurrent);
-                    //    }
-
-                    //    //右邊按鈕
-                    //    if (rightButton.IsPixelClick(tL.Position.X, tL.Position.Y))
-                    //    {
-                    //        if ((int)gtCurrent < roleEnd)
-                    //            gtCurrent++;
-                    //        Debug.WriteLine(gtCurrent);
-                    //    }
-
+                    //    if ((int)gtCurrent > roleStart)
+                    //        gtCurrent--;
                     //}
-                    
+                    //if (isRightButton)
+                    //{
+                    //    if ((int)gtCurrent < roleEnd)
+                    //        gtCurrent++;
+                    //}
 
 
+
+                    //按鈕方式2
+                    //使用觸控單次點擊方式
+                    TouchLocation tL = base.currentState.GetTouchLocation();
+                    if (tL.State == TouchLocationState.Released)
+                    {
+
+                        //左邊按鈕
+                        if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        {
+                            if ((int)gtCurrent > roleStart)
+                                gtCurrent--;
+                            Debug.WriteLine(gtCurrent);
+                        }
+
+                        //右邊按鈕
+                        if (rightButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        {
+                            if ((int)gtCurrent < roleEnd)
+                                gtCurrent++;
+                            Debug.WriteLine(gtCurrent);
+                        }
+                    }
+
+                    //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
+                    base.currentState.ClearTouchQueue();
                 }
             }
 

@@ -173,6 +173,14 @@ namespace CatcherGame
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// 清除TouchQueue裡面的所有狀態
+        /// </summary>
+        public void ClearTouchQueue()
+        {
+            touchQueue.Clear();
+        }
+
         public bool IsEmptyQueue() {
             if (touchQueue.Count != 0) return false;
             else return true;

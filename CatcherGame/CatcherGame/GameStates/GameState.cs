@@ -274,5 +274,14 @@ namespace CatcherGame.GameStates
 
             return mainGame.GetSpriteFontFromKeyByMainGame(key);
         }
+
+
+        /// <summary>
+        /// 透過mainGame清除TouchQueue裡面的所有狀態
+        /// </summary>
+        public void ClearTouchQueue()
+        {
+            mainGame.ClearTouchQueue();
+        }
     }
 }

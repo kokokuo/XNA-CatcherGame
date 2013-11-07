@@ -99,41 +99,43 @@ namespace CatcherGame.GameStates.Dialog
                         base.CloseDialog(); //透過父類別來關閉
                     }
 
-                    //按鈕方式1
-                    if (isLeftButton)
-                    {
-                        if ((int)gtCurrent > pageStart)
-                            gtCurrent--;
-                    }
-                    if (isRightButton)
-                    {
-                        if ((int)gtCurrent < pageEnd)
-                            gtCurrent++;
-                    }
+                    ////按鈕方式1
+                    //if (isLeftButton)
+                    //{
+                    //    if ((int)gtCurrent > pageStart)
+                    //        gtCurrent--;
+                    //}
+                    //if (isRightButton)
+                    //{
+                    //    if ((int)gtCurrent < pageEnd)
+                    //        gtCurrent++;
+                    //}
 
 
                     //按鈕方式2
                     //使用觸控單次點擊方式
-                    //TouchLocation tL = base.currentState.GetTouchLocation();
-                    //if (tL.State == TouchLocationState.Released)
-                    //{
+                    TouchLocation tL = base.currentState.GetTouchLocation();
+                    if (tL.State == TouchLocationState.Released)
+                    {
 
-                    //    左邊按鈕
-                    //    if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
-                    //    {
-                    //        if ((int)gtCurrent > pageStart)
-                    //            gtCurrent--;
+                        //左邊按鈕
+                        if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        {
+                            if ((int)gtCurrent > pageStart)
+                                gtCurrent--;
 
-                    //    }
+                        }
 
-                    //    右邊按鈕
-                    //    if (rightButton.IsPixelClick(tL.Position.X, tL.Position.Y))
-                    //    {
-                    //        if ((int)gtCurrent < pageEnd)
-                    //            gtCurrent++;
-                    //    }
-                    //}
+                        //右邊按鈕
+                        if (rightButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        {
+                            if ((int)gtCurrent < pageEnd)
+                                gtCurrent++;
+                        }
+                    }
 
+                    //清除TouchQueue裡的觸控點，因為避免Dequeue時候並不在Dialog中，因此要清除TouchQueue。
+                    base.currentState.ClearTouchQueue();
 
                 }
             }
