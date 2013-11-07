@@ -44,13 +44,15 @@ namespace CatcherGame.GameStates.Dialog
             stCurrent = DialogStateEnum.STATE_HOW_TO_PLAY;
             gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
 
-            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE1,new GameObject []{page1Texture,rightButton});
-            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE2, new GameObject[] { page2Texture,leftButton,rightButton});
-            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE3, new GameObject[] { page3Texture ,leftButton});
+            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE1,new GameObject []{page1Texture});
+            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE2, new GameObject[] { page2Texture });
+            AddgameObject(DialogGameObjectEnum.HOWTOPLAY_PAGE3, new GameObject[] { page3Texture });
 
             AddObjectTable(DialogStateEnum.STATE_HOW_TO_PLAY, GetDialogGameObject);
 
             AddGameObject(closeButton);
+            AddGameObject(leftButton);
+            AddGameObject(rightButton);
             base.isInit=true;
 
 
@@ -96,6 +98,19 @@ namespace CatcherGame.GameStates.Dialog
                     {                    
                         base.CloseDialog(); //透過父類別來關閉
                     }
+
+                    ////按鈕方式1
+                    //if (isLeftButton)
+                    //{
+                    //    if ((int)gtCurrent > pageStart)
+                    //        gtCurrent--;
+                    //}
+                    //if (isRightButton)
+                    //{
+                    //    if ((int)gtCurrent < pageEnd)
+                    //        gtCurrent++;
+                    //}
+
 
                     //按鈕方式2
                     //使用觸控單次點擊方式
