@@ -71,20 +71,18 @@ namespace CatcherGame.GameStates.Dialog
             gtCurrent = DialogGameObjectEnum.DICTIONARY_NICOLE;
 
             
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_NICOLE,new GameObject[]{nicoleTexture,nicoleIntroTexture});
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_LITTLEGIRL,new GameObject[]{littlegirlTexture,littlegirlIntroTexture});
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_FATDANCER, new GameObject[] { fatdancerTexture, fatdancerIntroTexture });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_FLYOLDLADY, new GameObject[] { flyoldladyTexture, flyoldladyIntroTexture });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_MANSTUBBLE, new GameObject[] { manstubbleTexture, manstubbleIntroTexture });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_NAUGHTYBOY, new GameObject[] { naughtyboyTexture, naughtyboyIntroTexture });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_OLDMAN, new GameObject[] { oldmanTexture, oldmanIntroTexture });
-            AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_NICOLE,new GameObject[]{nicoleTexture,nicoleIntroTexture,rightButton});
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_LITTLEGIRL,new GameObject[]{littlegirlTexture,littlegirlIntroTexture,leftButton,rightButton});
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_FATDANCER, new GameObject[] { fatdancerTexture, fatdancerIntroTexture ,leftButton,rightButton});
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_FLYOLDLADY, new GameObject[] { flyoldladyTexture, flyoldladyIntroTexture ,leftButton,rightButton});
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_MANSTUBBLE, new GameObject[] { manstubbleTexture, manstubbleIntroTexture,leftButton,rightButton });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_NAUGHTYBOY, new GameObject[] { naughtyboyTexture, naughtyboyIntroTexture,leftButton,rightButton });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_OLDMAN, new GameObject[] { oldmanTexture, oldmanIntroTexture,leftButton,rightButton });
+            AddgameObject(DialogGameObjectEnum.DICTIONARY_ROXANNE, new GameObject[] { roxanneTexture, roxanneIntroTexture,leftButton });
 
             AddObjectTable(DialogStateEnum.STATE_DICTIONARY, GetDialogGameObject);
 
             AddGameObject(closeButton);
-            AddGameObject(leftButton);
-            AddGameObject(rightButton);
             base.isInit = true;
         }
         public override void LoadResource()
@@ -142,24 +140,6 @@ namespace CatcherGame.GameStates.Dialog
                     if (isClickClose)
                         base.CloseDialog(); //透過父類別來關閉
 
-
-
-
-
-                    ////按鈕方式1
-                    //if (isLeftButton)
-                    //{
-                    //    if ((int)gtCurrent > roleStart)
-                    //        gtCurrent--;
-                    //}
-                    //if (isRightButton)
-                    //{
-                    //    if ((int)gtCurrent < roleEnd)
-                    //        gtCurrent++;
-                    //}
-
-
-
                     //按鈕方式2
                     //使用觸控單次點擊方式
                     TouchLocation tL = base.currentState.GetTouchLocation();
@@ -171,7 +151,6 @@ namespace CatcherGame.GameStates.Dialog
                         {
                             if ((int)gtCurrent > roleStart)
                                 gtCurrent--;
-                            Debug.WriteLine(gtCurrent);
                         }
 
                         //右邊按鈕
@@ -179,7 +158,6 @@ namespace CatcherGame.GameStates.Dialog
                         {
                             if ((int)gtCurrent < roleEnd)
                                 gtCurrent++;
-                            Debug.WriteLine(gtCurrent);
                         }
                     }
 
