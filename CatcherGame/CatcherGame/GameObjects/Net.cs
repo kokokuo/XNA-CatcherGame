@@ -80,8 +80,12 @@ namespace CatcherGame.GameObjects
         public void CheckCollision(List<DropObjects> dropObjs) {
             isCaught = false;
             foreach (DropObjects obj in dropObjs){
-                if ((obj.Y + obj.Height) <= (this.y + this.height) && (obj.Y + obj.Height) >= this.y
-                    && ((obj.X + (obj.Width / 2) >= this.x) && ((obj.X + (obj.Width / 2)) <= (this.x + this.Width))))
+                
+                bool currentYIsTouch = ( (obj.Y + obj.Height) <= (this.y + this.height ) && ( (obj.Y + obj.Height) >= this.y ) );
+                bool nextYIsTouch = (obj.GetNextFallingY() + obj.Height > (this.y + this.height) && obj.GetNextFallingY() <this.y) ;
+                bool XIsTouch = ((obj.X + (obj.Width / 2) >= this.x) && ((obj.X + (obj.Width / 2)) <= (this.x + this.Width)));
+                //角色的Y座標部分 現在由無在網子中,或是下次移動時有無在網子中 並且 X座標有在網子中
+                if ((currentYIsTouch || nextYIsTouch) && XIsTouch)
                 {
                     //如果掉落的物體沒有接觸到網子
                     if (!obj.GetIsTouch())
@@ -95,7 +99,6 @@ namespace CatcherGame.GameObjects
                         //如果是People的Type
                         if (obj is Creature)
                         {
-                           
                             //累加拯救到的人數
                             player.AddSavedPerson();
                         }

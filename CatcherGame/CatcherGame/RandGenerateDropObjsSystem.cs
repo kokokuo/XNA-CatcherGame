@@ -13,7 +13,7 @@ using CatcherGame.GameStates;
 namespace CatcherGame
 {
     public delegate void DropObjsTimeUpEventHandler(List<DropObjects> objs);
-    public class RandGenerateDropObjsSystem
+    public class RandGenerateDropObjsSystem : IDisposable
     {
         /// <summary>
         /// 產生角色的事件
@@ -29,9 +29,11 @@ namespace CatcherGame
         int nextGenerateTimes;
         int nextGenerateCreatureAmount;
         float leftBorder, rightBorder;
-        const int TEXTURE_MAX_WIDTH = 50;
+        const int TEXTURE_MAX_WIDTH = 100; //要調整
         const int MAX_HIGH_POS_Y = 70;
         GameState currentState;
+        private bool disposed;
+
         /// <summary>
         /// 載入所有掉落角色的資料
         /// </summary>
@@ -71,14 +73,14 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_LITTLEGIRL_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_LITTLEGIRL_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_LITTLEGIRL_WALK);
-            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_LITTLE_GIRL, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_LITTLE_GIRL, 0.45f, loadTexureKeys, 4f, 0f, 3f, 1));
+            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_LITTLE_GIRL, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_LITTLE_GIRL, 0.45f, loadTexureKeys, 5f, 0f, 3f, 1));
 
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_MANSTUBBLE_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_MANSTUBBLE_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_MANSTUBBLE_WALK);
-            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_MAN_STUBBLE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_MAN_STUBBLE, 0.6f, loadTexureKeys, 3f, 0f, 3f, 0));
+            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_MAN_STUBBLE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_MAN_STUBBLE, 0.6f, loadTexureKeys, 3.5f, 0f, 3f, 0));
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_NAUGHTYBOY_FALL);
@@ -90,83 +92,101 @@ namespace CatcherGame
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_OLDMAN_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_OLDMAN_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_OLDMAN_WALK);
-            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_OLD_MAN, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_OLD_MAN, 0.5f, loadTexureKeys, 3f, 0f, 3f, 1));
+            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_OLD_MAN, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_OLD_MAN, 0.5f, loadTexureKeys, 2f, 0f, 3f, 1));
 
             loadTexureKeys = new List<TexturesKeyEnum>();
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_FALL);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_CAUGHT);
             loadTexureKeys.Add(TexturesKeyEnum.PLAY_ROXANNE_WALK);
-            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_ROXANNE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_ROXANNE, 0.3f, loadTexureKeys, 3f, 0f, 6f, 1));
+            generaterReocrd.Add(DropObjectsKeyEnum.PERSON_ROXANNE, new CreatureDataRecord(DropObjectsKeyEnum.PERSON_ROXANNE, 0.3f, loadTexureKeys, 5f, 0f, 6f, 1));
         }
 
-       
+
+        private Dictionary<DropObjectsKeyEnum, float> CalculateDropObjProbability(out float x,out float y)
+        {
+             Dictionary<DropObjectsKeyEnum, float> creaturesProbability;
+             Random fallPositionX = new Random(Guid.NewGuid().GetHashCode());
+            Random fallPositionY = new Random(Guid.NewGuid().GetHashCode());
+            x = fallPositionX.Next((int)leftBorder, (int)rightBorder - TEXTURE_MAX_WIDTH);
+            y = fallPositionY.Next(MAX_HIGH_POS_Y);
+            if(y != 0)
+                y = -y;
+            //產生亂數位置位置
+            Vector2 startFallPos = new Vector2(x, y);
+            //紀錄有在符合機率的所有Creature
+            creaturesProbability = new Dictionary<DropObjectsKeyEnum,float>();
+            //計算每個角色遊戲產生出的機率
+            foreach (KeyValuePair<DropObjectsKeyEnum,DropObjectDataRecord> record in generaterReocrd) {
+                if (record.Value is CreatureDataRecord) { 
+                    Random generateProbability = new Random(Guid.NewGuid().GetHashCode());
+                    float p =  generateProbability.Next(100)/100f;
+                    //如果有在設定的機率值以下(表示有擲出)
+                    if (p <= record.Value.Probability){
+                        //從滿足產生機率的角色中找出最優先可以產生(實際產生的機率 離設定的機率值差距最大)
+                        float probabiltyDiff = record.Value.Probability - p;
+                        creaturesProbability.Add(record.Key, probabiltyDiff);
+                    }
+                }
+            }
+            return creaturesProbability;
+        }
+        private DropObjectsKeyEnum FindHightestPriorityKey(Dictionary<DropObjectsKeyEnum, float> creaturesProbability) {
+            float priorityP = -1;
+            DropObjectsKeyEnum priorityDropObjKey = DropObjectsKeyEnum.EMPTY;
+            //從滿足產生機率的角色中找出最優先可以產生(實際產生的機率 離設定的機率值差距最大)
+            foreach (KeyValuePair<DropObjectsKeyEnum, float> creature in creaturesProbability)
+            {
+                if (priorityDropObjKey == DropObjectsKeyEnum.EMPTY && priorityP == -1)
+                {
+                    priorityP = creature.Value;
+                    priorityDropObjKey = creature.Key;
+                }
+                else
+                {
+                    if (priorityP < creature.Value)
+                    {
+                        priorityP = creature.Value;
+                        priorityDropObjKey = creature.Key;
+                    }
+                }
+            }
+            return priorityDropObjKey;
+        }
+
         //第一次產生
         public List<DropObjects> WorkRandom(){ 
             Random nextDropTimes = new Random(Guid.NewGuid().GetHashCode());
             Random dropObjAmount = new Random(Guid.NewGuid().GetHashCode());
-            nextGenerateTimes =  nextDropTimes.Next(1000, maxGenerateTimes*1000);
+            nextGenerateTimes =  nextDropTimes.Next(2000, maxGenerateTimes*1000);
             nextGenerateCreatureAmount =  dropObjAmount.Next(1, creatureMaxGenerateAmount);
             //清除之前殘留指向的位置
             generatedDropObjs.Clear();
             
 
             //紀錄每個Creature實際產生的機率值
-            Dictionary<DropObjectsKeyEnum,float> creaturesProbability;
             while (generatedDropObjs.Count != nextGenerateCreatureAmount) {
-                Random fallPositionX = new Random(Guid.NewGuid().GetHashCode());
-                Random fallPositionY = new Random(Guid.NewGuid().GetHashCode());
-                float  x = fallPositionX.Next((int)leftBorder, (int)rightBorder - TEXTURE_MAX_WIDTH);
-                float y = fallPositionY.Next(MAX_HIGH_POS_Y);
-                if(y != 0)
-                    y = -y;
-                //產生亂數位置位置
-                Vector2 startFallPos = new Vector2(x, y);
-                //紀錄有在符合機率的所有Creature
-                creaturesProbability = new Dictionary<DropObjectsKeyEnum,float>();
-                //計算每個角色遊戲產生出的機率
-                foreach (KeyValuePair<DropObjectsKeyEnum,DropObjectDataRecord> record in generaterReocrd) {
-                    if (record.Value is CreatureDataRecord) { 
-                        Random generateProbability = new Random(Guid.NewGuid().GetHashCode());
-                        float p =  generateProbability.Next(100)/100f;
-                        //如果有在設定的機率值以下(表示有擲出)
-                        if (p <= record.Value.Probability){
-                            //從滿足產生機率的角色中找出最優先可以產生(實際產生的機率 離設定的機率值差距最大)
-                            float probabiltyDiff = record.Value.Probability - p;
-                            creaturesProbability.Add(record.Key, probabiltyDiff);
-                        }
-                    }
-                }
+                float x,y;
+                Dictionary<DropObjectsKeyEnum, float> creaturesProbability = CalculateDropObjProbability(out x, out y);
 
-                float priorityP =-1;
-                DropObjectsKeyEnum priorityDropObjKey = DropObjectsKeyEnum.EMPTY;
-                //從滿足產生機率的角色中找出最優先可以產生(實際產生的機率 離設定的機率值差距最大)
-                foreach (KeyValuePair<DropObjectsKeyEnum, float> creature in creaturesProbability)
+                DropObjectsKeyEnum priorityDropObjKey = FindHightestPriorityKey(creaturesProbability);
+                if (priorityDropObjKey != DropObjectsKeyEnum.EMPTY) //如果有符合的機率產生角色
                 {
-                    if (priorityDropObjKey == DropObjectsKeyEnum.EMPTY && priorityP == -1)
-                    {
-                        priorityP = creature.Value;
-                        priorityDropObjKey = creature.Key;
-                    }
-                    else {
-                        if (priorityP < creature.Value)
-                        {
-                            priorityP = creature.Value;
-                            priorityDropObjKey = creature.Key;
-                        }
-                    }
-                }
-                //加入至陣列
-                Creature c = new Creature(this.currentState, this.currentState.GetObjId(), x, y,
-                    generaterReocrd[priorityDropObjKey].FallSpeed,
-                    generaterReocrd[priorityDropObjKey].WaveDisplacement,
-                    ((CreatureDataRecord)generaterReocrd[priorityDropObjKey]).WalkSpeed,
-                    ((CreatureDataRecord)generaterReocrd[priorityDropObjKey]).WalkOrienation);
+                    //加入至陣列
+                    Creature c = new Creature(this.currentState, priorityDropObjKey, this.currentState.GetObjId(), x, y,
+                        generaterReocrd[priorityDropObjKey].FallSpeed,
+                        generaterReocrd[priorityDropObjKey].WaveDisplacement,
+                        ((CreatureDataRecord)generaterReocrd[priorityDropObjKey]).WalkSpeed,
+                        ((CreatureDataRecord)generaterReocrd[priorityDropObjKey]).WalkOrienation);
 
-                //載入圖片檔
-                foreach (TexturesKeyEnum keys in generaterReocrd[priorityDropObjKey].TexturesKey) {
-                    c.LoadResource(keys);
+                    //增加ID
+                    currentState.AddObjId();
+                    //載入圖片檔
+                    foreach (TexturesKeyEnum keys in generaterReocrd[priorityDropObjKey].TexturesKey)
+                    {
+                        c.LoadResource(keys);
+                    }
+                    generatedDropObjs.Add(c);
                 }
-                generatedDropObjs.Add(c);
             }
             return generatedDropObjs;
         }
@@ -186,6 +206,31 @@ namespace CatcherGame
                 }
             }
         
+        }
+
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);     
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+
+                if (disposing)
+                {
+                    if (generaterReocrd != null) {
+                        generaterReocrd.Clear();
+                    }
+                    if (generatedDropObjs != null) {
+                        generatedDropObjs.Clear();
+                    }
+                    totaleEapsed = 0;
+                    currentState = null;
+                }
+            }
+            disposed = true;
         }
     }
 }

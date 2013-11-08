@@ -16,7 +16,8 @@ namespace CatcherGame.GameObjects
     /// </summary>
     public class DropObjectDataRecord
     {
-        public DropObjectDataRecord(DropObjectsKeyEnum dropObjKey,float probability, List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue)
+        public DropObjectDataRecord(DropObjectsKeyEnum dropObjKey,float probability, 
+            List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue)
         {
             this.DropObjectKey = dropObjKey;
             this.Probability = probability;

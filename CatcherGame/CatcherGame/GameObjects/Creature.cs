@@ -39,8 +39,8 @@ namespace CatcherGame.GameObjects
         /// <param name="fallingWave">擺動的位移量(數值應為正)</param>
         /// <param name="walkSpeed"></param>
         /// <param name="orienation">移動的方向(0為左邊,1為右邊)</param>
-        public Creature(GameState currentGameState, int id, float x, float y, float fallingSpeed, float fallingWave, float walkSpeed, int orienation)
-            : base(currentGameState, id, x, y, fallingSpeed, fallingWave) 
+        public Creature(GameState currentGameState, DropObjectsKeyEnum key, int id, float x, float y, float fallingSpeed, float fallingWave, float walkSpeed, int orienation)
+            : base(currentGameState,key, id, x, y, fallingSpeed, fallingWave) 
         { 
             Init();
             //設定掉下來的速度與擺動的位移量

@@ -10,7 +10,8 @@ namespace CatcherGame.GameObjects
     /// </summary>
     public class CreatureDataRecord : DropObjectDataRecord
     {
-        public CreatureDataRecord(DropObjectsKeyEnum dropObjKey,float probability, List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue,float walkSpeed, int walkOrienation)
+        public CreatureDataRecord(DropObjectsKeyEnum dropObjKey,float probability, 
+            List<TexturesKeyEnum> texturesKey, float fallSpeed,float waveValue,float walkSpeed, int walkOrienation)
             : base(dropObjKey, probability, texturesKey, fallSpeed, waveValue)
         {
             WalkOrienation = walkOrienation;

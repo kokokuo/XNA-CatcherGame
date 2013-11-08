@@ -21,8 +21,8 @@ namespace CatcherGame.GameObjects
 
         AnimationSprite walkAnimation;
         //移動步伐
-        const int LEFT_MOVE_STEP = -5;
-        const int RIGHT_MOVE_STEP = 5;
+        const int LEFT_MOVE_STEP = -10;
+        const int RIGHT_MOVE_STEP = 10;
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
