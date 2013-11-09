@@ -102,7 +102,7 @@ namespace CatcherGame.GameObjects
                             //累加拯救到的人數
                             player.AddSavedPerson();
                         }
-
+                        //不使用PlayGameState.RemoveDropObjs(this) ,在迴圈中這樣移除會有問題
                         RemoveDropObject(obj.Id);
                     }
                    

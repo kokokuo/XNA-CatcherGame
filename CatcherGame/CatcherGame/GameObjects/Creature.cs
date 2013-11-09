@@ -20,7 +20,7 @@ namespace CatcherGame.GameObjects
     {
         List<AnimationSprite> animationList;
         AnimationSprite pCurrentAnimation;
-        bool isSaved,isDead;
+        bool isSaved;
         
        
         float savedWalkSpeed; //被接住後離開畫面移動的速度
@@ -60,7 +60,7 @@ namespace CatcherGame.GameObjects
             base.fallingNextYPos = this.y ;
             
             animationList = new List<AnimationSprite>();
-            isDead = isSaved = false;
+            isDead = false;
            
         }
 
@@ -69,9 +69,7 @@ namespace CatcherGame.GameObjects
             return this.isSaved;
         }
 
-        public bool GetIsDead(){
-            return this.isDead;
-        }
+        
 
         /// <summary>
         /// 設定載入的圖片組,使用給予Key方式設定載入
@@ -110,15 +108,7 @@ namespace CatcherGame.GameObjects
             pCurrentAnimation.Draw(spriteBatch);
         }
 
-        //是否墜落到地板
-        private bool IsFallingCollideFloor() {
-            if ( (base.y+ base.height) >= base.gameState.GetBackgroundTexture().Height )
-            {
-                return true;
-            }
-            else
-                return false;
-        }
+        
         //墜落搖晃時是否碰到邊界
         private bool IsFallingWaveCollideBorder()
         {
@@ -153,7 +143,7 @@ namespace CatcherGame.GameObjects
             if (isFalling) {
                 fallingNextYPos = this.y + fallingSpeed;
                 //判斷有無落到地板 ,沒有就繼續往下掉
-                if (!IsFallingCollideFloor())
+                if (! base.IsFallingCollideFloor())
                 {
                     this.y = fallingNextYPos;
                 }
@@ -193,10 +183,11 @@ namespace CatcherGame.GameObjects
                 //往上飄
                 this.y -= DEAD_FLY_UP_SPEED;
                 if (IsOuterGameScreenBorder()) {
-                    
+                    //從DropObjectList中移除
+                    ((PlayGameState)gameState).RemoveDropObjs(this);
                     //告知遊戲可以漏接的人數減少
                     ((PlayGameState)this.gameState).SubtractCanLostPeopleNumber();
-                    //移除自己
+                    //從GameObjects移除自己
                     ((PlayGameState)this.gameState).RemoveGameObject(this.id);
                     
                 }

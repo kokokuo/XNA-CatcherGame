@@ -40,7 +40,7 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
-        List<DropObjects> FallingObjects;
+        List<DropObjects> fallingObjects;
        
 
         RandGenerateDropObjsSystem randSys;
@@ -49,7 +49,7 @@ namespace CatcherGame.GameStates
         {
             dialogTable = new Dictionary<DialogStateEnum, GameDialog>();
             dialogTable.Add(DialogStateEnum.STATE_PAUSE, new PauseDialog(this));
-            FallingObjects = new List<DropObjects>();
+            fallingObjects = new List<DropObjects>();
             willRemoveObjectId = new List<int>();
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
@@ -99,7 +99,7 @@ namespace CatcherGame.GameStates
             foreach (DropObjects obj in generateObjs)
             {
                 AddGameObject(obj);
-                FallingObjects.Add(obj);
+                fallingObjects.Add(obj);
             }
             //訂閱事件
             randSys.GenerateDropObjs += randSys_GenerateDropObjs;
@@ -125,7 +125,7 @@ namespace CatcherGame.GameStates
 
         //釋放遊戲中的所有資料
         public void Release() {
-            FallingObjects.Clear();
+            fallingObjects.Clear();
             smokeTexture.Dispose();
             lifeTexture.Dispose();
             scoreTexture.Dispose();
@@ -191,7 +191,7 @@ namespace CatcherGame.GameStates
         {
             foreach (DropObjects obj in objs) {
                 AddGameObject(obj);
-                FallingObjects.Add(obj);
+                fallingObjects.Add(obj);
             }
         }
 
@@ -241,7 +241,7 @@ namespace CatcherGame.GameStates
                 else {
                     player.SetStand(); //設定站立
                 }
-                player.CheckIsCaught(FallingObjects);
+                player.CheckIsCaught(fallingObjects);
 
                 //如果有要移除的元件,執行移除方法
                 if (willRemoveObjectId.Count > 0) {
@@ -292,7 +292,17 @@ namespace CatcherGame.GameStates
                     }
                 }
             }
+
             willRemoveObjectId.Clear();
+        }
+
+        /// <summary>
+        /// 移除掉落的物件
+        /// </summary>
+        /// <param name="fallingObj"></param>
+        public void RemoveDropObjs(DropObjects fallingObj) {
+            fallingObjects.Remove(fallingObj);
+            //不可Dispose,Dispose應該要由GameObjects來做
         }
     }
 }

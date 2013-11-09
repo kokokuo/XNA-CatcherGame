@@ -19,6 +19,7 @@ namespace CatcherGame.GameObjects
         protected float fallingNextXPos; //接下來會擺動的x座標
         protected bool isFalling, isCaught,isTouch;
         protected DropObjectsKeyEnum objectKey;
+        protected bool isDead;
         public DropObjects(GameState currentGameState, DropObjectsKeyEnum key,int id, float x, float y, float fallingSpeed, float fallingWave)
             : base(currentGameState, id, x, y)
         {
@@ -27,13 +28,30 @@ namespace CatcherGame.GameObjects
             this.fallingWave = fallingWave;
             this.isFalling = true;
             this.isCaught = this.isTouch = false;
+            this.isDead = false;
 
+        }
+
+        //是否墜落到地板
+        protected virtual bool IsFallingCollideFloor()
+        {
+            if ((base.y + base.height) >= base.gameState.GetBackgroundTexture().Height)
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
         public abstract void SetCaught();
 
         public void SetTouched() {
             this.isTouch = true;
+        }
+
+        public bool GetIsDead()
+        {
+            return this.isDead;
         }
 
         public bool GetIsCaught() {
