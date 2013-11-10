@@ -40,7 +40,6 @@ namespace CatcherGame.GameObjects
             this.y = y;
             disposed = false;
         }
-
         
         protected abstract void Init();
         public abstract void LoadResource(TexturesKeyEnum key);

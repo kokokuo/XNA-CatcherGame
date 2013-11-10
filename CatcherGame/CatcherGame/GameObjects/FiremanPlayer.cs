@@ -12,23 +12,25 @@ using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
-    public delegate void ValueUpdateEventHandler(int newValue);
-
+    public delegate void CaughtEffectItemsEventHandler(EffectItem item);
+    public  delegate void ValueUpdateEventHandler(int newValue);
+    
     public class FiremanPlayer : GameObject
     {
         public event ValueUpdateEventHandler SaveNewPerson;
-      
 
         AnimationSprite walkAnimation;
         //移動步伐
-        const int LEFT_MOVE_STEP = -10;
-        const int RIGHT_MOVE_STEP = 10;
+        int LEFT_MOVE_STEP = -7;
+        int RIGHT_MOVE_STEP = 7;
         bool isWalking; //是否移動
         Net savedNet; //網子類別(Has)
         float init_x, init_y;
-
         int savePeopleNumber;
-      
+        List<int> willRemoveItemsId;
+        //被接到的道具
+        LinkedList<EffectItem> caughtEffectItem;
+        int isSpeedUp;
         public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
@@ -37,7 +39,76 @@ namespace CatcherGame.GameObjects
 
             //數值待解決(改為依裝置吃尺寸去調整)
              savedNet = new Net(currentGameState, id, x + 73, y + 85, this);
+             savedNet.AddSavedPerson += savedNet_AddSavedPerson;
+             savedNet.CaughtEffectItems += savedNet_CaughtEffectItems;
              savedNet.LoadResource(TexturesKeyEnum.PLAY_NET);
+        }
+        
+        private void savedNet_CaughtEffectItems(EffectItem item)
+        {
+            bool isEliminated = false;
+            float displayX = (((PlayGameState)gameState).GetLifeTextureLayer().X + ((PlayGameState)gameState).GetLifeTextureLayer().Width / 2 ) - item.Width / 2;
+            //註冊使用時間到的時候的事件
+            item.EffectTimesUp += item_EffectTimesUp;
+            if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES && caughtEffectItem.Count > 0)
+            {
+                foreach (EffectItem slowItem in caughtEffectItem)
+                {
+                    if (slowItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
+                    {
+                        slowItem.SetEffectElimination();
+                        caughtEffectItem.Remove(slowItem);
+                        isEliminated = true;
+                        break;
+                    }
+                }
+                
+            }
+            else if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES && caughtEffectItem.Count >0)
+            {
+                foreach (EffectItem boostingItem in caughtEffectItem) {
+                    if (boostingItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES) {
+                        boostingItem.SetEffectElimination();
+                        caughtEffectItem.Remove(boostingItem);
+                        isEliminated = true;
+                        break;
+                    }
+                }
+               
+            }
+            if (!isEliminated) {
+                if(caughtEffectItem.Count == 0){
+                    item.X = displayX;
+                    item.Y = ((PlayGameState)gameState).GetLifeTextureLayer().Y + ((PlayGameState)gameState).GetLifeTextureLayer().Height;
+                    caughtEffectItem.AddFirst(item);
+                }
+                else{
+                    item.X = displayX;
+                    item.Y = (caughtEffectItem.Last.Value.Y + caughtEffectItem.Last.Value.Height);
+                    caughtEffectItem.AddLast(item);
+                }
+                
+            }
+        }
+
+        private void item_EffectTimesUp(EffectItem effectItem)
+        {
+            willRemoveItemsId.Add(effectItem.Id);
+        }
+
+        
+
+        /// <summary>
+        /// 累加新的Person
+        /// </summary>
+        private  void savedNet_AddSavedPerson()
+        {
+            savePeopleNumber++;
+            //觸發事件
+            if (SaveNewPerson != null)
+            {
+                SaveNewPerson.Invoke(savePeopleNumber);
+            }
         }
 
         protected override void Init()
@@ -46,21 +117,14 @@ namespace CatcherGame.GameObjects
             this.init_x = this.x = x;
             this.init_y = this.y = y;
             walkAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300);
-
+            caughtEffectItem = new LinkedList<EffectItem>();
             savePeopleNumber = 0;
+            willRemoveItemsId = new List<int>();
+            isSpeedUp = 0;
            
         }
 
-        /// <summary>
-        /// 累加新的Person
-        /// </summary>
-        public void AddSavedPerson(){
-            savePeopleNumber++;
-            //觸發事件
-            if (SaveNewPerson != null){
-                SaveNewPerson.Invoke(savePeopleNumber);
-            }
-        }
+        
        
         /// <summary>
         /// 確認掉落的所有元件有無接觸到網子
@@ -87,7 +151,7 @@ namespace CatcherGame.GameObjects
         }
 
 
-       
+        
 
         public override void Update()
         {
@@ -98,7 +162,15 @@ namespace CatcherGame.GameObjects
                 //設定現在的圖片長寬為遊戲元件的長寬
                 this.Height = walkAnimation.GetCurrentFrameTexture().Height;
                 this.Width = walkAnimation.GetCurrentFrameTexture().Width;
-            
+            }
+            if(caughtEffectItem.Count > 0 ){
+                foreach (EffectItem item in caughtEffectItem){
+                    item.Update();
+                }
+            }
+
+            if (willRemoveItemsId.Count > 0) {
+                RemoveEffectItemFromList();
             }
             savedNet.Update();
         }
@@ -107,6 +179,12 @@ namespace CatcherGame.GameObjects
         {
             walkAnimation.Draw(spriteBatch);
             savedNet.Draw(spriteBatch);
+            if (caughtEffectItem.Count >0){
+                foreach (EffectItem item in caughtEffectItem)
+                {
+                    item.Draw(spriteBatch);
+                }
+            }
         }
 
         //設定站立
@@ -139,6 +217,34 @@ namespace CatcherGame.GameObjects
                 isWalking = true;
                 
             }
+        }
+
+        /// <summary>
+        /// 將 id 放入準備要被刪除的 list
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveDropObject(int id)
+        {
+            willRemoveItemsId.Add(id);
+        }
+
+        /// <summary>
+        /// 真正將 DropObjects 刪除
+        /// </summary>
+        private void RemoveEffectItemFromList()
+        {
+            foreach (int removeId in willRemoveItemsId)
+            {
+                foreach (EffectItem obj in caughtEffectItem)
+                {
+                    if (obj.Id == removeId)
+                    {
+                        caughtEffectItem.Remove(obj);
+                        break;
+                    }
+                }
+            }
+            willRemoveItemsId.Clear();
         }
 
         protected override void Dispose(bool disposing)

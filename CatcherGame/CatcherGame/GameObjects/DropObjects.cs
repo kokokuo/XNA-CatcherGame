@@ -12,6 +12,9 @@ using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
+    /// <summary>
+    /// 掉落物類別,記錄了跟掉落物相關的方法或變數
+    /// </summary>
     public abstract class DropObjects : GameObject 
     {
         protected float fallingSpeed, fallingWave;

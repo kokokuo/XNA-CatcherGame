@@ -21,11 +21,19 @@ namespace CatcherGame.GameStates
         const int RIGHT_MOVE_BUTTON_X_POS = 700;
         const int LEFT_MOVE_BUTTON_X_POS = 0;
         const int MOVE_BUTTON_Y_POS = 355;
+        const int LIFE_X = 710;
+        const int LIFE_Y = 20;
+        const int SCORE_X = 15;
+        const int SCORE_Y = 95;
+        float savedPeoplefontX;
+        float savedPeoplefontY;
+        float lifefontX;
+        float lifefontY;
         Button pauseButton;
         Button leftMoveButton;
         Button rightMoveButton;
 
-         List<int> willRemoveObjectId;
+        List<int> willRemoveObjectId;
 
         
         FiremanPlayer player;
@@ -40,9 +48,9 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
+        //掉落的物件 (角色與道具)
         List<DropObjects> fallingObjects;
        
-
         RandGenerateDropObjsSystem randSys;
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
@@ -54,8 +62,7 @@ namespace CatcherGame.GameStates
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
 
-           
-
+          
         }
 
         
@@ -65,9 +72,9 @@ namespace CatcherGame.GameStates
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
             base.rightGameScreenBorder = RIGHT_MOVE_BUTTON_X_POS;
             base.leftGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON)[0].Width;
-
+            
             //初始化隨機角色產生系統
-            randSys = new RandGenerateDropObjsSystem(this, 3, 3);
+            randSys = new RandGenerateDropObjsSystem(this, 2,3, 3,3,5,2);
             randSys.SetBorder(leftGameScreenBorder, rightGameScreenBorder);
 
             base.objIdCount = 0;
@@ -81,8 +88,8 @@ namespace CatcherGame.GameStates
             player.SaveNewPerson +=player_SaveNewPerson;
 
             smokeTexture = new TextureLayer(this,objIdCount++, 0, 0);
-            lifeTexture = new TextureLayer(this,objIdCount++, 0, 0);
-            scoreTexture = new TextureLayer(this, objIdCount++, 0, 0);
+            lifeTexture = new TextureLayer(this, objIdCount++, LIFE_X, LIFE_Y);
+            scoreTexture = new TextureLayer(this, objIdCount++, SCORE_X, SCORE_Y);
             
 
             //加入遊戲元件
@@ -93,7 +100,17 @@ namespace CatcherGame.GameStates
             AddGameObject(pauseButton);
 
             //啟動第一次隨機功能取得掉落角色
-            List<DropObjects> generateObjs =  randSys.WorkRandom();
+            List<DropObjects> generateObjs =  randSys.WorkCreatureRandom();
+          
+            //加入至遊戲中
+            foreach (DropObjects obj in generateObjs)
+            {
+                AddGameObject(obj);
+                fallingObjects.Add(obj);
+            }
+
+            //啟動第一次隨機功能取得掉落道具
+            generateObjs = randSys.WorkEffectItemRandom();
 
             //加入至遊戲中
             foreach (DropObjects obj in generateObjs)
@@ -101,6 +118,7 @@ namespace CatcherGame.GameStates
                 AddGameObject(obj);
                 fallingObjects.Add(obj);
             }
+          
             //訂閱事件
             randSys.GenerateDropObjs += randSys_GenerateDropObjs;
 
@@ -259,9 +277,14 @@ namespace CatcherGame.GameStates
             lifeTexture.Draw(this.GetSpriteBatch());
             scoreTexture.Draw(this.GetSpriteBatch());
             //繪製文字資源
-            //座標位置有待調整為動態
-            gameSateSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(),new Vector2(40,130) ,Color.White);
-            gameSateSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(),new Vector2(765,10), Color.White);
+            //座標位置以調整為依照圖片之間的位置距離去設定,帶有待調整
+            //
+            savedPeoplefontX = ((SCORE_X + scoreTexture.Width)/2) - savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).X/2;
+            savedPeoplefontY = ((SCORE_Y + scoreTexture.Height)/2) + savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).Y/2 - 10;
+            lifefontX = LIFE_X + lifeTexture.Width;
+            lifefontY = LIFE_Y - 10; //微修正
+            gameSateSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(), new Vector2(savedPeoplefontX, savedPeoplefontY), Color.White);
+            gameSateSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(), new Vector2(lifefontX, lifefontY), Color.White);
         }
 
 
@@ -303,6 +326,14 @@ namespace CatcherGame.GameStates
         public void RemoveDropObjs(DropObjects fallingObj) {
             fallingObjects.Remove(fallingObj);
             //不可Dispose,Dispose應該要由GameObjects來做
+        }
+
+        public TextureLayer GetLifeTextureLayer() {
+            return lifeTexture;
+        }
+        public TextureLayer GetScoreTextureLayer()
+        {
+            return scoreTexture;
         }
     }
 }

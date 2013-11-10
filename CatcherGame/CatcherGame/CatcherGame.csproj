@@ -69,6 +69,7 @@
     <Compile Include="GameObjects\CreatureDataRecord.cs" />
     <Compile Include="GameObjects\DropObjects.cs" />
     <Compile Include="GameObjects\DropObjectsKeyEnum.cs" />
+    <Compile Include="GameObjects\EffectItemDataRecord.cs" />
     <Compile Include="GameObjects\EffectItem.cs" />
     <Compile Include="GameObjects\FiremanPlayer.cs" />
     <Compile Include="GameObjects\DropObjectDataRecord.cs" />

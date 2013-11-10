@@ -62,7 +62,9 @@ namespace CatcherGame.TextureManager
             LoadPlayNaughtyBoy();
             LoadPlayOldMan();
             LoadPlayRoxanne();
-
+            //道具
+            LoadPlayBoostingShoes();
+            LoadPlaySlowShoes();
 
             //載入遊戲中的暫停對話框
             LoadPauseDialogBackground();
@@ -283,7 +285,7 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/life"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/life_fix"));
                 _dictionary.Add(key, texture2Ds);
             }
 
@@ -296,7 +298,7 @@ namespace CatcherGame.TextureManager
             if (!_dictionary.ContainsKey(key))
             {
                 List<Texture2D> texture2Ds = new List<Texture2D>();
-                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/score"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/score_fix"));
                 _dictionary.Add(key, texture2Ds);
             }
 
@@ -369,6 +371,35 @@ namespace CatcherGame.TextureManager
             }
 
         }
+
+        //遊戲中加速鞋
+        private void LoadPlayBoostingShoes()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_BOOSTING_SHOES;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/Item/boosting_shoes"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
+        //遊戲中降速
+        private void LoadPlaySlowShoes()
+        {
+            TexturesKeyEnum key = TexturesKeyEnum.PLAY_ITEM_SLOW_SHOES;
+
+            if (!_dictionary.ContainsKey(key))
+            {
+                List<Texture2D> texture2Ds = new List<Texture2D>();
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/Item/slow"));
+                texture2Ds.Add(mainGame.Content.Load<Texture2D>("Play/Item/disappear"));
+                _dictionary.Add(key, texture2Ds);
+            }
+        }
+
         //遊戲中死亡的符號
         private void LoadPlayDie() {
             TexturesKeyEnum key = TexturesKeyEnum.PLAY_DIE;

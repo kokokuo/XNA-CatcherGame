@@ -149,6 +149,8 @@ namespace CatcherGame.GameObjects
                 }
                 else {
                     isDead = true;
+                    //告知遊戲可以漏接的人數減少
+                    ((PlayGameState)this.gameState).SubtractCanLostPeopleNumber();
                     isFalling = false;
                     pCurrentAnimation = animationList[DIE_KEY];
                 }
@@ -185,8 +187,6 @@ namespace CatcherGame.GameObjects
                 if (IsOuterGameScreenBorder()) {
                     //從DropObjectList中移除
                     ((PlayGameState)gameState).RemoveDropObjs(this);
-                    //告知遊戲可以漏接的人數減少
-                    ((PlayGameState)this.gameState).SubtractCanLostPeopleNumber();
                     //從GameObjects移除自己
                     ((PlayGameState)this.gameState).RemoveGameObject(this.id);
                     

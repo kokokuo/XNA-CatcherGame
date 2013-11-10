@@ -12,7 +12,7 @@ using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
     /// <summary>
-    /// 記錄所有遊戲元件的參數
+    /// 記錄所有掉落物遊戲元件的參數,基類別
     /// </summary>
     public class DropObjectDataRecord
     {

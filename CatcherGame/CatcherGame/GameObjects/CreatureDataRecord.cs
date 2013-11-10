@@ -6,7 +6,7 @@ using CatcherGame.TextureManager;
 namespace CatcherGame.GameObjects
 {
     /// <summary>
-    /// 紀錄生物的資料
+    /// 紀錄生物的資料,用以產生生物類別時可以填入資訊
     /// </summary>
     public class CreatureDataRecord : DropObjectDataRecord
     {

@@ -15,9 +15,15 @@ using CatcherGame.Sprite;
 
 namespace CatcherGame.GameObjects
 {
-    //網子類別:尚未製作完成
+    public  delegate void ValueAddedEventHandler();
+    
+   
+    //網子類別
     public class Net : GameObject
     {
+        public event ValueAddedEventHandler AddSavedPerson;
+        public event CaughtEffectItemsEventHandler CaughtEffectItems;
+
         AnimationSprite netStateAnimation; //網子動畫
         
         List<int> willRemoveObjectId;
@@ -77,6 +83,10 @@ namespace CatcherGame.GameObjects
                 netStateAnimation.SetNextWantFrameIndex(0);
             }
         }
+        /// <summary>
+        /// 傳進遊戲持有的所有掉落物件,計算有無碰撞
+        /// </summary>
+        /// <param name="dropObjs"></param>
         public void CheckCollision(List<DropObjects> dropObjs) {
             isCaught = false;
             foreach (DropObjects obj in dropObjs){
@@ -100,8 +110,19 @@ namespace CatcherGame.GameObjects
                         if (obj is Creature)
                         {
                             //累加拯救到的人數
-                            player.AddSavedPerson();
+                            if (AddSavedPerson != null) {
+                                AddSavedPerson.Invoke();
+                            }
                         }
+                        else if (obj is EffectItem) {  //是道具的話
+
+                            //累加拯救到的人數
+                            if (CaughtEffectItems != null)
+                            {
+                                CaughtEffectItems.Invoke( (EffectItem)obj );
+                            }
+                        
+                        } 
                         //不使用PlayGameState.RemoveDropObjs(this) ,在迴圈中這樣移除會有問題
                         RemoveDropObject(obj.Id);
                     }
@@ -123,7 +144,7 @@ namespace CatcherGame.GameObjects
         }
 
         /// <summary>
-        /// 真正將 GameObject 刪除
+        /// 真正將 DropObjects 刪除
         /// </summary>
         private void RemoveDropObjectFromList(List<DropObjects> dropObjs)
         {

@@ -17,20 +17,25 @@ namespace CatcherGame.GameObjects
     public class TextureLayer : GameObject
     {
         AnimationSprite layer;
+        Rectangle bounds;
         public TextureLayer(GameState currentGameState, int objId, float x, float y)
             : base(currentGameState, objId, x, y)
         {
             Init();
         }
+        
 
         protected override void Init()
         {
             layer = new AnimationSprite(new Vector2(base.x,base.y), 300);
+           
         }
 
         public override void LoadResource(TexturesKeyEnum key)
         {
             layer.SetTexture2DList(base.gameState.GetTexture2DList(key));
+            height = layer.GetCurrentFrameTexture().Height;
+            width = layer.GetCurrentFrameTexture().Width;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

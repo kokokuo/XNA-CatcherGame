@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+
 using CatcherGame;
 using CatcherGame.Sprite;
 using CatcherGame.GameStates;
@@ -13,25 +14,34 @@ using CatcherGame.TextureManager;
 
 namespace CatcherGame.GameObjects
 {
+    public delegate void EffectTimesUpEventHandler(EffectItem effectItem);
     public class EffectItem : DropObjects
     {
+        public event EffectTimesUpEventHandler EffectTimesUp;
         AnimationSprite itemAnimation;
-
-        public EffectItem(GameState currentGameState, DropObjectsKeyEnum key, int id, float x, float y, float fallingSpeed, float fallingWave)
+        float totalEapsed;
+        float effectTime;
+        public EffectItem(GameState currentGameState, DropObjectsKeyEnum key, int id, float x, float y, float fallingSpeed, float fallingWave,float effectTime)
             : base(currentGameState, key, id, x, y, fallingSpeed, fallingWave)
         {
             Init();
+            this.effectTime = effectTime;
         }
-      
+        public void SetDisplayPostion(Vector2 pos) {
+            base.x = pos.X;
+            base.y = pos.Y;
+        }
         public override void SetCaught()
         {
             base.isCaught = true;
             base.isFalling = false;
+            
         }
 
         protected override void Init()
         {
-            itemAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300f);   
+            itemAnimation = new AnimationSprite(new Vector2(this.x, this.y), 300f);
+            totalEapsed = 0;
         }
 
         /// <summary>
@@ -55,6 +65,10 @@ namespace CatcherGame.GameObjects
         {
             itemAnimation.Draw(spriteBatch);
         }
+        public void SetEffectElimination() {
+            isDead = true;
+            isCaught = false;
+        }
 
         public override void Update()
         {
@@ -73,8 +87,16 @@ namespace CatcherGame.GameObjects
             }
             else if (isCaught)
             {
-                //設定屬性效果 
-                //在螢幕上顯示(呼叫gameState方法)
+                totalEapsed += gameState.GetTimeSpan().Milliseconds;
+                //消失
+                if (totalEapsed >= (effectTime*1000) ) {
+                    isDead = true;
+                    isCaught = false;
+                    if (EffectTimesUp != null) {
+                        EffectTimesUp.Invoke(this);
+                    }
+                }
+               
             }
             else if (isDead) {
                 //從DropObjectList中移除
@@ -82,6 +104,32 @@ namespace CatcherGame.GameObjects
                 //移除自己
                 ((PlayGameState)this.gameState).RemoveGameObject(this.id);
             }
+
+
+            //設定座標
+            itemAnimation.SetToLeftPos(base.x, base.y);
+            //更新frame
+            itemAnimation.SetNextWantFrameIndex(0);
+            //設定現在的圖片長寬為遊戲元件的長寬
+            this.Height = itemAnimation.GetCurrentFrameTexture().Height;
+            this.Width = itemAnimation.GetCurrentFrameTexture().Width;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (!base.disposed)
+            {
+
+                if (disposing)
+                {
+                    if (itemAnimation != null)
+                    {
+                        itemAnimation.Dispose();
+                    }
+                    totalEapsed = 0;
+                    Console.WriteLine("FirePlayer disposed.");
+                }
+            }
+            disposed = true;
         }
     }
 }
