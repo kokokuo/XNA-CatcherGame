@@ -62,7 +62,7 @@ namespace CatcherGame
             gameStateTable.Add(GameStateEnum.STATE_MENU,new HomeMenuState(this));
             gameStateTable.Add(GameStateEnum.STATE_START_COMIC, new GameStartComicState(this));
             gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, new PlayGameState(this));
-
+            gameStateTable.Add(GameStateEnum.STATE_GAME_OVER, new GameOverState(this));
             //設定水平橫向時的座標
             TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
             TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
