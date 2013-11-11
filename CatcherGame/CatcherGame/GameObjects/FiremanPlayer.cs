@@ -19,6 +19,13 @@ namespace CatcherGame.GameObjects
     {
         public event ValueUpdateEventHandler SaveNewPerson;
 
+        enum EffectState{
+            NORMAL = 0,
+            SPEED_UP,
+            SLOW
+        }
+
+
         AnimationSprite walkAnimation;
         //移動步伐
         int LEFT_MOVE_STEP = -7;
@@ -30,7 +37,7 @@ namespace CatcherGame.GameObjects
         List<int> willRemoveItemsId;
         //被接到的道具
         LinkedList<EffectItem> caughtEffectItem;
-        int isSpeedUp;
+        EffectState state;
         public FiremanPlayer(GameState currentGameState, int id, float x, float y)
             : base(currentGameState, id, x, y)
         {
@@ -56,8 +63,10 @@ namespace CatcherGame.GameObjects
                 {
                     if (slowItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
                     {
-                        slowItem.SetEffectElimination();
-                        caughtEffectItem.Remove(slowItem);
+                        //互相抵消 所以兩個道具效果都要消除 ->set dead
+                        slowItem.SetEffectElimination(); 
+                        item.SetEffectElimination();
+                        willRemoveItemsId.Add(slowItem.Id);
                         isEliminated = true;
                         break;
                     }
@@ -68,35 +77,79 @@ namespace CatcherGame.GameObjects
             {
                 foreach (EffectItem boostingItem in caughtEffectItem) {
                     if (boostingItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES) {
+                        //互相抵消 所以兩個道具效果都要消除 -> set dead
                         boostingItem.SetEffectElimination();
-                        caughtEffectItem.Remove(boostingItem);
+                        item.SetEffectElimination();
+                         willRemoveItemsId.Add(boostingItem.Id);
                         isEliminated = true;
                         break;
                     }
                 }
                
             }
-            if (!isEliminated) {
-                if(caughtEffectItem.Count == 0){
+            if (!isEliminated) //如果沒有被抵銷
+            {
+                if (caughtEffectItem.Count == 0) //第一個道具 加在最上面 位置對其在Life的下方
+                {
                     item.X = displayX;
                     item.Y = ((PlayGameState)gameState).GetLifeTextureLayer().Y + ((PlayGameState)gameState).GetLifeTextureLayer().Height;
                     caughtEffectItem.AddFirst(item);
                 }
-                else{
+                else //加在上一個道具顯示的位置下方
+                {
                     item.X = displayX;
                     item.Y = (caughtEffectItem.Last.Value.Y + caughtEffectItem.Last.Value.Height);
                     caughtEffectItem.AddLast(item);
                 }
-                
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES){
+                    SetSpeedEffect(item.GetKeyEnum());
+                }
             }
+            else { //被削除的話重設為預設速度
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES){
+                    resetSpeedEffect();
+                }
+            }
+
         }
 
+       
+
+        private void SetSpeedEffect(DropObjectsKeyEnum key) {
+            if (state == EffectState.NORMAL)
+            {
+                if (key == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES)
+                {
+                    state = EffectState.SPEED_UP;
+                    LEFT_MOVE_STEP = -12;
+                    RIGHT_MOVE_STEP = 12;
+                }
+                else if (key == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
+                {
+                    state = EffectState.SLOW;
+                    LEFT_MOVE_STEP = -4;
+                    RIGHT_MOVE_STEP = 4;
+                }
+            }
+        }
+        private void resetSpeedEffect() {
+            state = EffectState.NORMAL;
+            LEFT_MOVE_STEP = -7;
+            RIGHT_MOVE_STEP = 7;
+        }
+
+        /// <summary>
+        /// 道具效果時間已到移除
+        /// </summary>
+        /// <param name="effectItem"></param>
         private void item_EffectTimesUp(EffectItem effectItem)
         {
             willRemoveItemsId.Add(effectItem.Id);
-        }
+            if (effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || effectItem.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES) {
+                resetSpeedEffect();
+            }
 
-        
+        }
 
         /// <summary>
         /// 累加新的Person
@@ -120,11 +173,24 @@ namespace CatcherGame.GameObjects
             caughtEffectItem = new LinkedList<EffectItem>();
             savePeopleNumber = 0;
             willRemoveItemsId = new List<int>();
-            isSpeedUp = 0;
+            state = EffectState.NORMAL;
            
         }
 
-        
+        //從List後面尋找同類的效果道具,並把屬性附加上去
+        //e.g加速協時間到移除掉後,第二個加速協移動為第一個,並把效果附加上去
+        private void UpdateEffectFromBufferItem()
+        {
+            foreach (EffectItem item in caughtEffectItem)
+            {
+                //速度的部分
+                if (item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_BOOSTING_SHOES || item.GetKeyEnum() == DropObjectsKeyEnum.ITEM_SLOW_SHOES)
+                {
+                    SetSpeedEffect(item.GetKeyEnum());
+                }
+            }
+
+        }
        
         /// <summary>
         /// 確認掉落的所有元件有無接觸到網子
@@ -150,7 +216,7 @@ namespace CatcherGame.GameObjects
             this.Width = walkAnimation.GetCurrentFrameTexture().Width;
         }
 
-
+      
         
 
         public override void Update()
@@ -168,6 +234,8 @@ namespace CatcherGame.GameObjects
                     item.Update();
                 }
             }
+
+           
 
             if (willRemoveItemsId.Count > 0) {
                 RemoveEffectItemFromList();
@@ -219,6 +287,17 @@ namespace CatcherGame.GameObjects
             }
         }
 
+        private void MoveTheDisplayItemPosition() {
+            //移動道具的位置
+            if (caughtEffectItem.Count > 0)
+            {
+                caughtEffectItem.First.Value.Y = ((PlayGameState)gameState).GetLifeTextureLayer().Y + ((PlayGameState)gameState).GetLifeTextureLayer().Height;
+                for (LinkedListNode<EffectItem> itemNode = caughtEffectItem.First.Next; itemNode != null; itemNode = itemNode.Next)
+                {
+                    itemNode.Value.Y = itemNode.Previous.Value.Y;
+                }
+            }
+        }
         /// <summary>
         /// 將 id 放入準備要被刪除的 list
         /// </summary>
@@ -244,6 +323,12 @@ namespace CatcherGame.GameObjects
                     }
                 }
             }
+
+            //移動道具顯示的位置
+            MoveTheDisplayItemPosition();
+            //尋找後面的有無道具可以繼續附加效果
+            UpdateEffectFromBufferItem();
+
             willRemoveItemsId.Clear();
         }
 

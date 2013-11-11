@@ -108,8 +108,18 @@ namespace CatcherGame.GameObjects
 
             //設定座標
             itemAnimation.SetToLeftPos(base.x, base.y);
-            //更新frame
-            itemAnimation.SetNextWantFrameIndex(0);
+
+            if (totalEapsed >= (effectTime * 1000) / 2)
+            {
+                itemAnimation.UpdateFrame(gameState.GetTimeSpan());
+            }
+            else
+            {
+                //更新frame
+                itemAnimation.SetNextWantFrameIndex(0);
+
+            }
+           
             //設定現在的圖片長寬為遊戲元件的長寬
             this.Height = itemAnimation.GetCurrentFrameTexture().Height;
             this.Width = itemAnimation.GetCurrentFrameTexture().Width;

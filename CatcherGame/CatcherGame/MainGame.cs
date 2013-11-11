@@ -135,7 +135,7 @@ namespace CatcherGame
             // 允許遊戲結束 預設方法
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
+            
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && !this.isMessageBoxShow)
             //{
             //    this.isMessageBoxShow = true;
@@ -151,7 +151,7 @@ namespace CatcherGame
                 touchQueue.Enqueue(location);
             }
             pCurrentScreenState.Update();
-            
+           
 
             base.Update(gameTime);
         }
