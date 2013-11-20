@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using CatcherGame.GameObjects;
 using CatcherGame.TextureManager;
-
 using CatcherGame.GameStates.Dialog;
+
 namespace CatcherGame.GameStates
 {
     public class HomeMenuState : GameState

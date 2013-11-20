@@ -11,20 +11,22 @@ using CatcherGame.GameObjects;
 using CatcherGame.TextureManager;
 using CatcherGame.GameStates.Dialog;
 using CatcherGame.FontManager;
+using CatcherGame.FileStorageHelper;
 
 namespace CatcherGame.GameStates
 {
     public class PlayGameState  :GameState
     {
-        const int FIREMAN_INIT_X = 300;
-        const int FIREMAN_INIT_Y = 355;
-        const int RIGHT_MOVE_BUTTON_X_POS = 700;
-        const int LEFT_MOVE_BUTTON_X_POS = 0;
-        const int MOVE_BUTTON_Y_POS = 355;
-        const int LIFE_X = 710;
-        const int LIFE_Y = 20;
-        const int SCORE_X = 15;
-        const int SCORE_Y = 95;
+        int FIREMAN_INIT_X ;
+        int FIREMAN_INIT_Y ;
+        int RIGHT_MOVE_BUTTON_X_POS = 700;
+        int LEFT_MOVE_BUTTON_X_POS = 0;
+        int MOVE_BUTTON_Y_POS = 355;
+        int LIFE_X = 710;
+        int LIFE_Y = 20;
+        int SCORE_X = 15;
+        int SCORE_Y = 95;
+
         float savedPeoplefontX;
         float savedPeoplefontY;
         float lifefontX;
@@ -48,10 +50,13 @@ namespace CatcherGame.GameStates
         TextureLayer smokeTexture;
         TextureLayer lifeTexture;
         TextureLayer scoreTexture;
+        TextureLayer floorTexture;
         //掉落的物件 (角色與道具)
         List<DropObjects> fallingObjects;
        
         RandGenerateDropObjsSystem randSys;
+        bool isOver,isWriteingFile;
+        
         public PlayGameState(MainGame gMainGame) 
             :base(gMainGame)
         {
@@ -62,17 +67,31 @@ namespace CatcherGame.GameStates
             base.x = 0; base.y = 0;
             base.backgroundPos = new Vector2(base.x, base.y);
 
-          
+           
         }
 
         
 
         public override void BeginInit()
         {
+            int player_x = base.GetDeviceScreenWidthByMainGame() / 2 - base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN)[0].Width / 2;
+            int player_y = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 - base.GetTexture2DList(TexturesKeyEnum.PLAY_FIREMAN)[0].Height;
+            FIREMAN_INIT_X = player_x;
+            FIREMAN_INIT_Y = player_y;
+            RIGHT_MOVE_BUTTON_X_POS = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Width; //-50;
+            LEFT_MOVE_BUTTON_X_POS = 10;
+            MOVE_BUTTON_Y_POS = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height / 2 -base.GetTexture2DList(TexturesKeyEnum.PLAY_RIGHT_MOVE_BUTTON)[0].Height;
+            LIFE_X = base.GetDeviceScreenWidthByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_LIFE)[0].Width -30; //- 70;
+            LIFE_Y = 20;
+            SCORE_X = 15;
+            SCORE_Y = base.GetTexture2DList(TexturesKeyEnum.PLAY_PAUSE_BUTTON)[0].Height;
+
+
             //設定消防員的移動邊界(包含角色掉落的邊界也算在內)
             base.rightGameScreenBorder = RIGHT_MOVE_BUTTON_X_POS;
             base.leftGameScreenBorder = base.GetTexture2DList(TexturesKeyEnum.PLAY_LEFT_MOVE_BUTTON)[0].Width;
-            
+            isOver = false;
+            isWriteingFile = false;
             //初始化隨機角色產生系統
             randSys = new RandGenerateDropObjsSystem(this, 2,3, 3,3,5,2);
             randSys.SetBorder(leftGameScreenBorder, rightGameScreenBorder);
@@ -91,13 +110,13 @@ namespace CatcherGame.GameStates
             lifeTexture = new TextureLayer(this, objIdCount++, LIFE_X, LIFE_Y);
             scoreTexture = new TextureLayer(this, objIdCount++, SCORE_X, SCORE_Y);
             
+            int floor_y = base.GetDeviceScreenHeightByMainGame() - base.GetTexture2DList(TexturesKeyEnum.PLAY_FLOOR)[0].Height;
+            floorTexture = new TextureLayer(this, objIdCount++, 0, floor_y);
 
             //加入遊戲元件
             AddGameObject(player);
             
-            AddGameObject(leftMoveButton);
-            AddGameObject(rightMoveButton);
-            AddGameObject(pauseButton);
+           
 
             //啟動第一次隨機功能取得掉落角色
             List<DropObjects> generateObjs =  randSys.WorkCreatureRandom();
@@ -121,6 +140,11 @@ namespace CatcherGame.GameStates
           
             //訂閱事件
             randSys.GenerateDropObjs += randSys_GenerateDropObjs;
+
+            //加入圖層
+            AddGameObject(leftMoveButton);
+            AddGameObject(rightMoveButton);
+            AddGameObject(pauseButton);
 
             //對 對話框做初始化
             foreach (KeyValuePair<DialogStateEnum, GameDialog> dialog in dialogTable)
@@ -147,6 +171,7 @@ namespace CatcherGame.GameStates
             smokeTexture.Dispose();
             lifeTexture.Dispose();
             scoreTexture.Dispose();
+            floorTexture.Dispose();
             willRemoveObjectId.Clear();
             //指向NULL
             savedPeopleNumberFont = null;
@@ -169,7 +194,7 @@ namespace CatcherGame.GameStates
                 //Release();
                 //遊戲結束
                 Debug.WriteLine("Game Over...");
-                //切換到遊戲結束的畫面
+                isOver = true;
             }
         }
 
@@ -190,7 +215,7 @@ namespace CatcherGame.GameStates
             smokeTexture.LoadResource(TexturesKeyEnum.PLAY_SMOKE);
             lifeTexture.LoadResource(TexturesKeyEnum.PLAY_LIFE);
             scoreTexture.LoadResource(TexturesKeyEnum.PLAY_SCORE);
-        
+            floorTexture.LoadResource(TexturesKeyEnum.PLAY_FLOOR);
 
             
             //載入對話框的圖片資源
@@ -213,9 +238,54 @@ namespace CatcherGame.GameStates
             }
         }
 
+        private void SaveData() {
+            GameRecordData readData = null;
+            //紀錄檔案
+            GameRecordData saveData = new GameRecordData();
+         
+           
+            //與舊資料作判斷
+            if (readData != null){
+                if (readData.HistoryTopSavedNumber < savedPeopleNumber){
+                    saveData.HistoryTopSavedNumber = savedPeopleNumber;
+                }
+                else {
+                    saveData.HistoryTopSavedNumber = readData.HistoryTopSavedNumber;
+                }
+                //check檔案中使否影經擁有角色
+                foreach(DropObjectsKeyEnum getkey in   player.GetCaughtKey()){
+                    bool isGot = false; 
+                    foreach(DropObjectsKeyEnum key in  readData.CaughtDropObjects){
+                        if(getkey == key){
+                            isGot = true; 
+                            break;
+                        }
+                    }
+                    if(!isGot){ //如果沒有拿到過 先放到舊資料中
+                         readData.CaughtDropObjects.Add(getkey);
+                    }
+                }
+                //一次把舊資料放到存檔區
+                saveData.CaughtDropObjects = readData.CaughtDropObjects;
+            }
+            else{ //如果沒有資料
+                saveData.HistoryTopSavedNumber = savedPeopleNumber;
+                saveData.CaughtDropObjects = player.GetCaughtKey();
+            }
+            saveData.CurrentSavePeopleNumber = savedPeopleNumber;
 
+            if (!isWriteingFile)
+            {
+                try
+                {
+                    //await StorageHelper.SaveTextToFile("record.catcher", JsonHelper.Serialize<GameRecordData>(saveData));
+                }
+                catch { }
+                isWriteingFile = true;
+            }
+        }
 
-        public override void Update()
+       public override void Update()
         {
             //如果沒有談出對話框->處理遊戲邏輯
             if (!base.hasDialogShow)
@@ -265,6 +335,15 @@ namespace CatcherGame.GameStates
                 if (willRemoveObjectId.Count > 0) {
                     RemoveGameObjectFromList();
                 }
+                
+                //切換到遊戲結束的畫面
+                if (isOver) {
+                    SaveData();
+                    this.Release();
+                    //切換狀態
+                    base.SetNextGameSateByMain(GameStateEnum.STATE_GAME_OVER);
+                    
+                }
             }
             base.Update();
         }
@@ -272,6 +351,7 @@ namespace CatcherGame.GameStates
         {
             // 繪製主頁背景
             gameSateSpriteBatch.Draw(base.background, base.backgroundPos, Color.White);
+            floorTexture.Draw(this.GetSpriteBatch());
             base.Draw();
             smokeTexture.Draw(this.GetSpriteBatch());
             lifeTexture.Draw(this.GetSpriteBatch());
@@ -279,14 +359,16 @@ namespace CatcherGame.GameStates
             //繪製文字資源
             //座標位置以調整為依照圖片之間的位置距離去設定,帶有待調整
             //
-            savedPeoplefontX = ((SCORE_X + scoreTexture.Width)/2) - savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).X/2;
+            savedPeoplefontX = ((SCORE_X + scoreTexture.Width)/2) - savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).X/2 +5;
             savedPeoplefontY = ((SCORE_Y + scoreTexture.Height)/2) + savedPeopleNumberFont.MeasureString(savedPeopleNumber.ToString()).Y/2 - 10;
-            lifefontX = LIFE_X + lifeTexture.Width;
+            lifefontX = LIFE_X + lifeTexture.Width -5;
             lifefontY = LIFE_Y - 10; //微修正
             gameSateSpriteBatch.DrawString(savedPeopleNumberFont, savedPeopleNumber.ToString(), new Vector2(savedPeoplefontX, savedPeoplefontY), Color.White);
             gameSateSpriteBatch.DrawString(lostPeopleNumberFont, lostPeopleNumber.ToString(), new Vector2(lifefontX, lifefontY), Color.White);
-        }
 
+          
+        }
+        
 
         /// <summary>
         /// 將 id 放入準備要被刪除的 list

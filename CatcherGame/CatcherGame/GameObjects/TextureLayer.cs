@@ -7,10 +7,11 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-
 using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 using CatcherGame.Sprite;
+using System.Diagnostics;
+
 namespace CatcherGame.GameObjects
 {
     //顯示單純的圖層圖片,如果有某些圖片會在最上層,且和遊戲中的邏輯無關的話,可以用此類別 e.g 遊戲中的煙霧 或 選單的紅色邊
@@ -59,7 +60,7 @@ namespace CatcherGame.GameObjects
                         layer.Dispose();
                     }
 
-                    Console.WriteLine("Object disposed.");
+                    Debug.WriteLine("Object disposed.");
                 }
             }
             disposed = true;   

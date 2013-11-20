@@ -12,10 +12,10 @@ using Microsoft.Xna.Framework.Graphics;
 using CatcherGame.GameStates;
 using CatcherGame.TextureManager;
 using CatcherGame.Sprite;
-
+using System.Diagnostics;
 namespace CatcherGame.GameObjects
 {
-    public  delegate void ValueAddedEventHandler();
+    public  delegate void ValueAddedEventHandler(DropObjects obj);
     
    
     //網子類別
@@ -111,7 +111,7 @@ namespace CatcherGame.GameObjects
                         {
                             //累加拯救到的人數
                             if (AddSavedPerson != null) {
-                                AddSavedPerson.Invoke();
+                                AddSavedPerson.Invoke(obj);
                             }
                         }
                         else if (obj is EffectItem) {  //是道具的話
@@ -176,7 +176,7 @@ namespace CatcherGame.GameObjects
                     if (willRemoveObjectId.Count > 0) {
                         willRemoveObjectId.Clear();
                     }
-                    Console.WriteLine("FirePlayer disposed.");
+                    Debug.WriteLine("FirePlayer disposed.");
                 }
             }
             disposed = true;

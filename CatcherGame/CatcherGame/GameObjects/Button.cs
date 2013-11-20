@@ -10,6 +10,7 @@ using CatcherGame.Sprite;
 using CatcherGame.GameStates;
 
 using CatcherGame.TextureManager;
+using System.Diagnostics;
 namespace CatcherGame.GameObjects
 {
     public class Button : GameObject 
@@ -88,7 +89,11 @@ namespace CatcherGame.GameObjects
             Color[] currtentTextureColor = new Color[currentTexture.Width * currentTexture.Height];
             currentTexture.GetData<Color>(currtentTextureColor);
             //偵測按下去的座標換算成圖片圖片的像素位置
-            Color clickPoint = currtentTextureColor[((int)x - currentTexture.Bounds.Left) + (((int)y) - currentTexture.Bounds.Top) * currentTexture.Bounds.Width];
+            int pixelPos = ((int)x - currentTexture.Bounds.Left) + (((int)y) - currentTexture.Bounds.Top) * currentTexture.Bounds.Width;
+            if(currtentTextureColor.Length < pixelPos)
+                return false;
+
+            Color clickPoint = currtentTextureColor[pixelPos];
             if (clickPoint.A != 0)
             {
                 return true;
@@ -135,7 +140,7 @@ namespace CatcherGame.GameObjects
                         buttonAnimation.Dispose();
                     }
 
-                    Console.WriteLine("FirePlayer disposed.");
+                    Debug.WriteLine("FirePlayer disposed.");
                 }
             }
             disposed = true;

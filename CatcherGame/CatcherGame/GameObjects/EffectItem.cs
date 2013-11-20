@@ -136,7 +136,7 @@ namespace CatcherGame.GameObjects
                         itemAnimation.Dispose();
                     }
                     totalEapsed = 0;
-                    Console.WriteLine("FirePlayer disposed.");
+                    Debug.WriteLine("FirePlayer disposed.");
                 }
             }
             disposed = true;

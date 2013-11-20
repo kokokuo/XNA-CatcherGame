@@ -16,21 +16,20 @@ using CatcherGame.GameStates;
 using CatcherGame.FontManager;
 
 using System.Diagnostics;
-
 namespace CatcherGame
 {
     /// <summary>
-    /// 這是您遊戲的主要型別
+    /// This is the main type for your game
     /// </summary>
-    public class MainGame : Microsoft.Xna.Framework.Game
+    public class MainGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager _graphics;
+        SpriteBatch _spriteBatch;
 
         Queue<TouchLocation> touchQueue;
 
         //遊戲狀態表
-        Dictionary<GameStateEnum,GameState> gameStateTable;
+        Dictionary<GameStateEnum, GameState> gameStateTable;
         GameState pCurrentScreenState;
 
         //圖片管理器
@@ -45,11 +44,11 @@ namespace CatcherGame
 
         public MainGame()
         {
-            graphics = new GraphicsDeviceManager(this);
-            Debug.WriteLine(graphics.PreferredBackBufferHeight);
-            Debug.WriteLine(graphics.PreferredBackBufferWidth);
-
+            _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Debug.WriteLine(_graphics.PreferredBackBufferHeight);
+            Debug.WriteLine(_graphics.PreferredBackBufferWidth);
+         
 
             // Windows Phone 預設的畫面播放速率為 30 fps。
             TargetElapsedTime = TimeSpan.FromTicks(333333);
@@ -58,27 +57,28 @@ namespace CatcherGame
             InactiveSleepTime = TimeSpan.FromSeconds(1);
 
             //遊戲狀態表
-            gameStateTable = new Dictionary<GameStateEnum,GameState>();
-            gameStateTable.Add(GameStateEnum.STATE_MENU,new HomeMenuState(this));
+            gameStateTable = new Dictionary<GameStateEnum, GameState>();
+            gameStateTable.Add(GameStateEnum.STATE_MENU, new HomeMenuState(this));
             gameStateTable.Add(GameStateEnum.STATE_START_COMIC, new GameStartComicState(this));
             gameStateTable.Add(GameStateEnum.STATE_PLAYGAME, new PlayGameState(this));
             gameStateTable.Add(GameStateEnum.STATE_GAME_OVER, new GameOverState(this));
             //設定水平橫向時的座標
             TouchPanel.DisplayOrientation = Microsoft.Xna.Framework.DisplayOrientation.LandscapeLeft;
             TouchPanel.EnabledGestures = GestureType.Tap | GestureType.FreeDrag | GestureType.None | GestureType.Hold;
-            
-            
+
+
             touchQueue = new Queue<TouchLocation>();
         }
-       
+
         /// <summary>
-        /// 允許遊戲先執行所需的初始化程序，再開始執行。
-        /// 這是遊戲可查詢必要服務和載入任何非圖形相關內容
-        /// 的地方。呼叫 base.Initialize 會列舉所有元件
-        /// 並予以初始化。
+        /// Allows the game to perform any initialization it needs to before starting to run.
+        /// This is where it can query for any required services and load any non-graphic
+        /// related content.  Calling base.Initialize will enumerate through any components
+        /// and initialize them as well.
         /// </summary>
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
             // TODO: 在此新增初始化邏輯
             fontManager = new SpriteFontManager(this);
             texture2DManager = new Texture2DManager(this);
@@ -88,62 +88,38 @@ namespace CatcherGame
         }
 
         /// <summary>
-        /// 每次遊戲都會呼叫 LoadContent 一次，這是載入所有內容
-        /// 的地方。
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
         /// </summary>
         protected override void LoadContent()
         {
-            // 建立可用來繪製紋理的新 SpriteBatch。
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            
+            // Create a new SpriteBatch, which can be used to draw textures.
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // TODO: use this.Content to load your game content here
             // TODO: 在此使用 this.Content 來載入遊戲內容
-            pCurrentScreenState.SetSpriteBatch(spriteBatch);
+            pCurrentScreenState.SetSpriteBatch(_spriteBatch);
             pCurrentScreenState.LoadResource();
         }
 
         /// <summary>
-        /// 每次遊戲都會呼叫 UnloadContent 一次，這是解除載入
-        /// 所有內容的地方。
+        /// UnloadContent will be called once per game and is the place to unload
+        /// all content.
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: 在此解除載入任何非 ContentManager 內容
+            // TODO: Unload any non ContentManager content here
         }
 
-        //離開遊戲處理
-        private void userSelected(IAsyncResult result)
-        {
-            this.isMessageBoxShow = false;
-
-            if (!result.IsCompleted)
-                return;
-
-            int? index = Guide.EndShowMessageBox(result);
-
-            if (index.HasValue && index.Value == 0)
-                this.Exit();
-
-
-        }
         /// <summary>
-        /// 允許遊戲執行如更新世界、
-        /// 檢查衝突、收集輸入和播放音訊的邏輯。
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
         /// </summary>
-        /// <param name="gameTime">提供時間值的快照。</param>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // 允許遊戲結束 預設方法
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
-                this.Exit();
-            
-            //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed && !this.isMessageBoxShow)
-            //{
-            //    this.isMessageBoxShow = true;
-            //    Guide.BeginShowMessageBox("Exit", "Do you want to exit?", new string[] { "Yes", "No" }, 1, MessageBoxIcon.None, new AsyncCallback(this.userSelected), null);
-            //}
+            // TODO: Add your update logic here
 
-            // TODO: 在此新增您的更新邏輯
-            
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;
             foreach (TouchLocation location in tc)
@@ -151,24 +127,25 @@ namespace CatcherGame
                 touchQueue.Enqueue(location);
             }
             pCurrentScreenState.Update();
-           
 
             base.Update(gameTime);
         }
 
         /// <summary>
-        /// 當遊戲應該自我繪製時會呼叫此項目。
+        /// This is called when the game should draw itself.
         /// </summary>
-        /// <param name="gameTime">提供時間值的快照。</param>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // TODO: Add your drawing code here
+
             // TODO: 在此新增您的繪圖程式碼
-            spriteBatch.Begin();
+            _spriteBatch.Begin();
             //繪製現在的狀態
             pCurrentScreenState.Draw();
-            spriteBatch.End();
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
@@ -181,11 +158,13 @@ namespace CatcherGame
             touchQueue.Clear();
         }
 
-        public bool IsEmptyQueue() {
+        public bool IsEmptyQueue()
+        {
             if (touchQueue.Count != 0) return false;
             else return true;
         }
-        public TouchLocation GetTouchLocation() {
+        public TouchLocation GetTouchLocation()
+        {
             return touchQueue.Dequeue();
         }
 
@@ -193,7 +172,8 @@ namespace CatcherGame
         /// 取得當下觸碰畫面的所有觸控點
         /// </summary>
         /// <returns></returns>
-        public TouchCollection GetCurrentFrameTouchCollection() {
+        public TouchCollection GetCurrentFrameTouchCollection()
+        {
             return currtenTouchCollection;
         }
 
@@ -212,14 +192,16 @@ namespace CatcherGame
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public SpriteFont GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum key) {
+        public SpriteFont GetSpriteFontFromKeyByMainGame(SpriteFontKeyEnum key)
+        {
 
             return fontManager.GetSpriteFontFromKey(key);
         }
 
-      
 
-        public void SetNextGameState(GameStateEnum nextStateKey) {
+
+        public void SetNextGameState(GameStateEnum nextStateKey)
+        {
             //切換遊戲狀態
             pCurrentScreenState = gameStateTable[nextStateKey];
             if (!pCurrentScreenState.GetGameStateHasInit)
@@ -227,10 +209,20 @@ namespace CatcherGame
                 //進入新狀態所做的初始化
                 pCurrentScreenState.BeginInit();
                 //載入資源
-                pCurrentScreenState.SetSpriteBatch(spriteBatch);
+                pCurrentScreenState.SetSpriteBatch(_spriteBatch);
                 pCurrentScreenState.LoadResource();
             }
-            
+
+        }
+
+
+
+        public int GetDeviceScreenWidth() {
+            return _graphics.PreferredBackBufferWidth;
+        }
+        public int GetDeviceScreenHeight()
+        {
+            return _graphics.PreferredBackBufferHeight;
         }
     }
 }

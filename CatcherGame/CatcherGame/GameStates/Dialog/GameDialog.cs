@@ -53,7 +53,10 @@ namespace CatcherGame.GameStates.Dialog
         //座標由子類別(真正要用的Dialog)設定
         public virtual void LoadResource()
         {
-            closeButton.LoadResource(TextureManager.TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
+            //隨然closeButton可以由子類別決定，但觸控時候的點還是原位置的點。
+            //暫時先這樣解決，等郭董起床再問他!!!!><''
+            //因此暫時註解掉這行，
+            //closeButton.LoadResource(TextureManager.TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
         }
         /// <summary>
         /// 關閉Dialog,子類別Dialgo可以透過此來關閉

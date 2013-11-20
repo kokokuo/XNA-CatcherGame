@@ -224,7 +224,7 @@ namespace CatcherGame.GameObjects
                         pCurrentAnimation = null;
                     }
                     
-                    Console.WriteLine("FirePlayer disposed.");
+                    Debug.WriteLine("FirePlayer disposed.");
                 }
             }
             disposed = true;

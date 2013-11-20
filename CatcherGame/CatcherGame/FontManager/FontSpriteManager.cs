@@ -22,6 +22,7 @@ namespace CatcherGame.FontManager
             LoadTopScoreFont();
             LoadPlaySavedPeopleNumberFont();
             LoadPlayLostPeopleNumberFont();
+            LoadGameOverCurrentSavedPeopleNumberFont();
         }
 
         /// <summary>
@@ -48,6 +49,14 @@ namespace CatcherGame.FontManager
             if (!_dictionary.ContainsKey(key))
             {
                 _dictionary.Add(key, mainGame.Content.Load<SpriteFont>("SavedPeopleFont"));
+            }
+        }
+        private void LoadGameOverCurrentSavedPeopleNumberFont()
+        {
+            SpriteFontKeyEnum key = SpriteFontKeyEnum.GAME_VOER_CURRENT_SAVED_PEOPLE_FONT;
+            if (!_dictionary.ContainsKey(key))
+            {
+                _dictionary.Add(key, mainGame.Content.Load<SpriteFont>("CurrentScoreFont"));
             }
         }
 

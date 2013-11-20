@@ -81,8 +81,8 @@ namespace CatcherGame.GameStates
             this.mainGame = mainGamePointer;
             
             isInit = false;
-            width = 800;
-            height = 480;
+            width = mainGame.GetDeviceScreenWidth();
+            height = mainGame.GetDeviceScreenHeight() ;
             hasDialogShow = false;
         }
         
@@ -264,6 +264,7 @@ namespace CatcherGame.GameStates
             this.mainGame.SetNextGameState(key);
         }
 
+
         /// <summary>
         /// 取得文字資源
         /// </summary>
@@ -282,6 +283,16 @@ namespace CatcherGame.GameStates
         public void ClearTouchQueue()
         {
             mainGame.ClearTouchQueue();
+        }
+
+
+        public int GetDeviceScreenWidthByMainGame()
+        {
+            return mainGame.GetDeviceScreenWidth();
+        }
+        public int GetDeviceScreenHeightByMainGame()
+        {
+            return mainGame.GetDeviceScreenHeight();
         }
     }
 }

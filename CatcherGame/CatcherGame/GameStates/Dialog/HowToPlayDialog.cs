@@ -30,8 +30,8 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void BeginInit()
         {
-            pageStart = 9;
-            pageEnd = 11;
+            pageStart = 8;
+            pageEnd = 10;
             backgroundPos = new Vector2(0, 0);
             closeButton = new Button(base.currentState, base.countId++, 0,0);
             leftButton = new Button(base.currentState, base.countId++, 0, 0);
@@ -63,6 +63,7 @@ namespace CatcherGame.GameStates.Dialog
             page1Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE1);
             page2Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE2);
             page3Texture.LoadResource(TexturesKeyEnum.HOWTOPLAY_PAGE3);
+            closeButton.LoadResource(TexturesKeyEnum.DIALOG_CLOSE_BUTTON);
             base.LoadResource();
         }
         public override void Update()
@@ -75,34 +76,19 @@ namespace CatcherGame.GameStates.Dialog
                 gtCurrent = DialogGameObjectEnum.HOWTOPLAY_PAGE1;
 
                 TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
-                bool isClickClose = false;
-                bool isLeftButton = false;
-                bool isRightButton = false;
+
                 if (tc.Count > 0)
                 {
-                    //所有當下的觸控點去判斷有無點到按鈕
-                    foreach (TouchLocation touchLocation in tc)
-                    {
-                        if (!isClickClose)
-                            isClickClose = closeButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
-                        if (!isLeftButton)
-                            isLeftButton = leftButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
-                        if (!isRightButton)
-                            isRightButton = rightButton.IsPixelClick(touchLocation.Position.X, touchLocation.Position.Y);
-                    }
 
-                    //遊戲邏輯判斷
-                    if (isClickClose)
-                    {                    
-                        base.CloseDialog(); //透過父類別來關閉
-                    }
-
-                    //按鈕方式2
                     //使用觸控單次點擊方式
                     TouchLocation tL = base.currentState.GetTouchLocation();
                     if (tL.State == TouchLocationState.Released)
                     {
-
+                        //關閉按鈕
+                        if (closeButton.IsPixelClick(tL.Position.X, tL.Position.Y))
+                        {
+                            base.CloseDialog();//透過父類別來關閉
+                        }
                         //左邊按鈕
                         if (leftButton.IsPixelClick(tL.Position.X, tL.Position.Y))
                         {
