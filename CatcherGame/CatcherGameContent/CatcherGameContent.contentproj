@@ -652,23 +652,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameOver\gameover_back.png">
-      <Name>gameover_back</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="GameOver\gameover_menu.png">
       <Name>gameover_menu</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="GameOver\gameover_character_1.png">
-      <Name>gameover_character_1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="GameOver\gameover_again.png">
-      <Name>gameover_again</Name>
+    <Compile Include="GameOver\gameover_back.png">
+      <Name>gameover_back</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -702,6 +692,20 @@
     </Compile>
     <Compile Include="Dialog\Dictionary\dictionary_rightButton.png">
       <Name>dictionary_rightButton</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameOver\gameover_again.png">
+      <Name>gameover_again</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameOver\gameover_character_1.png">
+      <Name>gameover_character_1</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

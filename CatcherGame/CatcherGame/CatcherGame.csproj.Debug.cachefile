@@ -103,17 +103,17 @@ Content\Play\Item\Net expander.xnb
 Content\Play\Item\Net shrinker.xnb
 Content\Play\Item\slow.xnb
 Content\Play\Item\disappear.xnb
-Content\SavedPeopleFont.xnb
-Content\LostPeopleFont.xnb
-Content\TopScoreFont.xnb
 Content\StartComic\comic800.xnb
-Content\GameOver\gameover_back.xnb
 Content\GameOver\gameover_menu.xnb
-Content\GameOver\gameover_character_1.xnb
-Content\GameOver\gameover_again.xnb
+Content\GameOver\gameover_back.xnb
 Content\Play\floor.xnb
-Content\CurrentScoreFont.xnb
 Content\Play\play_back.xnb
 Content\Dialog\Dictionary\dictionary_no.xnb
 Content\Dialog\Dictionary\dictionary_leftButton.xnb
 Content\Dialog\Dictionary\dictionary_rightButton.xnb
+Content\GameOver\gameover_again.xnb
+Content\GameOver\gameover_character_1.xnb
+Content\SavedPeopleFont.xnb
+Content\LostPeopleFont.xnb
+Content\TopScoreFont.xnb
+Content\CurrentScoreFont.xnb
