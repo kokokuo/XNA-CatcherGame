@@ -119,7 +119,9 @@ namespace CatcherGame
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
-
+            // 允許遊戲結束 預設方法
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                this.Exit();
             TouchCollection tc = TouchPanel.GetState();
             currtenTouchCollection = tc;
             foreach (TouchLocation location in tc)

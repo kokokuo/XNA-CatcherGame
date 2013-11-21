@@ -18,7 +18,7 @@ namespace CatcherGame.GameStates.Dialog
         SpriteFont topSavedPeopleNumberFont;
         GameRecordData readData;
         string topSavedPeoepleNumber;
-        
+       
         public TopScoreDialog(GameState pCurrentState)
             : base(pCurrentState) 
         { 
@@ -30,10 +30,13 @@ namespace CatcherGame.GameStates.Dialog
             closeButton = new Button(base.currentState, base.countId++, 0, 0);
             AddGameObject(closeButton);
             topSavedPeoepleNumber = "Not Saved";
-            //讀取紀錄檔
-            
-            
 
+            //讀取紀錄檔
+            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+            if (readData !=null && readData.HistoryTopSavedNumber != 0)
+            { //分數不為零
+                topSavedPeoepleNumber = readData.HistoryTopSavedNumber.ToString();
+            }
             base.isInit = true;
         }
         public override void LoadResource()
@@ -46,8 +49,14 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-            //讀取紀錄檔
             
+            //讀取紀錄檔
+            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+            if (readData != null && readData.HistoryTopSavedNumber != 0)
+            { //分數不為零
+                topSavedPeoepleNumber = readData.HistoryTopSavedNumber.ToString();
+            }
+               
 
             TouchCollection tc = base.currentState.GetCurrentFrameTouchCollection();
             bool isClickClose = false;

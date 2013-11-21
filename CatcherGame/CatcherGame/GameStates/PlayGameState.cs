@@ -242,7 +242,8 @@ namespace CatcherGame.GameStates
             GameRecordData readData = null;
             //紀錄檔案
             GameRecordData saveData = new GameRecordData();
-         
+            //先載入舊資料
+            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
            
             //與舊資料作判斷
             if (readData != null){
@@ -278,7 +279,7 @@ namespace CatcherGame.GameStates
             {
                 try
                 {
-                    //await StorageHelper.SaveTextToFile("record.catcher", JsonHelper.Serialize<GameRecordData>(saveData));
+                    FileStorageHelper.StorageHelperSingleton.Instance.SaveGameRecordData(saveData);
                 }
                 catch { }
                 isWriteingFile = true;
