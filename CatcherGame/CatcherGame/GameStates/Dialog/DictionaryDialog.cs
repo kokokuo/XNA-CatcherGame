@@ -146,19 +146,28 @@ namespace CatcherGame.GameStates.Dialog
         }
         public override void Update()
         {
-
-            //讀取紀錄檔
-            readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
-            if (readData != null && readData.CaughtDropObjects.ToList() != null&&isDataRead==false)
-            { 
-                caughtObjects = readData.CaughtDropObjects.ToList();
+            if (!isDataRead)
+            {
+                //
                 ReleaseGameObject();
-                isDataRead = true;
+                //讀取紀錄檔
+                readData = FileStorageHelper.StorageHelperSingleton.Instance.LoadGameRecordData();
+                if (readData != null && readData.CaughtDropObjects.ToList() != null && isDataRead == false)
+                {
+                    caughtObjects = readData.CaughtDropObjects.ToList();
+                    isDataRead = true;
+                }
             }
+           
+            
+           
 
             if (!base.currentState.IsEmptyQueue())
             {
+                //指定當前頁面是DictionaryDialog頁面
                 stCurrent = DialogStateEnum.STATE_DICTIONARY;
+
+                //片段當前頁面是空值，就初始化給第一個角色
                 if (gtCurrent == DialogGameObjectEnum.EMPTY)
                     gtCurrent = DialogGameObjectEnum.DICTIONARY_FATDANCER;
 
@@ -212,12 +221,14 @@ namespace CatcherGame.GameStates.Dialog
             base.Draw(); //繪製遊戲元件
         }
 
-      
+        /// <summary>
+        /// 把遊戲中物件加入gameObject，讓切換可以分開顯示
+        /// </summary>
         public void ReleaseGameObject()
         {
             objectTable[DialogStateEnum.STATE_DICTIONARY].Clear();
 
-            //把遊戲中物件加入gameObject，讓切換可以分開顯示
+            
 
             //FatDancer
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_FAT_DANCE))
@@ -254,7 +265,6 @@ namespace CatcherGame.GameStates.Dialog
                 AddgameObject(DialogGameObjectEnum.DICTIONARY_OLDMAN, new GameObject[] { oldmanTexture, oldmanIntroTexture, leftButton, rightButton });
             else
                 AddgameObject(DialogGameObjectEnum.DICTIONARY_OLDMAN, new GameObject[] { noTexture, leftButton, rightButton });
-
 
             //Roxanne
             if (caughtObjects.Contains(DropObjectsKeyEnum.PERSON_ROXANNE))
