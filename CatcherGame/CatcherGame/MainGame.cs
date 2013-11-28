@@ -48,8 +48,8 @@ namespace CatcherGame
             Content.RootDirectory = "Content";
             Debug.WriteLine(_graphics.PreferredBackBufferHeight);
             Debug.WriteLine(_graphics.PreferredBackBufferWidth);
-         
 
+            _graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft;
             // Windows Phone 預設的畫面播放速率為 30 fps。
             TargetElapsedTime = TimeSpan.FromTicks(333333);
 
