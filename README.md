@@ -1,14 +1,19 @@
-WP-CatcherGameProject
-=====================
+# Windows Phone Project - Catcher Game 
+---
 
-Windows Phone Project - Catcher Game 
+## English Summary
+A Catch game with firefighters in the background to save people. The game is a "side-scrolling game where players need to operate two firefighters with a hand-held safety net to catch people from the high-rise building who are not in a hurry to escape.
 
-You might have played games like catching fruits, but you definitely have not played intense catching game such as this with firefighters catching people!
+Sometimes, there will be some special effects props falling in the game, such as expanding the safety net, accelerating the movement, or reducing the speed of catching the net and slowing down.
 
- 
+<img src="https://raw.githubusercontent.com/kokokuo/WP-CatcherGameProject/master/CatherGame%20-%20Sample%201.png" alt="Game Playing View - Menu">
 
+<img src="https://raw.githubusercontent.com/kokokuo/WP-CatcherGameProject/master/CatherGame%20-%20Sample%203.png" alt="ame Playing Views - Playing">
 
+## Platform
+Developing the game by C# and XNA 3.0 Game Framework and deploying to the Windows Phone Platform.
 
-
-Our proposed reincarnation of the classic egg catcher game is designed to be highly interactive. The theme of the game proposed will revolve around the heroic elements of fire fighters. Moreover, it will be available on most third generation portable electronic devices.
-
+## Team Member 
+Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
+Rick Chiang : Game Developer / Project Management
+Hsin-Yu Shih : Game Material Deisgner / Idea Thinking
