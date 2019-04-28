@@ -15,8 +15,8 @@ Sometimes, there will be some special effects props falling in the game, such as
   <img src="https://raw.githubusercontent.com/kokokuo/WP-CatcherGameProject/master/CatherGame%20-%20Sample%203.png">
 </p>
 
-## Platform
-Developing the game by C# and XNA 3.0 Game Framework and deploying to the Windows Phone Platform.
+## Platform and Tools
+Developing the game by **C#** and **XNA 3.0 Game Framework** and deploying to the **Windows Phone** Platform.
 
 ## Team Member 
 * Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
