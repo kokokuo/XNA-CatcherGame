@@ -22,3 +22,6 @@ Developing the game by **C#** and **XNA 3.0 Game Framework** and deploying to th
 * Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
 * Rick Chiang : Game Developer / Project Management
 * Hsin-Yu Shih : Game Material Desgner / Idea Thinking
+
+
+### [Game Demo Video](https://www.youtube.com/watch?v=ouuagv4ibdc)
