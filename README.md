@@ -19,6 +19,6 @@ Sometimes, there will be some special effects props falling in the game, such as
 Developing the game by C# and XNA 3.0 Game Framework and deploying to the Windows Phone Platform.
 
 ## Team Member 
-Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
-Rick Chiang : Game Developer / Project Management
-Hsin-Yu Shih : Game Material Deisgner / Idea Thinking
+* Eason Kuo: Team Leading / Game Developer / The Game Development and Architecture Coaching 
+* Rick Chiang : Game Developer / Project Management
+* Hsin-Yu Shih : Game Material Deisgner / Idea Thinking
