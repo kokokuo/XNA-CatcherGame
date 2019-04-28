@@ -1,4 +1,4 @@
-# Windows Phone Project - Catcher Game 
+# XNA Catcher Game 
 
 ## Summary
 A Catch game with firefighters in the background to save people. The game is a "side-scrolling game where players need to operate two firefighters with a hand-held safety net to catch people from the high-rise building who are not in a hurry to escape.
